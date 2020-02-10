@@ -10,6 +10,7 @@ def strToArray(text):
     return arrayProduce
 #--end strToArray---
 
+
 def areaLoader(environment, level, board):
     """area loader .py is the file which containt the loader functions.
 
