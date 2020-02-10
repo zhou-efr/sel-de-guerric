@@ -1,0 +1,12 @@
+alors ?
+function : jsp (pk pas)
+return type : none
+copied parameter : none
+modified parameter : none
+internal variable : none
+BEGIN
+write("nothing)
+END
+
+C:\Users\gundamzhou\Documents\GitHub\sel-de-guerric\files\environment1\level1
+C:/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/files/environment1/level1

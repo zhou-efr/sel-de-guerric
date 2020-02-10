@@ -1,0 +1,6 @@
+[submodule "pygame"]
+	path = pygame
+	url = https://github.com/pygame/pygame
+[submodule "GitPython"]
+	path = GitPython
+	url = https://github.com/gitpython-developers/GitPython
