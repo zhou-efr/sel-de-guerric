@@ -59,6 +59,14 @@ class environmentLoader:
     def getInventory(self):
         return self.inventory
 
+    def getItem(self, keyChar):
+        for i in self.inventory:
+            if (i.getKeyChar() == keyChar):
+                return i
+            #---end if---
+        #---end for---
+        return obj.item('n/a', self.environment)
+
     def getEnvironment(self):
         return self.environment
     #---End of accessors---
@@ -103,9 +111,12 @@ class levelLoader:
             with open(self.levelStructureAdress, 'r') as file:
                 contents = file.read().split('\n')
             #---end with---
-
+            
             for i in range(len(contents)):
                 contents[i] = strToArray(contents[i])
+                for j in range(len(contents[i])):
+                    contents[i][j] = int(contents[i][j])
+                #---end for---
             #---end for---
 
             self.levelStructure = contents
@@ -193,8 +204,8 @@ class areaLoader:
         self.level = level 
         self.board = board
         self.adress = "C:/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files/environment" + str( environment) + "/level" + str( level)
-        self.boardAdress = self.adress + "/board" + self.board + ".txt"
-        self.backAdress = self.adress + "/back" + self.board + ".png"
+        self.boardAdress = str(self.adress) + "/board" + str(self.board) + ".txt"
+        self.backAdress = str(self.adress) + "/back" + str(self.board) + ".png"
         self.area = []
 
         #beginning of initialazation 
