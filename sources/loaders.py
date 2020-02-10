@@ -1,14 +1,68 @@
-import pygame
+"""loader.py
 
-pygame.init()
+    it's the file containing all the loaders class and their needed functions
 
-def strToArray(text):
-    arrayProduce = []
-    for i in text:
-        arrayProduce.append(i)
-    #---end for---
-    return arrayProduce
-#--end strToArray---
+"""
+import objects as obj
+
+class environmentLoader:
+    """environment loader is the class which load and keep all the needed features communal to all the environment
+
+        current features loaded:
+            items
+            levels
+            >> beasts
+    """
+    def __init__(self, environment):
+        #attributs settings
+        self.environment = environment
+        self.currentLevel = levelLoader(environment, 1)
+        self.inventory = []
+        self.folder = "C:/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files/environment" + str( environment) 
+        self.invotoryAdress = self.folder + "inventory.txt"
+
+        #initialazation
+        self.initInventory()
+    #---end init--
+
+    def initInventory(self):
+        #inventory initialazation
+        contents = None
+        try:
+            with open(self.invotoryAdress, 'r') as file:
+                contents = file.read().split('\n')
+            #---end with---
+            self.inventory = contents
+        except FileNotFoundError:
+            print("file not found")
+        #---end try---
+        
+        for i in range(len(self.inventory)):
+            self.inventory[i] = obj.item(self.inventory[i])
+        #---end for---
+    #---end initInventory---
+
+    def nextLevel(self):
+        self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
+    #---end nextLevel---
+
+    #---Beginning accessor---
+    def getInventoryAdress(self):
+        return self.invotoryAdress
+
+    def getFolder(self):
+        return self.folder
+
+    def getLevel(self):
+        return self.currentLevel
+
+    def getInventory(self):
+        return self.inventory
+
+    def getEnvironment(self):
+        return self.environment
+    #---End of accessors---
+#---end environmentLoader---
 
 class levelLoader:
     """this class load a level
@@ -34,8 +88,8 @@ class levelLoader:
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "levelStruct.txt"
         self.levelStructure = []
-        self.position = 11
-        self.currentBoard = areaLoader(self.environment, self.level, 11) #11 being the starting board
+        self.position = 11 #11 being the starting board
+        self.currentBoard = areaLoader(self.environment, self.level, self.position) 
 
         #initialazation
         self.initStructure()
@@ -71,10 +125,36 @@ class levelLoader:
         elif (direction == 'e'):
             self.position -= 10
         else:
-            self.position += 0
+            self.position += 0 #
 
-        self.currentBoard = areaLoader(self.environment, self.level, 11)
-        
+        self.currentBoard = areaLoader(self.environment, self.level, self.position)
+    #---end boardChange
+
+    #---Beginning of accessors---
+    def getBoard(self):
+        return self.currentBoard
+
+    def getfolder(self):
+        return self.folder
+
+    def getLevel(self):
+        return self.level
+
+    def getStructure(self):
+        return self.levelStructure
+
+    def getStructureAdress(self):
+        return self.levelStructureAdress
+
+    def getPosition(self):
+        return self.position
+
+    def getMusic(self):
+        return self.musicAdress
+
+    def getEnvironment(self):
+        return self.environment
+#---end levelLoader---       
 
 class areaLoader:
     """area loader is the class containing all the necessary contained in folders
@@ -141,6 +221,8 @@ class areaLoader:
         #---end try---
     #---end initBoard---
 
+
+    #---Beginning of accessors---
     def getBackAdress(self):
         return self.backAdress
 
@@ -158,15 +240,13 @@ class areaLoader:
 
     def getEnvironment(self):
         return self.environment
+    #---End of accessors---
 #---end AreaLoader---
 
-
-def areaPrinter(surface, board, environment):
-    """
-        surface : a pygame surface
-        board : 2d array containing keyChar
-        environment : environment object 
-    """
-#---end areaPrinter---
-
-print(areaLoader(1,1,1))
+def strToArray(text):
+    arrayProduce = []
+    for i in text:
+        arrayProduce.append(i)
+    #---end for---
+    return arrayProduce
+#--end strToArray---
