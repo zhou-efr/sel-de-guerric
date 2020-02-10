@@ -2,9 +2,6 @@ import pygame
 
 pygame.init()
 
-
-
-
 def strToArray(text):
     arrayProduce = []
     for i in text:
@@ -12,6 +9,72 @@ def strToArray(text):
     #---end for---
     return arrayProduce
 #--end strToArray---
+
+class levelLoader:
+    """this class load a level
+        it's mean it's load :
+            the musique
+            the layout of each area
+        
+        and it's contain :
+            loaded adress
+            layout array
+            the player data (maybe yes, maybe no it's depends on the backend structure)
+
+        and has methode :
+            for change area (in function of direction 'n' 's' 'e' 'o')
+            accessors
+    """
+
+    def __init__(self, environment, level):
+        #setting internal variables
+        self.environment = environment
+        self.level = level
+        self.folder = "C:/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files/environment" + str( environment) + "/level" + str( level)
+        self.musicAdress = self.folder + "soundtrack.mp3"
+        self.levelStructureAdress = self.folder + "levelStruct.txt"
+        self.levelStructure = []
+        self.position = 11
+        self.currentBoard = areaLoader(self.environment, self.level, 11) #11 being the starting board
+
+        #initialazation
+        self.initStructure()
+    #---end init---
+
+    def initStructure(self):
+        #board initialazation
+        contents = None 
+
+        try:
+            with open(self.levelStructureAdress, 'r') as file:
+                contents = file.read().split('\n')
+            #---end with---
+
+            for i in range(len(contents)):
+                contents[i] = strToArray(contents[i])
+            #---end for---
+
+            self.levelStructure = contents
+            
+        except FileNotFoundError:
+            print("file not found")
+        #---end try---
+    #---end initStructure---
+
+    def boardChange(self, direction):
+        if (direction == 'n'):
+            self.position += 1
+        elif (direction == 's'):
+            self.position -= 1
+        elif (direction == 'o'):
+            self.position += 10
+        elif (direction == 'e'):
+            self.position -= 10
+        else:
+            self.position += 0
+
+        self.currentBoard = areaLoader(self.environment, self.level, 11)
+        
 
 class areaLoader:
     """area loader is the class containing all the necessary contained in folders
@@ -96,6 +159,7 @@ class areaLoader:
     def getEnvironment(self):
         return self.environment
 #---end AreaLoader---
+
 
 def areaPrinter(surface, board, environment):
     """
