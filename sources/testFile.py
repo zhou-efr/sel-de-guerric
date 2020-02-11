@@ -22,7 +22,7 @@ SIZE_OF_TILES = 50
 for i in range(len(tab1)):
     for j in range(len(tab1[i])):
         bufferItem = testIDE.getItem(tab1[i][j])
-        window.blit(bufferItem.picture(), (i*SIZE_OF_TILES, j*SIZE_OF_TILES))
+        window.blit(bufferItem.getPicture().convert_alpha(), (j*SIZE_OF_TILES, i*SIZE_OF_TILES))
     #---end for---
 #---end for---
 

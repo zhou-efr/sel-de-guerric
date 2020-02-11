@@ -18,7 +18,7 @@ class environmentLoader:
         self.environment = environment
         self.currentLevel = levelLoader(environment, 1)
         self.inventory = []
-        self.folder = "../files/environment" + str( environment) 
+        self.folder = "../sel-de-guerric/files/environment" + str( environment) 
         self.invotoryAdress = self.folder + "/inventory.txt"
 
         #initialazation
@@ -30,15 +30,15 @@ class environmentLoader:
         contents = None
         try:
             with open(self.invotoryAdress, 'r') as file:
-                contents = file.read().split('\n')
+                contents = file.read().split(' ')
             #---end with---
             self.inventory = contents
-        except FileNotFoundError:
-            print("file not found")
+        except FileNotFoundError as er:
+            print("file not found ", er)
         #---end try---
         
         for i in range(len(self.inventory)):
-            self.inventory[i] = obj.item(self.inventory[i])
+            self.inventory[i] = obj.item(self.inventory[i], self.environment)
         #---end for---
     #---end initInventory---
 
@@ -65,7 +65,7 @@ class environmentLoader:
                 return i
             #---end if---
         #---end for---
-        return obj.item('n/a', self.environment)
+        return obj.item('na', self.environment)
 
     def getEnvironment(self):
         return self.environment
@@ -92,7 +92,7 @@ class levelLoader:
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "../files/environment" + str( environment) + "/level" + str( level)
+        self.folder = "../sel-de-guerric/files/environment" + str( environment) + "/level" + str( level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
@@ -113,7 +113,7 @@ class levelLoader:
             #---end with---
             
             for i in range(len(contents)):
-                contents[i] = strToArray(contents[i])
+                contents[i] = contents[i].split()
                 for j in range(len(contents[i])):
                     contents[i][j] = int(contents[i][j])
                 #---end for---
@@ -121,8 +121,8 @@ class levelLoader:
 
             self.levelStructure = contents
             
-        except FileNotFoundError:
-            print("file not found")
+        except FileNotFoundError as er:
+            print("file not found ", er)
         #---end try---
     #---end initStructure---
 
@@ -203,7 +203,7 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "../files/environment" + str( environment) + "/level" + str( level)
+        self.adress = "../sel-de-guerric/files/environment" + str( environment) + "/level" + str( level)
         self.boardAdress = str(self.adress) + "/board" + str(self.board) + ".txt"
         self.backAdress = str(self.adress) + "/back" + str(self.board) + ".png"
         self.area = []
@@ -217,7 +217,7 @@ class areaLoader:
         contents = None 
 
         try:
-            with open(self.adress, 'r') as file:
+            with open(self.boardAdress, 'r') as file:
                 contents = file.read().split('\n')
             #---end with---
 
@@ -227,8 +227,8 @@ class areaLoader:
 
             self.area = contents
             
-        except FileNotFoundError:
-            print("file not found")
+        except FileNotFoundError as er:
+            print("file not found ", er)
         #---end try---
     #---end initBoard---
 

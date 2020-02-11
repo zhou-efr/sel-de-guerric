@@ -7,6 +7,8 @@ author : la tribut des zhou
 """
 import pygame
 
+pygame.init()
+
 class item:
     """item, the main class, all others object are inherent to this one
         Work In Progress (wip)
@@ -15,8 +17,8 @@ class item:
     """
     def __init__(self, keyChar, environment):
         self.keyChar = keyChar
-        self.pictureAdress = "C:/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files/environment" + str( environment) + "/" + keyChar + ".png"
-        self.picture = pygame.image.load(self.pictureAdress).convert_alpha()
+        self.pictureAdress = "../sel-de-guerric/files/environment" + str( environment) + "/" + keyChar + ".png"
+        self.picture = pygame.image.load(self.pictureAdress)
     #---end init---
 
     #---beginning accessors
