@@ -24,6 +24,25 @@ wallpaper = pygame.image.load(testIDE.getLevel().getBoard().getBackAdress()).con
 window.blit(wallpaper, (0,0))
 for i in range(len(tab1)):
     for j in range(len(tab1[i])):
+        print(tab1[i][j])
+        bufferItem = testIDE.getItem(tab1[i][j])
+        bufferPicture = pygame.transform.scale(bufferItem.getPicture().convert_alpha(), (SIZE_OF_TILES, SIZE_OF_TILES))
+        window.blit(bufferPicture, (j*SIZE_OF_TILES, i*SIZE_OF_TILES))
+    #---end for---
+#---end for---
+
+pygame.display.flip()
+os.system("pause")
+
+print("------board perspective has changed------")
+testIDE.getLevel().boardChange('o')
+tab1 = testIDE.getLevel().getBoard().getArray()
+
+wallpaper = pygame.image.load(testIDE.getLevel().getBoard().getBackAdress()).convert()
+window.blit(wallpaper, (0,0))
+for i in range(len(tab1)):
+    for j in range(len(tab1[i])):
+        print(tab1[i][j])
         bufferItem = testIDE.getItem(tab1[i][j])
         bufferPicture = pygame.transform.scale(bufferItem.getPicture().convert_alpha(), (SIZE_OF_TILES, SIZE_OF_TILES))
         window.blit(bufferPicture, (j*SIZE_OF_TILES, i*SIZE_OF_TILES))

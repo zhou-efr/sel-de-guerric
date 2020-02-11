@@ -29,7 +29,7 @@ class environmentLoader:
         #inventory initialazation
         contents = None
         try:
-            with open(self.invotoryAdress, 'r') as file:
+            with open(self.invotoryAdress, 'r', encoding='utf-8') as file:
                 contents = file.read().split(' ')
             #---end with---
             self.inventory = contents
@@ -108,7 +108,7 @@ class levelLoader:
         contents = None 
 
         try:
-            with open(self.levelStructureAdress, 'r') as file:
+            with open(self.levelStructureAdress, 'r', encoding='utf-8') as file:
                 contents = file.read().split('\n')
             #---end with---
             
@@ -128,13 +128,13 @@ class levelLoader:
 
     def boardChange(self, direction):
         if (direction == 'n'):
-            self.position += 1
-        elif (direction == 's'):
-            self.position -= 1
-        elif (direction == 'o'):
             self.position += 10
-        elif (direction == 'e'):
+        elif (direction == 's'):
             self.position -= 10
+        elif (direction == 'o'):
+            self.position += 1
+        elif (direction == 'e'):
+            self.position -= 1
         else:
             self.position += 0 #
 
@@ -217,7 +217,7 @@ class areaLoader:
         contents = None 
 
         try:
-            with open(self.boardAdress, 'r') as file:
+            with open(self.boardAdress, 'r', encoding='utf-8') as file:
                 contents = file.read().split('\n')
             #---end with---
 
