@@ -4,6 +4,8 @@
         print(contents)
 except FileNotFoundError as identifier:
     print(identifier)"""
+
+
 import os as os
 import pygame 
 import loaders as ld
@@ -25,8 +27,6 @@ for i in range(len(tab1)):
 #---end for---
 
 pygame.display.flip()
-continuer = 1
-while continuer:
-	continuer = int(input())
+os.system("pause")
 
 pygame.quit()
