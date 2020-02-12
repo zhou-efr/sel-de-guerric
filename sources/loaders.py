@@ -13,10 +13,10 @@ class environmentLoader:
             levels
             >> beasts
     """
-    def __init__(self, environment):
+    def __init__(self, environment, level = 1, area = 11):
         #attributs settings
         self.environment = environment
-        self.currentLevel = levelLoader(environment, 1)
+        self.currentLevel = levelLoader(environment, level, area)
         self.inventory = []
         self.folder = "../files/environment" + str( environment) 
         self.invotoryAdress = self.folder + "/inventory.dat"
@@ -88,7 +88,7 @@ class levelLoader:
             accessors
     """
 
-    def __init__(self, environment, level):
+    def __init__(self, environment, level, area = 11):
         #setting internal variables
         self.environment = environment
         self.level = level
@@ -96,7 +96,7 @@ class levelLoader:
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
-        self.position = 11 #11 being the starting board
+        self.position = area #11 being the starting board
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
 
         #initialazation
@@ -144,6 +144,9 @@ class levelLoader:
     #---Beginning of accessors---
     def getBoard(self):
         return self.currentBoard
+
+    def setBoard(self, position):
+        self.currentBoard = areaLoader(self.environment, self.level, position)
 
     def getfolder(self):
         return self.folder
