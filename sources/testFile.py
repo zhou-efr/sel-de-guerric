@@ -5,7 +5,7 @@
 except FileNotFoundError as identifier:
     print(identifier)"""
 
-
+"""
 import os as os
 import pygame 
 import loaders as ld
@@ -55,3 +55,6 @@ os.system("pause")
 
 
 pygame.quit()
+"""
+var = input("blah")
+print(var)

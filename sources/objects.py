@@ -17,7 +17,7 @@ class item:
     """
     def __init__(self, keyChar, environment):
         self.keyChar = keyChar
-        self.pictureAdress = "../files/environment" + str( environment) + "/" + keyChar + ".png"
+        self.pictureAdress = "./files/environment" + str( environment) + "/" + keyChar + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
     #---end init---
 
