@@ -31,3 +31,17 @@ class item:
     def getPicture(self):
         return self.picture
     #---end accessors---
+
+class entities (item):
+
+    def __init__(self, keyChar, environment):
+        super.__init__(keyChar, environment)
+    #---end init---
+#---end entities---
+
+class player (entities):
+
+    def __init__(self, keyChar, environment):
+        super.__init__(keyChar, environment)
+    #---end init---
+#---end player---
