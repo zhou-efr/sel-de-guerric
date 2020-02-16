@@ -47,19 +47,19 @@ def inputReader(inputs):
     rInput = deepcopy(inputs)
     fInput = {}
     for i, j in rInput.items():
-        rInput[i] = False
+        rInput[i] = (False, i)
     #---end for---
 
     print(rInput)
 
     for e in pygame.event.get() :
         if e.type == QUIT:
-            rInput[e.type] = True
+            rInput[e.type] = (True, e.type)
         elif e.type == KEYDOWN:
             if e.key in inputs.keys():
-                rInput[e.key] = True
+                rInput[e.key] = (True, e.key)
             else:
-                rInput[e.key] = False
+                rInput[e.key] = (False, e.key)
             #---end if---
         #---end if---
     #---end for---
@@ -73,3 +73,10 @@ def inputReader(inputs):
 
     return fInput
 #---end inputReader---
+
+def inputUpkeep(key):
+    for e in pygame.event.get():
+        if e.type == KEYUP and e.key == key:
+            return False
+    return True
+#---end inputUpkeep---

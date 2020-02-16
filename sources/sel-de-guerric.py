@@ -17,7 +17,6 @@ window = pygame.display.set_mode((width, height))
 """
 TILE_SIZE = int(height/9)
 
-
 #------keyboard------
 keyMap = {}
 try:
@@ -42,8 +41,6 @@ except FileNotFoundError as identifier:
         12 : "quit"}
 #---end try---
 
-#---Cinematic---
-
 #---Main Loop---
 lauched = True
 while lauched:
@@ -51,14 +48,13 @@ while lauched:
     game = True
     while game:
         inputs = f.inputReader(keyMap)
-        print(inputs)
-        if inputs["pause"]:
+        if inputs["pause"][0]:
             game = False
-        elif inputs["quit"]:
+        elif inputs["quit"][0]:
             game = False
             lauched = False
+        #---end if---
     #---end second loop---
-    
     lauched = False
 #---end Main loop---
 
