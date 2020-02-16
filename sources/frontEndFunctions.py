@@ -50,8 +50,6 @@ def inputReader(inputs):
         rInput[i] = (False, i)
     #---end for---
 
-    print(rInput)
-
     for e in pygame.event.get() :
         if e.type == QUIT:
             rInput[e.type] = (True, e.type)
@@ -63,9 +61,6 @@ def inputReader(inputs):
             #---end if---
         #---end if---
     #---end for---
-
-    print(rInput)
-    print(inputs)
 
     for i, j in inputs.items():
         fInput[j] = rInput[i]

@@ -29,7 +29,7 @@ try:
         contents[i][1] = int(contents[i][1])
         keyMap[contents[i][1]] = contents[i][0]
     #---end for---
-except FileNotFoundError as identifier:
+except FileNotFoundError or IndexError as identifier:
     print(identifier, "default qwerty mode will be apply")
     keyMap = {119 : "up",
         115 : "down",
