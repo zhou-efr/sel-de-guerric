@@ -19,14 +19,13 @@ import pygame
 from pygame.locals import *
 import loaders as ld
 
-def printer(testIDE, window, xWorld = 0, yWorld = 0): #WIP
+def printer(testIDE, window, sizeOfTiles, xWorld = 0, yWorld = 0): #WIP
     pygame.init()
-    sizeOfTiles = 50
 
     #---backend elements---
     tab1 = testIDE.getLevel().getBoard().getArray()
-
-    wallpaper = pygame.image.load(testIDE.getLevel().getBoard().getBackAdress()).convert()
+    windowRect = window.get_rect()
+    wallpaper = pygame.transform.scale(pygame.image.load(testIDE.getLevel().getBoard().getBackAdress()).convert(), windowRect.bottomright)
     window.blit(wallpaper, (0,0))
     
     for i in range(len(tab1)):

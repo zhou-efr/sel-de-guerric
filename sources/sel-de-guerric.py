@@ -1,6 +1,8 @@
 import time
 import pygame
 import frontEndFunctions as f
+import objects as o
+import loaders as l
 
 #---Initialazation---
 #------pygame------
@@ -29,7 +31,7 @@ try:
         contents[i][1] = int(contents[i][1])
         keyMap[contents[i][1]] = contents[i][0]
     #---end for---
-except FileNotFoundError or IndexError as identifier:
+except (FileNotFoundError, IndexError) as identifier:
     print(identifier, "default qwerty mode will be apply")
     keyMap = {119 : "up",
         115 : "down",
@@ -41,21 +43,31 @@ except FileNotFoundError or IndexError as identifier:
         12 : "quit"}
 #---end try---
 
+#------game------
+loaded = l.environmentLoader(1, 2, 11)
+clock = 0 #in ms
+test = o.player()
+
 #---Main Loop---
 lauched = True
 while lauched:
+    lauched = False
     #---Second Loop---
     game = True
     while game:
+        f.printer(loaded, window, TILE_SIZE)
         inputs = f.inputReader(keyMap)
         if inputs["pause"][0]:
             game = False
         elif inputs["quit"][0]:
             game = False
             lauched = False
+        clock += 1
+        window.blit(test.getPicture(clock), (int(test.getPosition()[0]*TILE_SIZE),int(test.getPosition()[1]*TILE_SIZE)))
+        time.sleep(0.05)
+        pygame.display.flip()
         #---end if---
     #---end second loop---
-    lauched = False
 #---end Main loop---
 
 #---end---

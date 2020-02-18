@@ -56,5 +56,5 @@ os.system("pause")
 
 pygame.quit()
 """
-var = input("blah")
+var = eval("Test")
 print(var)
