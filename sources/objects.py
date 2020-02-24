@@ -36,14 +36,8 @@ class entities (item):
 
     def __init__(self, keyChar, environment):
         super().__init__(keyChar, environment)
-    #---end init---
-#---end entities---
-
-class player (entities):
-
-    def __init__(self):
-        self.spriteAdress = "./files/player/sprite/sprt"
-        self.info = "./files/player/p.dat"
+        self.info = "./files/environment" + str(environment)+"/" + keyChar + "/" + keyChar + ".dat"
+        self.folder = "./files/environment" + str(environment)+"/" + keyChar + "/"
         self.data = {}
         self.sprite = []
         self.internalClock = -1
@@ -55,8 +49,30 @@ class player (entities):
 
             for i in range(len(contents)):
                 contents[i] = contents[i].split()
+                subContents = []
                 try:
                     contents[i][1] = eval(contents[i][1])
+                    if contents[i][1] < 0:
+                        contents[i][1] = {}
+                        try:
+                            root = self.folder + "sprite/" + contents[i][0]  + "/" + contents[i][0] + ".dat"
+                            with open(root , 'r') as target:
+                                subContents = target.read().split("\n")
+                            #---end with---
+
+                            for j in range(len(contents)):
+                                subContents[j] = subContents[j].split()
+                                try:
+                                    subContents[j][1] = eval(subContents[j][1])
+                                except NameError as identifier:
+                                    subContents[i][1] = str(subContents[i][1])
+                                #---end try---
+                                contents[i][1][subContents[j][0]] = subContents[j][1]
+                            #---end for---
+                        except (FileNotFoundError, IndexError) as identifier:
+                            print(identifier)
+                        #---end try---
+                    #---end if---
                 except NameError as identifier:
                     contents[i][1] = str(contents[i][1])
                 self.data[contents[i][0]] = contents[i][1]
@@ -65,26 +81,58 @@ class player (entities):
             print(identifier)
             self.data = {"sprite" : 1, "x" : 2.0, "y" : 2.0}
         #---end try---
-
-        for i in range(self.data["sprite"]):
-            self.sprite.append(pygame.image.load(self.spriteAdress + str(i) + ".png"))
-        #---end for---
         
-
-
+        self.updateSprite()
     #---end init---
 
-    def getPicture(self, clock = 0):
-        if (clock%(self.data["sprite"]) == 0):
+    def internalClockUpdate(self):
+        if (self.internalClock >= (self.data[self.data["state"]]["index"] - 1)):
             self.internalClock = -1
         #---end if---
-
         self.internalClock += 1
+    #--end iternalClockUpdate---
 
+    def getPicture(self):
+        self.internalClockUpdate()
         return self.sprite[self.internalClock]
     #---end getPicture---
 
     def getPosition(self):
         return self.data["x"], self.data["y"]
-    
-#---end player---
+    #---end getPosition---
+
+    def updateSprite(self):
+        for i in range(self.data[self.data["state"]]["index"]):
+            self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
+        #---end for---
+    #---end updateSprite---
+
+    def changeState(self, dead = 0):
+        if dead:
+            self.data["state"] = "dead"
+        #---end if---
+        
+        self.updateSprite()
+    #---end changeState---
+#---end entities---
+
+class player (entities):
+
+    def __init__(self):
+        super().__init__('p', 0)
+    #---end init---
+
+    def changeState(self, dead = 0):
+        if self.data["state"] == "bouncing" :
+            self.data["state"] = "static"
+        elif self.data["state"] == "static":
+            self.data["state"] = "bouncing"
+        #---end if---
+        
+        if dead:
+            self.data["state"] = "dead"
+        #---end if---
+        
+        self.updateSprite()
+    #---end changeState---
+#---end player---  

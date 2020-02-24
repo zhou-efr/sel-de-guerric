@@ -3,7 +3,7 @@
     it's the file containing all the loaders class and their needed functions
 
 """
-import objects as obj
+import objects as o
 
 class environmentLoader:
     """environment loader is the class which load and keep all the needed features communal to all the environment
@@ -38,7 +38,7 @@ class environmentLoader:
         #---end try---
         
         for i in range(len(self.inventory)):
-            self.inventory[i] = obj.item(self.inventory[i], self.environment)
+            self.inventory[i] = o.item(self.inventory[i], self.environment)
         #---end for---
     #---end initInventory---
 
@@ -65,7 +65,7 @@ class environmentLoader:
                 return i
             #---end if---
         #---end for---
-        return obj.item('na', self.environment)
+        return o.item('na', self.environment)
 
     def getEnvironment(self):
         return self.environment

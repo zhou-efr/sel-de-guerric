@@ -37,7 +37,7 @@ except (FileNotFoundError, IndexError) as identifier:
         115 : "down",
         100 : "right",
         97 : "left",
-        305 : "action1",
+        304 : "action1",
         32 : "action2",
         27 : "pause",
         12 : "quit"}
@@ -59,11 +59,13 @@ while lauched:
         inputs = f.inputReader(keyMap)
         if inputs["pause"][0]:
             game = False
+        elif inputs["action1"][0]:
+            test.changeState()
         elif inputs["quit"][0]:
             game = False
             lauched = False
         clock += 1
-        window.blit(test.getPicture(clock), (int(test.getPosition()[0]*TILE_SIZE),int(test.getPosition()[1]*TILE_SIZE)))
+        window.blit(test.getPicture(), (int(test.getPosition()[0]*TILE_SIZE),int(test.getPosition()[1]*TILE_SIZE)))
         time.sleep(0.05)
         pygame.display.flip()
         #---end if---
