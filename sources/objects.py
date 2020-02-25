@@ -47,7 +47,7 @@ class entities (item):
             self.data = l.fileLoader(self.folder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
             print(identifier)
-            self.data = {"sprite" : 1, "x" : 2.0, "y" : 2.0}
+            self.data = {"sprite" : 1, "x" : 2.0, "y" : 2.0}# faut update le default case mais j'ai la flemme
         #---end try---
         self.data["newState"] = None
         self.updateSprite()
