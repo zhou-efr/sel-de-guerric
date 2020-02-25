@@ -264,3 +264,25 @@ def strToArray(text):
     #---end for---
     return arrayProduce
 #--end strToArray---
+
+def fileLoader(folderRoot, file):
+    data = {}
+    contents = []
+    root = folderRoot + file
+    with open(root, 'r') as target:
+        contents = target.read().split("\n")
+    #---end with---
+    for i in range(len(contents)):
+        contents[i] = contents[i].split()
+        try:
+            contents[i][1] = eval(contents[i][1])
+        except NameError:
+            contents[i][1] = str(contents[i][1])
+            if(contents[i][1] == "subDictionnary"):
+                contents[i][1] = fileLoader(folderRoot, contents[i][0] + ".dat")
+            #---end if---
+        #---end try---
+        data[contents[i][0]] = contents[i][1]
+    #---end for---
+    return data
+#---end fileLoader---

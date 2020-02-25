@@ -1,5 +1,5 @@
 x 2.0
 y 2.0
-bouncing -1
-static -1
+bouncing subDictionnary
+static subDictionnary
 state bouncing

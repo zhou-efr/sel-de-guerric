@@ -6,6 +6,7 @@
 author : la tribut des zhou
 """
 import pygame
+import loaders as l
 
 pygame.init()
 
@@ -36,7 +37,6 @@ class entities (item):
 
     def __init__(self, keyChar, environment):
         super().__init__(keyChar, environment)
-        self.info = "./files/environment" + str(environment)+"/" + keyChar + "/" + keyChar + ".dat"
         self.folder = "./files/environment" + str(environment)+"/" + keyChar + "/"
         self.data = {}
         self.sprite = []
@@ -44,40 +44,7 @@ class entities (item):
         self.changed = False
         contents = []
         try:
-            with open(self.info, 'r') as target:
-                contents = target.read().split("\n")
-            #---end with---
-            for i in range(len(contents)):
-                contents[i] = contents[i].split()
-                try:
-                    contents[i][1] = eval(contents[i][1])
-                    if contents[i][1] < 0:
-                        contents[i][1] = {}
-                        subContents = []
-                        try:
-                            root = self.folder + "sprite/" + contents[i][0]  + "/" + contents[i][0] + ".dat"
-                            with open(root , 'r') as target:
-                                subContents = target.read().split("\n")
-                            #---end with---
-
-                            for j in range(len(subContents)):
-                                subContents[j] = subContents[j].split()
-                                try:
-                                    subContents[j][1] = eval(subContents[j][1])
-                                except NameError as identifier:
-                                    subContents[j][1] = str(subContents[j][1])
-                                #---end try---
-                                contents[i][1][subContents[j][0]] = subContents[j][1]
-                            #---end for---
-                        except (FileNotFoundError, IndexError) as identifier:
-                            print(identifier)
-                        #---end try---
-                    #---end if---
-                except NameError as identifier:
-                    contents[i][1] = str(contents[i][1])
-                self.data[contents[i][0]] = contents[i][1]
-                #---end try---
-            #---end for---
+            self.data = l.fileLoader(self.folder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
             print(identifier)
             self.data = {"sprite" : 1, "x" : 2.0, "y" : 2.0}
