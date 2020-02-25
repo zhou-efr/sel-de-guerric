@@ -109,8 +109,6 @@ class entities (item):
 
     def updateSprite(self):
         self.sprite = []
-        print(self.data)
-        print(self.internalClock)
         for i in range(self.data[self.data["state"]]["index"]):
             self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
         #---end for---
