@@ -56,5 +56,5 @@ os.system("pause")
 
 pygame.quit()
 """
-var = eval((1, 2))
-print(var)
+
+print(type(var))
