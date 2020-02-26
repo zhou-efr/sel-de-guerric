@@ -20,6 +20,7 @@ class item:
         self.keyChar = keyChar
         self.pictureAdress = "./files/environment" + str( environment) + "/" + keyChar + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
+        self.position = {"x1" : 0, "y1" : 0, "x2" : 0, "y2" : 0}
     #---end init---
 
     #---beginning accessors
@@ -31,6 +32,9 @@ class item:
     
     def getPicture(self):
         return self.picture
+
+    def getPosition(self):
+        return self.position
     #---end accessors---
 
 class entities (item):
@@ -42,6 +46,8 @@ class entities (item):
         self.sprite = []
         self.internalClock = -1
         self.changed = False
+        self.speed = 0
+        self.acceleration = 0
         contents = []
         try:
             self.data = l.fileLoader(self.folder, str(keyChar) + ".dat")
@@ -87,6 +93,14 @@ class entities (item):
         #---end if---
         self.changed = True
     #---end changeState---
+
+    #---beginning accessors---
+    def getSpeed(self):
+        return self.speed
+    
+    def getAcceleration(self):
+        return self.acceleration
+    #---end accessors---
 #---end entities---
 
 class player (entities):

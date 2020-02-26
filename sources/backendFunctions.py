@@ -4,6 +4,8 @@ Those Functions are used to load the level physic, and to update it over the tim
 author : la tribut des zhou
 """
 
+import objects as o
+
 def HitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
     #Load the fill
     try:
@@ -59,9 +61,64 @@ def HitboxesFileReader(adress):  #Return the list of the objects with their type
         return hu
     except (FileNotFoundError, IndexError) as identifier:
         print("error : ", identifier)
-        return 0
+        return []
     #---end try---
 #---end HitboxesFileReader---
+
+def ObjectIddentifier(l):
+    obj = []
+    ent = []
+    #Iddentify if the object is an object or an entitie
+    for i in l:
+        if i[0] == "p" or i[0] == "e":
+            ent.append(i)
+        else:
+            obj.append(i)
+        #---end if---
+    #---end for
+    return ent, obj
+#---end ObjectIddentifier---
+
+def SimpleList(adress):
+    return ObjectIddentifier(HitboxesFileReader(adress))
+#---end SimpleList---
+
+def List(adress, environment):
+    #lists to fill
+    player = []
+    entities = []
+    walls = []
+    exit = []
+    #fill the lists
+    for i in HitboxesFileReader(adress):
+        if i[0] == "p":
+            player.append(o.player("p", environment))
+            player[-1].position["x1"] = i[1]
+            player[-1].position["x2"] = i[3]
+            player[-1].position["y1"] = i[2]
+            player[-1].position["y2"] = i[4]
+        elif i[0] == "e":
+            entities.append(o.entities("e", environment))
+            entities[-1].position["x1"] = i[1]
+            entities[-1].position["x2"] = i[3]
+            entities[-1].position["y1"] = i[2]
+            entities[-1].position["y2"] = i[4]
+        elif i[0] == "s":
+            exit.append(o.item("s", environment))
+            exit[-1].position["x1"] = i[1]
+            exit[-1].position["x2"] = i[3]
+            exit[-1].position["y1"] = i[2]
+            exit[-1].position["y2"] = i[4]
+        else:
+            walls.append(o.item(i[0], environment))
+            walls[-1].position["x1"] = i[1]
+            walls[-1].position["x2"] = i[3]
+            walls[-1].position["y1"] = i[2]
+            walls[-1].position["y2"] = i[4]
+        #---end if---
+    #---end for---
+    return player, entities, exit, walls
+#---end List---
 
 def Acceleration(entities, object, world):
     #Check the world's acceleration's property

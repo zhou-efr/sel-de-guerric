@@ -4,6 +4,7 @@
 
 """
 import objects as o
+import backendFunctions as b
 
 class environmentLoader:
     """environment loader is the class which load and keep all the needed features communal to all the environment
@@ -98,6 +99,9 @@ class levelLoader:
         self.levelStructure = []
         self.position = area #11 being the starting board
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
+        self.boxesadress = self.folder + "/boxes" + str(area)
+        self.simplelist = b.SimpleList(self.boxesadress)
+        self.list = b.List(self.boxesadress, environment)
 
         #initialazation
         self.initStructure()
@@ -168,6 +172,13 @@ class levelLoader:
 
     def getEnvironment(self):
         return self.environment
+
+    def getSimpleList(self):
+        return self.simplelist
+
+    def getList(self):
+        return self.list
+    #---end of accessors---
 #---end levelLoader---       
 
 class areaLoader:
