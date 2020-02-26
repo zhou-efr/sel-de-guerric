@@ -115,7 +115,7 @@ def List(adress, environment):
     return player, entities, exit, walls
 #---end List---
 
-def physicLoader(id,distance,dtime,speed): #give the influence of sopthing on the acceleration of an other
+def physicLoader(id,distance,dtime,speed): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
         influence = {"x" : -speed*0.05, "y" : -1} #natural decrease of speed and gravity
@@ -142,16 +142,22 @@ def physicLoader(id,distance,dtime,speed): #give the influence of sopthing on th
 def Acceleration(ent, obj, world):
     #Execute the influence of the world on the entities
     for e in ent:
-        worldinfluence = physicLoader("world" + str(world),0,0,e.speed)
-        e.acceleration += worldinfluence
+        worldinfluence = physicLoader("world" + str(world),0,0,((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2))
+        e.acceleration["x"] += worldinfluence["x"]
+        e.acceleration["y"] += worldinfluence["y"]
     #---end for---
     #Check each entities/object and execute their influence on each entities 
     for ele in ent+obj:
         for e in ent:
             distance = ((ele.position["x1"]-e.position["x1"])**2 + (ele.position["y1"]-e.position["y1"])**2)**(1/2)
-            speed = e.speed - ele.speed
-            influence = physicLoader(ele.keychar,distance,0,speed)
-            e.acceleration += influence
+            if ele in ent:
+                speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2) - ((ele.speed["x"])**2 + (ele.speed["y"])**2)**(1/2)
+            else:
+                speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2)
+            #---end if---
+            influence = physicLoader(ele.keyChar,distance,0,speed)
+            e.acceleration["x"] += influence["x"]
+            e.acceleration["y"] += influence["y"]
         #---end for---
     #---end for---
     return ent
@@ -161,9 +167,10 @@ def Speed(ent):
     #Check each acceleration of the entities
     for e in ent:
         #Add it to the speed
-        e.speed += e.acceleration
+        e.speed["x"] += e.acceleration["x"]
+        e.speed["y"] += e.acceleration["y"]
         #Remove the Acceleration
-        e.acceleration = 0
+        e.acceleration = {"x" : 0, "y" : 0}
     #---end for---
     return ent
 #---end Speed---

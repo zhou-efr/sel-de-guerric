@@ -46,8 +46,8 @@ class entities (item):
         self.sprite = []
         self.internalClock = -1
         self.changed = False
-        self.speed = 0
-        self.acceleration = 0
+        self.speed = {"x" : 0,"y" : 0}
+        self.acceleration = {"x" : 0,"y" : 0}
         contents = []
         try:
             self.data = l.fileLoader(self.folder, str(keyChar) + ".dat")
