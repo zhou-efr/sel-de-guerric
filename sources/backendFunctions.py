@@ -41,7 +41,7 @@ def HitboxesFileReader(adress):  #Return the list of the objects with their type
             
         #Compact column object
         hu=[]
-        for i in range(l-1):
+        for i in range(l):
             for o in obj[i]:
                 hu.append(o)
                 j = 0
@@ -88,28 +88,28 @@ def List(adress, environment):
     for i in HitboxesFileReader(adress):
         if i[0] == "p":
             player.append(o.player())
-            player[-1].position["x1"] = i[1]
-            player[-1].position["x2"] = i[3]
-            player[-1].position["y1"] = i[2]
-            player[-1].position["y2"] = i[4]
+            player[-1].position["y1"] = i[1]
+            player[-1].position["y2"] = i[3]
+            player[-1].position["x1"] = i[2]
+            player[-1].position["x2"] = i[4]
         elif i[0] == "e":
             entities.append(o.entities("e", environment))
-            entities[-1].position["x1"] = i[1]
-            entities[-1].position["x2"] = i[3]
-            entities[-1].position["y1"] = i[2]
-            entities[-1].position["y2"] = i[4]
+            entities[-1].position["y1"] = i[1]
+            entities[-1].position["y2"] = i[3]
+            entities[-1].position["x1"] = i[2]
+            entities[-1].position["x2"] = i[4]
         elif i[0] == "s":
             exit.append(o.item("s", environment))
-            exit[-1].position["x1"] = i[1]
-            exit[-1].position["x2"] = i[3]
-            exit[-1].position["y1"] = i[2]
-            exit[-1].position["y2"] = i[4]
+            exit[-1].position["y1"] = i[1]
+            exit[-1].position["y2"] = i[3]
+            exit[-1].position["x1"] = i[2]
+            exit[-1].position["x2"] = i[4]
         else:
             walls.append(o.item(i[0], environment))
-            walls[-1].position["x1"] = i[1]
-            walls[-1].position["x2"] = i[3]
-            walls[-1].position["y1"] = i[2]
-            walls[-1].position["y2"] = i[4]
+            walls[-1].position["y1"] = i[1]
+            walls[-1].position["y2"] = i[3]
+            walls[-1].position["x1"] = i[2]
+            walls[-1].position["x2"] = i[4]
         #---end if---
     #---end for---
     return player, entities, exit, walls
