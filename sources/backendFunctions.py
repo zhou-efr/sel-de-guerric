@@ -5,6 +5,7 @@ author : la tribut des zhou
 """
 
 import objects as o
+import math as m
 
 def HitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
     #Load the fill
@@ -119,6 +120,30 @@ def List(adress, environment):
     #---end for---
     return player, entities, exit, walls
 #---end List---
+
+def physicLoader(id,distance,dtime,speed): #give the influence of sopthing on the acceleration of an other
+    influence = {"x" : 0, "y" : 0}
+    if id == "word1":
+        influence = {"x" : -speed*0.05, "y" : -1} #natural decrease of speed and gravity
+    elif id == "player_jump":
+        influence["y"] = 5
+    elif id == "player_right":
+        if dtime <= 1:
+            n = abs(-dtime^3+2*dtime)
+        else:
+            n = abs(1/dtime)
+        #---endif---
+        influence["x"] = -m.log(m.log(n+1)+1)
+    elif id == "player_left":
+        if dtime <= 1:
+            n = abs(-dtime^3+2*dtime)
+        else:
+            n = abs(1/dtime)
+        #---endif---
+        influence["x"] = m.log(m.log(n+1)+1)
+    #---end if---
+    return influence
+#---end physicLoader---
 
 def Acceleration(entities, object, world):
     #Check the world's acceleration's property
