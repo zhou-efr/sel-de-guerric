@@ -66,22 +66,16 @@ def HitboxesFileReader(adress):  #Return the list of the objects with their type
     #---end try---
 #---end HitboxesFileReader---
 
-def ObjectIddentifier(l):
-    obj = []
+def SimpleList(adress, environment):
     ent = []
-    #Iddentify if the object is an object or an entitie
-    for i in l:
-        if i[0] == "p" or i[0] == "e":
-            ent.append(i)
-        else:
-            obj.append(i)
-        #---end if---
-    #---end for
+    obj = []
+    for e in List(adress, environment)[:1]:
+        ent += e
+    #---endfor---
+    for e in List(adress, environment)[2:]:
+        obj += e
+    #---endfor---
     return ent, obj
-#---end ObjectIddentifier---
-
-def SimpleList(adress):
-    return ObjectIddentifier(HitboxesFileReader(adress))
 #---end SimpleList---
 
 def List(adress, environment):
@@ -123,7 +117,7 @@ def List(adress, environment):
 
 def physicLoader(id,distance,dtime,speed): #give the influence of sopthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
-    if id == "word1":
+    if id == "world1":
         influence = {"x" : -speed*0.05, "y" : -1} #natural decrease of speed and gravity
     elif id == "player_jump":
         influence["y"] = 5
@@ -145,19 +139,33 @@ def physicLoader(id,distance,dtime,speed): #give the influence of sopthing on th
     return influence
 #---end physicLoader---
 
-def Acceleration(entities, object, world):
-    #Check the world's acceleration's property
-    #Execute its influence on the entities
-    #Check each entities/object 
-    #Execute their influences on the entities
-    return 0
+def Acceleration(ent, obj, world):
+    #Execute the influence of the world on the entities
+    for e in ent:
+        worldinfluence = physicLoader("world" + str(world),0,0,e.speed)
+        e.acceleration += worldinfluence
+    #---end for---
+    #Check each entities/object and execute their influence on each entities 
+    for ele in ent+obj:
+        for e in ent:
+            distance = ((ele.position["x1"]-e.position["x1"])**2 + (ele.position["y1"]-e.position["y1"])**2)**(1/2)
+            speed = e.speed - ele.speed
+            influence = physicLoader(ele.keychar,distance,0,speed)
+            e.acceleration += influence
+        #---end for---
+    #---end for---
+    return ent
 #---end Acceleration---
 
-def Speed(entities, object):
+def Speed(ent):
     #Check each acceleration of the entities
-    #Add it to the speed
-    #Remove the Acceleration
-    return 0
+    for e in ent:
+        #Add it to the speed
+        e.speed += e.acceleration
+        #Remove the Acceleration
+        e.acceleration = 0
+    #---end for---
+    return ent
 #---end Speed---
 
 def Moove(entities, object):
