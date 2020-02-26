@@ -87,7 +87,7 @@ def List(adress, environment):
     #fill the lists
     for i in HitboxesFileReader(adress):
         if i[0] == "p":
-            player.append(o.player("p", environment))
+            player.append(o.player())
             player[-1].position["x1"] = i[1]
             player[-1].position["x2"] = i[3]
             player[-1].position["y1"] = i[2]
