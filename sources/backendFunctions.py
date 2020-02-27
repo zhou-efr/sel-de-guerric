@@ -175,8 +175,113 @@ def Speed(ent):
     return ent
 #---end Speed---
 
-def Moove(entities, object):
-    #Check the hitboxes of a travel
-    #Execute the travel 
-    return 0
-#---end Moove---
+def HorizontalHit(ent, obj):
+    for e in ent:
+        hitpoint = []
+        coef = e.speed["y"]/e.speed["x"]
+        dx = e.position["x2"]-e.position["x1"] #size x of the entitie
+        for hit in obj+ent:
+            col = True
+            if e.speed["x"] <= hit.position["x2"]-e.position["x1"]: 
+                ens = {"y1" : e.position["y1"] + coef*(hit.position["x2"]-e.position["x1"]), "y2" : e.position["y1"] + coef*(hit.position["x2"]-e.position["x1"]), "x" : hit.position["x2"]}
+                i = 0
+            elif e.speed["x"] >= hit.position["x1"]-e.position["x2"]:
+                ens = {"y1" : e.position["y1"] + coef*(hit.position["x1"]-e.position["x2"]), "y2":e.position["y1"] + coef*(hit.position["x1"]-e.position["x2"]), "x" : hit.position["x1"]}
+                i = 1
+            else:
+                col = False
+            #---end if---
+            if col and (ens["y1"] < hit.position["y1"] < ens["y2"] or hit.position["y1"] < ens["y1"] < hit.position["y2"]):
+                hitpoint.append([i,ens])
+            #---end if---
+        #---end for---
+        hit = []
+        for h in hitpoint:
+            if hit == []:
+                hit = h
+            elif ((h[1]["y1"]**2 + h[1]["y2"]**2)**(1/2) < (hit[1]["y1"]**2 + hit[1]["y2"]**2)**(1/2)):
+                hit = h
+            #---end if---
+        #---end for---
+
+        if hit != []:
+            if hit[0] == 0:
+                e.speed["x"] = 0
+                e.speed["y"] -= hit[1]["y1"] - e.position["y1"]
+                e.position["x1"] = hit[1]["x"]
+                e.position["x2"] = hit[1]["x"] + dx
+                e.position["y1"] = hit[1]["y1"]
+                e.position["y2"] = hit[1]["y2"]
+            else:
+                e.speed["x"] = 0
+                e.speed["y"] -= hit[1]["y1"] - e.position["y1"]
+                e.position["x1"] = hit[1]["x"] - dx
+                e.position["x2"] = hit[1]["x"]
+                e.position["y1"] = hit[1]["y1"]
+                e.position["y2"] = hit[1]["y2"]
+            #---end if---
+        #---end if---
+    #---end for---
+
+    return ent
+#---end HorizontalHit---
+
+def VerticalHit(ent, obj):
+    for e in ent:
+        hitpoint = []
+        coef = e.speed["x"]/e.speed["y"]
+        dy = e.position["y2"]-e.position["y1"] #size y of the entitie
+        for hit in obj+ent:
+            col = True
+            if e.speed["y"] <= hit.position["y2"]-e.position["y1"]: 
+                ens = {"x1" : e.position["x1"] + coef*(hit.position["y2"]-e.position["y1"]), "x2" : e.position["x1"] + coef*(hit.position["y2"]-e.position["y1"]), "y" : hit.position["y2"]}
+                i = 0
+            elif e.speed["y"] >= hit.position["y1"]-e.position["y2"]:
+                ens = {"x1" : e.position["x1"] + coef*(hit.position["y1"]-e.position["y2"]), "x2":e.position["x1"] + coef*(hit.position["y1"]-e.position["y2"]), "y" : hit.position["y1"]}
+                i = 1
+            else:
+                col = False
+            #---end if---
+            if col and (ens["x1"] < hit.position["x1"] < ens["x2"] or hit.position["x1"] < ens["x1"] < hit.position["x2"]):
+                hitpoint.append([i,ens])
+            #---end if---
+        #---end for---
+        hit = []
+        for h in hitpoint:
+            if hit == []:
+                hit = h
+            elif ((h[1]["x1"]**2 + h[1]["x2"]**2)**(1/2) < (hit[1]["x1"]**2 + hit[1]["x2"]**2)**(1/2)):
+                hit = h
+            #---end if---
+        #---end for---
+
+        if hit != []:
+            if hit[0] == 0:
+                e.speed["y"] = 0
+                e.speed["x"] -= hit[1]["x1"] - e.position["x1"]
+                e.position["y1"] = hit[1]["y"]
+                e.position["y2"] = hit[1]["y"] + dy
+                e.position["x1"] = hit[1]["x1"]
+                e.position["x2"] = hit[1]["x2"]
+            else:
+                e.speed["y"] = 0
+                e.speed["x"] -= hit[1]["x1"] - e.position["x1"]
+                e.position["y1"] = hit[1]["y"] - dy
+                e.position["y2"] = hit[1]["y"]
+                e.position["x1"] = hit[1]["x1"]
+                e.position["x2"] = hit[1]["x2"]
+            #---end if---
+        #---end if---
+    #---end for---
+
+    return ent
+#---end VerticalHit---
+
+def Move(ent, obj):
+    HorizontalHit(ent, obj)
+    VerticalHit(ent, obj)
+    for e in ent:
+        e.position["x"] += e.speed["x"]
+        e.position["y"] += e.speed["y"]
+    #---end for---
+#---end move---
