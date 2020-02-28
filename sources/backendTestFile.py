@@ -35,3 +35,16 @@ b.Speed(lists[0]+lists[1])
 
 8/0 #Same
 '''
+
+#Test for Move
+
+level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
+lists = level.list
+for i in range(5):
+    print(lists[1][0].position)
+    b.Acceleration(lists[0]+lists[1], lists[2]+lists[3], 1)
+    b.Speed(lists[0]+lists[1])
+    b.Move(lists[0]+lists[1], lists[2]+lists[3])
+#---end for---
+
+#8/0 #The error allow to see the variables and debug easly on Visual Code
