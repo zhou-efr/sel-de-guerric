@@ -19,7 +19,7 @@ class environmentLoader:
         self.environment = environment
         self.currentLevel = levelLoader(environment, level, area)
         self.inventory = []
-        self.folder = "./files/environment" + str( environment) 
+        self.folder = "./files/environment" + str(environment) 
         self.invotoryAdress = self.folder + "/inventory.dat"
 
         #initialazation
@@ -93,7 +93,7 @@ class levelLoader:
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "./files/environment" + str( environment) + "/level" + str( level)
+        self.folder = "./files/environment" + str(environment) + "/level" + str(level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
