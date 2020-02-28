@@ -217,7 +217,7 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "./files/environment" + str( environment) + "/level" + str( level)
+        self.adress = "./files/environment" + str(environment) + "/level" + str( level)
         self.boardAdress = str(self.adress) + "/board" + str(self.board) + ".dat"
         self.backAdress = str(self.adress) + "/back" + str(self.board) + ".png"
         self.area = []
