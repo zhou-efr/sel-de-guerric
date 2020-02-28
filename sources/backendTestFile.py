@@ -37,7 +37,7 @@ b.Speed(lists[0]+lists[1])
 '''
 
 #Test for Move
-
+'''
 level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
 lists = level.list
 for i in range(5):
@@ -48,3 +48,12 @@ for i in range(5):
 #---end for---
 
 #8/0 #The error allow to see the variables and debug easly on Visual Code
+'''
+
+#Test for simple list
+'''
+level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
+print(level.simpleList)
+
+8/0
+'''

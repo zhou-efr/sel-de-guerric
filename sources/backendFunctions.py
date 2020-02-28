@@ -70,13 +70,13 @@ def HitboxesFileReader(adress):  #Return the list of the objects with their type
     #---end try---
 #---end HitboxesFileReader---
 
-def SimpleList(adress, environment):
+def SimpleList(level):
     ent = []
     obj = []
-    for e in List(adress, environment)[:1]:
+    for e in level.list[:2]:
         ent += e
     #---endfor---
-    for e in List(adress, environment)[2:]:
+    for e in level.list[2:]:
         obj += e
     #---endfor---
     return ent, obj

@@ -100,8 +100,8 @@ class levelLoader:
         self.position = area #11 being the starting board
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
         self.boxesadress = self.folder + "/boxes" + str(area) + ".dat"
-        self.simplelist = b.SimpleList(self.boxesadress, environment)
         self.list = b.List(self.boxesadress, environment)
+        self.simpleList = b.SimpleList(self)
 
         #initialazation
         self.initStructure()
