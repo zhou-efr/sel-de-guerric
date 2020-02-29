@@ -20,8 +20,13 @@ class item:
         self.keyChar = keyChar
         self.pictureAdress = "./files/environment" + str( environment) + "/" + keyChar + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
+        self.updatePictureSize()
         self.position = {"x1" : 0, "y1" : 0, "x2" : 0, "y2" : 0}
     #---end init---
+
+    def updatePictureSize(self, size = 120):
+        self.picture = pygame.transform.scale(self.picture.convert_alpha(), (size, size))
+    #---end updatePictureSize---
 
     #---beginning accessors
     def getKeyChar(self):
@@ -48,7 +53,6 @@ class entities (item):
         self.changed = False
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
-        contents = []
         try:
             self.data = l.fileLoader(self.folder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
@@ -76,6 +80,12 @@ class entities (item):
         
     #---end getPicture---
 
+    def updatePictureSize(self, size = 120):
+        for i in range(len(self.sprite)):
+            self.sprite[i] = pygame.transform.scale(self.sprite[i].convert_alpha(), (size, size))
+        #---end for---
+    #---end updatePictureSize---
+
     def getPosition(self):
         return self.data["x"], self.data["y"]
     #---end getPosition---
@@ -85,6 +95,7 @@ class entities (item):
         for i in range(self.data[self.data["state"]]["index"]):
             self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
         #---end for---
+        self.updatePictureSize()
     #---end updateSprite---
 
     def changeState(self, dead = 0):

@@ -18,9 +18,9 @@ class environmentLoader:
         #attributs settings
         self.environment = environment
         self.currentLevel = levelLoader(environment, level, area)
-        self.inventory = []
-        self.folder = "./files/environment" + str(environment) 
-        self.invotoryAdress = self.folder + "/inventory.dat"
+        self.inventory = {}
+        self.folder = "./files/environment" + str(environment) + "/"
+        self.inventoryFile = "inventory.dat"
 
         #initialazation
         self.initInventory()
@@ -28,28 +28,22 @@ class environmentLoader:
 
     def initInventory(self):
         #inventory initialazation
-        contents = None
-        try:
-            with open(self.invotoryAdress, 'r', encoding='utf-8') as file:
-                contents = file.read().split(' ')
-            #---end with---
-            self.inventory = contents
-        except FileNotFoundError as er:
-            print("file not found ", er)
-        #---end try---
-        
-        for i in range(len(self.inventory)):
-            self.inventory[i] = o.item(self.inventory[i], self.environment)
-        #---end for---
+        self.inventory = fileLoader(self.folder, self.inventoryFile)
     #---end initInventory---
 
     def nextLevel(self):
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def sizeUpdate(self, size):
+        for i in self.inventory:
+            i[1].updatePictureSize(size)
+        #---end for---
+    #---end nextLevel---
+
     #---Beginning accessor---
     def getInventoryAdress(self):
-        return self.invotoryAdress
+        return self.folder + self.inventoryFile
 
     def getFolder(self):
         return self.folder
@@ -61,11 +55,9 @@ class environmentLoader:
         return self.inventory
 
     def getItem(self, keyChar):
-        for i in self.inventory:
-            if (i.getKeyChar() == keyChar):
-                return i
-            #---end if---
-        #---end for---
+        if keyChar in self.inventory.keys():
+            return self.inventory[keyChar]
+        #---end if---
         return o.item('na', self.environment)
 
     def getEnvironment(self):

@@ -1,1 +1,6 @@
-( ) [ ] b t
+( o.item("(",1)
+) o.item(")",1)
+[ o.item("[",1)
+] o.item("]",1)
+b o.item("b",1)
+t o.item("t",1)

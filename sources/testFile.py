@@ -57,4 +57,8 @@ os.system("pause")
 pygame.quit()
 """
 
-print(type(var))
+"""import objects as o
+
+test = eval('o.item("(", 1)')
+print(type(test), test.picture)"""
+

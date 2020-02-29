@@ -42,6 +42,15 @@ def printer(testIDE, window, sizeOfTiles, xWorld = 0, yWorld = 0): #WIP
     return xWorld, yWorld
 #---end devPrinter---
 
+def windowUpdate(window, environment, sizeOfTiles = -1):
+    if (sizeOfTiles <= 0):
+        sizeOfTiles = int(window.get_rect().bottom / 9)
+    #--end if---
+
+    entities = environment.getEntities()
+    
+#---end windowUpdate---
+
 def inputReader(inputs):
     rInput = deepcopy(inputs)
     fInput = {}
