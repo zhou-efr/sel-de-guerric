@@ -14,6 +14,7 @@ Then we have :
         animate sprites
         report error (flemme on les laisse se debrouiller seul)    
 """
+from math import m
 from copy import deepcopy
 import pygame
 from pygame.locals import *
@@ -43,12 +44,38 @@ def printer(testIDE, window, sizeOfTiles, xWorld = 0, yWorld = 0): #WIP
 #---end devPrinter---
 
 def windowUpdate(window, environment, sizeOfTiles = -1):
+    """"the function which blit everything 
+        For more readability I assume that ALL COORDINATES has the form (x,y) as
+        y 
+        ^
+        |
+        0,0-->x
+        (0,0) being the left top point of the screen
+    """
     if (sizeOfTiles <= 0):
         sizeOfTiles = int(window.get_rect().bottom / 9)
     #--end if---
 
+    windowRect = window.get_rect()
+    windowSize =(int(windowRect.right/sizeOfTiles)),int(windowRect.bottom/sizeOfTiles)))
     entities = environment.getEntities()
-    
+    worldSize = (environment.getwidth(),environment.getHeight())
+    abscissaPhaseShift = 0
+    ordinatePhaseShift = 0
+    player = entities.pop(0)
+    phaseShift = lambda x, y: int((x/m.abs(x))*((0,6/m.abs(y))*x))
+
+    if ((worldSize[0] >= windowSize[0]) and (player.x >= windowSize[0])):
+        abscissaPhaseShift = phaseShift(player.speed['x'], player.vXMax)*sizeOfTiles
+    #---end if---
+
+    if ((worldSize[1] >= windowSize[1]) and (player.x >= windowSize[1])):
+        ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)*sizeOfTiles
+    #---end if---
+
+    for i in entities:
+        window.blit(i.getPicture(), (i.position['x'] + abscissaPhaseShift, i.position['y'] + ordinatePhaseShift))
+    #---end for---
 #---end windowUpdate---
 
 def inputReader(inputs):

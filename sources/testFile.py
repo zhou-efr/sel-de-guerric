@@ -62,3 +62,11 @@ pygame.quit()
 test = eval('o.item("(", 1)')
 print(type(test), test.picture)"""
 
+"""t = [1, 2, 4, 5.0]
+print(t.index(type(float)))"""
+
+"""import math as m
+
+y = 10
+phaseShift = lambda x: m.log(x, y)
+print(phaseShift(10))"""
