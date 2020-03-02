@@ -118,7 +118,7 @@ def list(adress, environment):
     return player, entities, exit, walls
 #---end list---
 
-def physicLoader(id,distance,dtime,speed): #give the influence of somthing on the acceleration of an other
+def physicLoader(id,distance = 1,dtime = 0,speed = 0, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
         influence = {"x" : -speed["x"]*0.05, "y" : -1} #natural decrease of speed and gravity
@@ -138,7 +138,7 @@ def physicLoader(id,distance,dtime,speed): #give the influence of somthing on th
         else:
             n = abs(1/dtime)
         #---endif---
-        influence["x"] = m.log(m.log(n+1)+1)
+        influence["x"] = m.log(m.log(n+1)+1) * Vmax
     #---end if---
     return influence
 #---end physicLoader---
@@ -303,3 +303,15 @@ def loadsave(id):
     save = open(fileAdress, 'r').read().split('\n')
     return l.environmentLoader(save[1], save[2], save[3])
 #---end loadsave---
+
+def stateUpdater(obj):
+    for item in obj:
+        if item.keychar == 'm':
+            if abs(item.position["x2"]) - item.position["x1"] > abs(item.position["y2"] - item.position["y1"]):
+                item.state = 't'
+            elif abs(item.position["x2"]) - item.position["x1"] < abs(item.position["y2"] - item.position["y1"]):
+                item.state = 'b'
+            #---end if---
+        #---end if---
+    #---end for---
+#---end stateDetection---

@@ -35,7 +35,7 @@ class environmentLoader:
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
-    def getEntities():
+    def getEntities(self):
         self.environment.currentlevel.currentboard.entities()
 
     def sizeUpdate(self, size):
