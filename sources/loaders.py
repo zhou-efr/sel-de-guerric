@@ -35,6 +35,9 @@ class environmentLoader:
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def getEntities(self):
+        self.environment.currentlevel.currentboard.entities()
+
     def sizeUpdate(self, size):
         for i in self.inventory:
             i[1].updatePictureSize(size)
@@ -91,9 +94,6 @@ class levelLoader:
         self.levelStructure = []
         self.position = area #11 being the starting board
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
-        self.boxesadress = self.folder + "/boxes" + str(area) + ".dat"
-        self.list = b.List(self.boxesadress, environment)
-        self.simpleList = b.SimpleList(self)
 
         #initialazation
         self.initStructure()
@@ -164,12 +164,6 @@ class levelLoader:
 
     def getEnvironment(self):
         return self.environment
-
-    def getSimpleList(self):
-        return self.simplelist
-
-    def getList(self):
-        return self.list
     #---end of accessors---
 #---end levelLoader---       
 
@@ -181,14 +175,14 @@ class areaLoader:
     |
     ├environment0
     |   ├level 0
-    |   |   ├board00.txt
-    |   |   ├board10.txt
-    |   |   ├board01.txt
+    |   |   ├board00.dat
+    |   |   ├board10.dat
+    |   |   ├board01.dat
     |   |   ├etc
     |   ├level 1
-    |   |   ├board00.txt
-    |   |   ├board10.txt
-    |   |   ├board01.txt
+    |   |   ├board00.dat
+    |   |   ├board10.dat
+    |   |   ├board01.dat
     |   |   ├etc
     |   ├etc
     ├environment01
@@ -209,9 +203,14 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "./files/environment" + str(environment) + "/level" + str(level)
-        self.boardAdress = str(self.adress) + "/board" + str(self.board) + ".dat"
-        self.backAdress = str(self.adress) + "/back" + str(self.board) + ".png"
+        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.boardAdress = str(self.adress) + "/board.dat"
+        self.backAdress = str(self.adress) + "/back.png"
+        self.boxesadress = str(self.adress) + "/boxes.dat"
+        self.list = b.list(self.boxesadress, environment)
+        self.simpleList = b.simpleList(self)
+        self.entities = self.simpleList[0]
+        self.item = self.simpleList[1]
         self.area = []
 
         #beginning of initialazation 
@@ -257,6 +256,12 @@ class areaLoader:
 
     def getEnvironment(self):
         return self.environment
+    
+    def getSimpleList(self):
+        return self.simpleList
+
+    def getList(self):
+        return self.list
     #---End of accessors---
 #---end AreaLoader---
 
@@ -268,7 +273,7 @@ def strToArray(text):
     return arrayProduce
 #--end strToArray---
 
-def fileLoader(folderRoot, file):
+def fileLoader(folderRoot, file = ""):
     data = {}
     contents = []
     root = folderRoot + file

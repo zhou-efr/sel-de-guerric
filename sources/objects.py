@@ -18,19 +18,30 @@ class item:
     """
     def __init__(self, keyChar, environment):
         self.keyChar = keyChar
-        self.pictureAdress = "./files/environment" + str( environment) + "/" + keyChar + ".png"
+        self.state = "default"
+        self.folder = "./files/environment" + str(environment) + "/" + keyChar + "/"
+        self.pictureAdress = self.folder + self.state + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
-        self.updatePictureSize()
+        self.updateObjectPictureSize()
         self.position = {"x1" : 0, "y1" : 0, "x2" : 0, "y2" : 0}
     #---end init---
 
-    def updatePictureSize(self, size = 120):
+    def updateObjectPictureSize(self, size = 120):
         self.picture = pygame.transform.scale(self.picture.convert_alpha(), (size, size))
     #---end updatePictureSize---
+
+    def updateState(self, newstate):
+        self.state = newstate
+        self.pictureAdress = self.folder + self.state + ".png"
+        self.picture = pygame.image.load(self.pictureAdress)
+    #---end updateState---
 
     #---beginning accessors
     def getKeyChar(self):
         return self.keyChar
+
+    def getFolder(self):
+        return self.folder
     
     def getPictureAdress(self):
         return self.pictureAdress
@@ -46,7 +57,7 @@ class entities (item):
 
     def __init__(self, keyChar, environment):
         super().__init__(keyChar, environment)
-        self.folder = "./files/environment" + str(environment)+"/" + keyChar + "/"
+        self.dataFolder = self.folder + "data/"
         self.data = {}
         self.sprite = []
         self.internalClock = -1
@@ -54,10 +65,10 @@ class entities (item):
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
         try:
-            self.data = l.fileLoader(self.folder, str(keyChar) + ".dat")
+            self.data = l.fileLoader(self.dataFolder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
             print(identifier)
-            self.data = {"sprite" : 1, "x" : 2.0, "y" : 2.0}# faut update le default case mais j'ai la flemme
+            self.data = {"state" : 0}
         #---end try---
         self.data["newState"] = None
         self.updateSprite()
@@ -77,7 +88,6 @@ class entities (item):
         #---end if---
         self.internalClockUpdate()
         return self.sprite[self.internalClock]
-        
     #---end getPicture---
 
     def updatePictureSize(self, size = 120):
@@ -87,7 +97,7 @@ class entities (item):
     #---end updatePictureSize---
 
     def getPosition(self):
-        return self.data["x"], self.data["y"]
+        return self.position["x1"], self.position["y1"], self.position["x2"], self.position["y2"]
     #---end getPosition---
 
     def updateSprite(self):
