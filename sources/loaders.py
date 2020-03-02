@@ -35,6 +35,9 @@ class environmentLoader:
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def getEntities():
+        self.environment.currentlevel.currentboard.entities()
+
     def sizeUpdate(self, size):
         for i in self.inventory:
             i[1].updatePictureSize(size)
@@ -206,7 +209,7 @@ class areaLoader:
         self.boxesadress = str(self.adress) + "/boxes.dat"
         self.list = b.list(self.boxesadress, environment)
         self.simpleList = b.simpleList(self)
-        self.enities = self.simpleList[0]
+        self.entities = self.simpleList[0]
         self.item = self.simpleList[1]
         self.area = []
 
