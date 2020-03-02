@@ -200,12 +200,14 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "./files/environment" + str(environment) + "/level" + str(level)
-        self.boardAdress = str(self.adress) + "/board" + str(self.board) + ".dat"
-        self.backAdress = str(self.adress) + "/back" + str(self.board) + ".png"
-        self.boxesadress = str(self.adress) + "/boxes" + str(self.board) + ".dat"
+        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.boardAdress = str(self.adress) + "/board.dat"
+        self.backAdress = str(self.adress) + "/back.png"
+        self.boxesadress = str(self.adress) + "/boxes.dat"
         self.list = b.list(self.boxesadress, environment)
         self.simpleList = b.simpleList(self)
+        self.enities = self.simpleList[0]
+        self.item = self.simpleList[1]
         self.area = []
 
         #beginning of initialazation 

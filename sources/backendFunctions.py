@@ -1,6 +1,4 @@
 """
-Those Functions are used to load the level physic, and to update it over the time
-
 author : la tribut des zhou
 """
 
