@@ -60,6 +60,7 @@ print(area.simpleList)
 
 #Test save
 '''
-b.save(1, 11, 2)
+b.save(1, 11, 1)
 env = b.loadsave(1)
+print(env.environment, env.currentLevel.level, env.currentLevel.position)
 '''
