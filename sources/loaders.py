@@ -206,37 +206,14 @@ class areaLoader:
         self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
-        self.boxesadress = str(self.adress) + "/boxes.dat"
-        self.list = b.list(self.boxesadress, environment)
+        self.list = b.list(self.boardAdress, environment)
         self.simpleList = b.simpleList(self)
         self.entities = self.simpleList[0]
         self.item = self.simpleList[1]
-        self.area = []
 
         #beginning of initialazation 
-        self.initBoard()
+        b.stateUpdater(self.item)
     #---end init---
-
-    def initBoard(self):
-        #board initialazation
-        contents = None 
-
-        try:
-            with open(self.boardAdress, 'r', encoding='utf-8') as file:
-                contents = file.read().split('\n')
-            #---end with---
-
-            for i in range(len(contents)):
-                contents[i] = strToArray(contents[i])
-            #---end for---
-
-            self.area = contents
-            
-        except FileNotFoundError as er:
-            print("file not found ", er)
-        #---end try---
-    #---end initBoard---
-
 
     #---Beginning of accessors---
     def getBackAdress(self):
@@ -250,9 +227,6 @@ class areaLoader:
 
     def getLevel(self):
         return self.level
-
-    def getArray(self):
-        return self.area
 
     def getEnvironment(self):
         return self.environment

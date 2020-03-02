@@ -42,18 +42,17 @@ area = l.areaLoader(1, 1, 11)
 lists = area.list
 for i in range(5):
     print(lists[1][0].position)
-    b.Acceleration(lists[0]+lists[1], lists[2]+lists[3], 1)
-    b.Speed(lists[0]+lists[1])
-    b.Move(lists[0]+lists[1], lists[2]+lists[3])
+    b.acceleration(lists[0]+lists[1], lists[2]+lists[3], 1)
+    b.speed(lists[0]+lists[1])
+    b.move(lists[0]+lists[1], lists[2]+lists[3])
 #---end for---
 
-#8/0 #The error allow to see the variables and debug easly on Visual Code
+8/0 #The error allow to see the variables and debug easly on Visual Code
 '''
 
 #Test for simple list
 '''
 area = l.areaLoader(1, 1, 11)
-print(area.simpleList)
 
 8/0
 '''

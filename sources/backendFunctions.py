@@ -306,11 +306,42 @@ def loadsave(id):
 
 def stateUpdater(obj):
     for item in obj:
-        if item.keychar == 'm':
-            if abs(item.position["x2"]) - item.position["x1"] > abs(item.position["y2"] - item.position["y1"]):
-                item.state = 't'
-            elif abs(item.position["x2"]) - item.position["x1"] < abs(item.position["y2"] - item.position["y1"]):
-                item.state = 'b'
+        if item.keyChar == 'm':
+            if abs(item.position["x2"] - item.position["x1"]) > abs(item.position["y2"] - item.position["y1"]):
+                item.updateState('t')
+            elif abs(item.position["x2"] - item.position["x1"]) < abs(item.position["y2"] - item.position["y1"]):
+                item.updateState('b')
+            #---end if---
+        elif item.keyChar == 'c':
+            up = False
+            down = False
+            right = False
+            left = False
+            for i in obj:
+                if i.keyChar == 'm' or i.keyChar == 'c':
+                    if i.position["x1"] == item.position["x2"] + 1:
+                        right = True
+                    elif item.position["x1"] == i.position["x2"] + 1:
+                        left = True
+                    elif i.position["y2"] == item.position["y1"] + 1:
+                        up = True
+                    elif item.position["y2"] == i.position["y1"] + 1:
+                        down = True
+                    #---end if---
+                #---end if---
+            #---end for---
+            if up == True:
+                if right == True:
+                    item.updateState('[')
+                elif left == True:
+                    item.updateState(']')
+                #---end if---
+            elif down == True:
+                if right == True:
+                    item.updateState('(')
+                elif left == True:
+                    item.updateState(')')
+                #---end if---
             #---end if---
         #---end if---
     #---end for---
