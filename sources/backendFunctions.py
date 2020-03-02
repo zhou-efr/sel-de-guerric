@@ -6,6 +6,7 @@ author : la tribut des zhou
 
 import objects as o
 import math as m
+import loaders as l
 
 def hitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
     #Load the fill
@@ -274,3 +275,33 @@ def move(ent, obj):
         e.position["y2"] += e.speed["y"]
     #---end for---
 #---end move---
+
+
+def save(id, area, level = 0, environment = 0, newname = ""):
+    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
+    try:
+        save = open(fileAdress, 'r').read().split('\n')
+        save[3] = int(area)
+        if level != 0:
+            save[2] = int(level)
+        #---end if---
+        if environment != 0:
+            save[1] = int(environment)
+        #---end if---
+        if newname != "":
+            save[0] = newname
+        #---end if---
+        file = open(fileAdress, 'w')
+        s = str(save[0]) + "\n" + str(save[1]) + "\n" + str(save[2]) + "\n" + str(save[3])
+        file.write(s)
+
+    except FileNotFoundError:
+        print("Wrong save id")
+    #---end try---
+#---end save---
+
+def loadsave(id):
+    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
+    save = open(fileAdress, 'r').read().split('\n')
+    return l.environmentLoader(save[1], save[2], save[3])
+#---end loadsave---

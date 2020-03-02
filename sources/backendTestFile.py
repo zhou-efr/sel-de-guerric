@@ -51,9 +51,15 @@ for i in range(5):
 '''
 
 #Test for simple list
-
+'''
 area = l.areaLoader(1, 1, 11)
 print(area.simpleList)
 
 8/0
+'''
 
+#Test save
+'''
+b.save(1, 11, 2)
+env = b.loadsave(1)
+'''

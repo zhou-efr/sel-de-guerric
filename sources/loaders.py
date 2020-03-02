@@ -268,7 +268,7 @@ def strToArray(text):
     return arrayProduce
 #--end strToArray---
 
-def fileLoader(folderRoot, file):
+def fileLoader(folderRoot, file = ""):
     data = {}
     contents = []
     root = folderRoot + file
