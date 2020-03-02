@@ -15,8 +15,8 @@ print(b.HitboxesFileReader(adress))
 
 #Test of lists
 '''
-level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
-lists = level.list
+area = l.areaLoader(1, 1, 11)
+lists = area.list
 
 
 8/0 #The error allow to see the variables easly on Visual Code
@@ -24,8 +24,8 @@ lists = level.list
 
 #Test of the Acceleration and Speed function
 '''
-level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
-lists = level.list
+area = l.areaLoader(1, 1, 11)
+lists = area.list
 
 b.Acceleration(lists[0]+lists[1], lists[2]+lists[3], 1)
 
@@ -38,8 +38,8 @@ b.Speed(lists[0]+lists[1])
 
 #Test for Move
 '''
-level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
-lists = level.list
+area = l.areaLoader(1, 1, 11)
+lists = area.list
 for i in range(5):
     print(lists[1][0].position)
     b.Acceleration(lists[0]+lists[1], lists[2]+lists[3], 1)
@@ -51,9 +51,9 @@ for i in range(5):
 '''
 
 #Test for simple list
-'''
-level = l.levelLoader(1, 1)  #make the line of self.picture off and also the lines of the updateSprite method
-print(level.simpleList)
+
+area = l.areaLoader(1, 1, 11)
+print(area.simpleList)
 
 8/0
-'''
+

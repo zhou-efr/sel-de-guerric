@@ -7,7 +7,7 @@ author : la tribut des zhou
 import objects as o
 import math as m
 
-def HitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
+def hitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
     #Load the fill
     try:
         with open(adress, 'r') as target:
@@ -58,7 +58,7 @@ def HitboxesFileReader(adress):  #Return the list of the objects with their type
             #---end for---
         #---end for---
         
-        for ele in hu:  #inversing the vertical coordonate to be more logic in the 
+        for ele in hu:  #inversing the vertical coordonate to be more logic in the landmark
             ele[1] = -ele[1]
             ele[3] = -ele[3]
         #---end for---
@@ -68,28 +68,28 @@ def HitboxesFileReader(adress):  #Return the list of the objects with their type
         print("error : ", identifier)
         return []
     #---end try---
-#---end HitboxesFileReader---
+#---end hitboxesFileReader---
 
-def SimpleList(level):
+def simpleList(area):
     ent = []
     obj = []
-    for e in level.list[:2]:
+    for e in area.list[:2]:
         ent += e
     #---endfor---
-    for e in level.list[2:]:
+    for e in area.list[2:]:
         obj += e
     #---endfor---
     return ent, obj
-#---end SimpleList---
+#---end simpleList---
 
-def List(adress, environment):
+def list(adress, environment):
     #lists to fill
     player = []
     entities = []
     walls = []
     exit = []
     #fill the lists
-    for i in HitboxesFileReader(adress):
+    for i in hitboxesFileReader(adress):
         if i[0] == "p":
             player.append(o.player())
             player[-1].position["y1"] = i[1]
@@ -117,7 +117,7 @@ def List(adress, environment):
         #---end if---
     #---end for---
     return player, entities, exit, walls
-#---end List---
+#---end list---
 
 def physicLoader(id,distance,dtime,speed): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
@@ -144,7 +144,7 @@ def physicLoader(id,distance,dtime,speed): #give the influence of somthing on th
     return influence
 #---end physicLoader---
 
-def Acceleration(ent, obj, world):
+def acceleration(ent, obj, world):
     #Execute the influence of the world on the entities
     for e in ent:
         worldinfluence = physicLoader("world" + str(world),0,0,e.speed)
@@ -166,9 +166,9 @@ def Acceleration(ent, obj, world):
         #---end for---
     #---end for---
     return ent
-#---end Acceleration---
+#---end acceleration---
 
-def Speed(ent):
+def speed(ent):
     #Check each acceleration of the entities
     for e in ent:
         #Add it to the speed
@@ -178,10 +178,10 @@ def Speed(ent):
         e.acceleration = {"x" : 0, "y" : 0}
     #---end for---
     return ent
-#---end Speed---
+#---end speed---
 
 
-def Hit(ent, obj):
+def hit(ent, obj):
     for n in range(len(ent)):
         e = ent[n]
         hitpoint = {"x" : [], "y" : []}
@@ -260,13 +260,13 @@ def Hit(ent, obj):
         #---end if---
 
     return 0
-#---end Hit---
+#---end hit---
 
 
 
-def Move(ent, obj):
-    Hit(ent, obj)
-    Hit(ent, obj)
+def move(ent, obj):
+    hit(ent, obj)
+    hit(ent, obj)
     for e in ent:
         e.position["x1"] += e.speed["x"]
         e.position["x2"] += e.speed["x"]
