@@ -130,14 +130,14 @@ def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the 
         else:
             n = abs(1/dtime)
         #---endif---
-        influence["x"] = -m.log(m.log(n+1)+1)
+        influence["x"] = m.log(m.log(n+1)+1)
     elif id == "player_left":
         if dtime <= 1:
             n = abs(-dtime^3+2*dtime)
         else:
             n = abs(1/dtime)
         #---endif---
-        influence["x"] = m.log(m.log(n+1)+1) * Vmax
+        influence["x"] = -m.log(m.log(n+1)+1) * Vmax
     #---end if---
     return influence
 #---end physicLoader---
