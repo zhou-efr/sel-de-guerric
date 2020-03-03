@@ -63,3 +63,13 @@ b.save(1, 11, 1)
 env = b.loadsave(1)
 print(env.environment, env.currentLevel.level, env.currentLevel.position)
 '''
+
+
+load = l.environmentLoader(1)
+area = load.currentLevel.currentBoard
+print(area.entities[0].position)
+for i in range(5):
+    b.worldUpdater(area.entities, area.item, 1)
+    print(area.entities[0].position)
+
+8/0
