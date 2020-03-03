@@ -46,7 +46,6 @@ except (FileNotFoundError, IndexError) as identifier:
 #------game------
 loaded = l.environmentLoader(1, 2, 11)
 clock = 0 #in ms
-test = o.player()
 
 #---Main Loop---
 lauched = True
@@ -55,7 +54,7 @@ while lauched:
     #---Second Loop---
     game = True
     while game:
-        f.printer(loaded, window, TILE_SIZE)
+        f.windowUpdate(window, loaded, TILE_SIZE)
         inputs = f.inputReader(keyMap)
         if inputs["pause"][0]:
             game = False
@@ -65,7 +64,6 @@ while lauched:
             game = False
             lauched = False
         clock += 1
-        window.blit(test.getPicture(), (int(test.getPosition()[0]*TILE_SIZE),int(test.getPosition()[1]*TILE_SIZE)))
         time.sleep(0.05)
         pygame.display.flip()
         #---end if---

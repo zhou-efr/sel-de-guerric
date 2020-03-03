@@ -36,7 +36,13 @@ class environmentLoader:
     #---end nextLevel---
 
     def getEntities(self):
-        self.environment.currentlevel.currentboard.entities()
+        return self.currentLevel.currentBoard.entities
+
+    def getwidth(self):
+        return self.currentLevel.currentBoard.board
+
+    def getObjects(self):
+        return self.currentLevel.currentBoard.item
 
     def sizeUpdate(self, size):
         for i in self.inventory:
@@ -171,31 +177,31 @@ class areaLoader:
     """area loader is the class containing all the necessary contained in folders
 
 
-    image folder achitexture (c'est des fichier text xD)
-    |
-    ├environment0
-    |   ├level 0
-    |   |   ├board00.dat
-    |   |   ├board10.dat
-    |   |   ├board01.dat
-    |   |   ├etc
-    |   ├level 1
-    |   |   ├board00.dat
-    |   |   ├board10.dat
-    |   |   ├board01.dat
-    |   |   ├etc
-    |   ├etc
-    ├environment01
-    |   ├etc
-    ├etc
+        image folder achitexture (c'est des fichier text xD)
+        |
+        ├environment0
+        |   ├level 0
+        |   |   ├board00.dat
+        |   |   ├board10.dat
+        |   |   ├board01.dat
+        |   |   ├etc
+        |   ├level 1
+        |   |   ├board00.dat
+        |   |   ├board10.dat
+        |   |   ├board01.dat
+        |   |   ├etc
+        |   ├etc
+        ├environment01
+        |   ├etc
+        ├etc
 
-    level achitecture (the index of txt files)
-    11 12 13 14
-    21 22 23 24
-    31 32 33 34 99
-    41 42 43 44
-    
-    the player always spawn at board's index 00 and the arival board is always index 99
+        level achitecture (the index of txt files)
+        11 12 13 14
+        21 22 23 24
+        31 32 33 34 99
+        41 42 43 44
+        
+        the player always spawn at board's index 00 and the arival board is always index 99
 
     """
     def __init__(self,environment, level, board):
