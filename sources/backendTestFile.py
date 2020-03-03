@@ -9,8 +9,8 @@ author : la tribut des zhou
 
 #Test of the HitboxesFileReader
 '''
-adress = "./files/environment1/level1/boxes11.dat"
-print(b.HitboxesFileReader(adress))
+adress = './files/environment1/level1/11/board.dat'
+print(b.hitboxesFileReader(adress))
 '''
 
 #Test of lists
@@ -51,15 +51,25 @@ for i in range(5):
 '''
 
 #Test for simple list
-'''
-area = l.areaLoader(1, 1, 11)
+
+area = l.areaLoader(1, 1, 12)
 
 8/0
-'''
+
 
 #Test save
 '''
 b.save(1, 11, 1)
 env = b.loadsave(1)
 print(env.environment, env.currentLevel.level, env.currentLevel.position)
+'''
+
+'''
+load = l.environmentLoader(1)
+area = load.currentLevel.currentBoard
+for i in range(50):
+    print(area.entities[0].position)
+    b.worldUpdater(area.entities, area.item, 1, {"jump" : [True], "right": [False], "left": [False]})
+
+8/0
 '''

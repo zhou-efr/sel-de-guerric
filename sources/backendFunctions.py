@@ -22,13 +22,13 @@ def hitboxesFileReader(adress):  #Return the list of the objects with their type
             obj.append([])
             for char in line:
                 if char != " ":
-                    if c > 0 and char == obj[l][-1][0] and nospace == True:
-                        #Compact line object
-                        obj[l][-1][4] += 1
-                    else:
+                    if c == 0 or (len(obj[l]) > 0 and char != obj[l][-1][0]) or nospace == False:
                         #Add the new object tiles with his type, and his position
                         obj[l].append([char,l,c,l,c])
                         nospace = True
+                    else:
+                        #Compact line object
+                        obj[l][-1][4] += 1
                     #---end if---
                 else:
                     nospace = False
@@ -118,11 +118,10 @@ def list(adress, environment):
     return player, entities, exit, walls
 #---end list---
 
-def physicLoader(id,distance = 1,dtime = 0,speed = 0, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
+def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
         influence = {"x" : -speed["x"]*0.05, "y" : -1} #natural decrease of speed and gravity
-        #influence = {"x" : 0.3, "y" : -0.5} #debug
     elif id == "player_jump":
         influence["y"] = 5
     elif id == "player_right":
@@ -146,10 +145,21 @@ def physicLoader(id,distance = 1,dtime = 0,speed = 0, Vmax = 2.5): #give the inf
 def acceleration(ent, obj, world):
     #Execute the influence of the world on the entities
     for e in ent:
-        worldinfluence = physicLoader("world" + str(world),0,0,e.speed)
+        worldinfluence = physicLoader("world" + str(world),0,e.speed)
         e.acceleration["x"] += worldinfluence["x"]
         e.acceleration["y"] += worldinfluence["y"]
     #---end for---
+    #Move of the player(s)
+    inpinfluence = {"x" : 0, "y" : 0}
+    if ent[0].jump["jump"] == True and ent[0].hit == True:
+        inpinfluence = physicLoader("player_jump")
+    elif ent[0].walking["right"] == True:
+        inpinfluence = physicLoader("player_right", 0, ent[0][0].speed, ent[0][0].inptime)
+    elif ent[0].walking["left"] == True:
+        inpinfluence = physicLoader("player_left", 0, ent[0][0].speed, ent[0][0].inptime)
+    #---end if---
+    ent[0].acceleration["x"] += inpinfluence["x"]
+    ent[0].acceleration["y"] += inpinfluence["y"]
     #Check each entities/object and execute their influence on each entities 
     for ele in ent+obj:
         for e in ent:
@@ -159,7 +169,7 @@ def acceleration(ent, obj, world):
             else:
                 speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2)
             #---end if---
-            influence = physicLoader(ele.keyChar,distance,0,speed)
+            influence = physicLoader(ele.keyChar,distance,speed)
             e.acceleration["x"] += influence["x"]
             e.acceleration["y"] += influence["y"]
         #---end for---
@@ -187,23 +197,23 @@ def hit(ent, obj):
         dx = e.position["x2"]-e.position["x1"]
         dy = e.position["y2"]-e.position["y1"]
 
-        for ele in obj + ent[:n-1] + ent[n+1:]:
+        for ele in obj + ent[:n] + ent[n+1:]:
             hitx = True
             if e.speed["x"] + 1 > ele.position["x1"] - e.position["x2"]>0:
-                hitposx = {"x" : ele.position["x1"], "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
+                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             elif e.speed["x"] - 1 < ele.position["x2"] - e.position["x1"]<0:
-                hitposx = {"x" : ele.position["x2"], "y" : e.position["y1"] + (ele.position["x2"] - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
+                hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             else:
                 hitx = False
             #---end if---
 
             hity = True
-            if e.speed["y"] - 1 < ele.position["y2"] - e.position["y1"]<0:
-                hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1, "dist" : 0}
+            if e.speed["y"] - 1 < ele.position["y1"] - e.position["y2"]<0:
+                hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["y"] + 1 > ele.position["y1"] - e.position["y2"]>0:
+            elif e.speed["y"] + 1 > ele.position["y2"] - e.position["y1"]>0:
                 hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - 1 - e.position["y2"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
             else:
@@ -236,35 +246,35 @@ def hit(ent, obj):
             #---end if---
         #---end for---
 
-        if hitpointx != [] and (hitpointy == [] or hitpointx[2] > hitpointy[2]):
+        e.hit = True
+        if hitpointx != [] and hitpointy != [] and hitpointx[2] == hitpointy[2]:
             e.speed["x"] = 0
-            e.position["x1"] = hitpointx[0] - 1
-            e.position["x2"] = hitpointx[0] + dx - 1
+            e.speed["y"] = 0
+            e.position["x1"] = hitpointx[0]
+            e.position["x2"] = hitpointx[0] + dx
+            e.position["y1"] = hitpointy[1]
+            e.position["y2"] = hitpointy[1] + dy
+        elif hitpointx != [] and (hitpointy == [] or hitpointx[2] < hitpointy[2]):
+            e.speed["x"] = 0
+            e.position["x1"] = hitpointx[0]
+            e.position["x2"] = hitpointx[0] + dx
             e.position["y1"] = hitpointx[1]
             e.position["y2"] = hitpointx[1] + dy
-        elif hitpointy != [] and (hitpointx == [] or hitpointx[2] < hitpointy[2]):
+        elif hitpointy != [] and (hitpointx == [] or hitpointx[2] > hitpointy[2]):
             e.speed["y"] = 0
             e.position["x1"] = hitpointy[0]
             e.position["x2"] = hitpointy[0] + dx
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
-        elif hitpointx != [] and hitpointy != [] and hitpointx[2] == hitpointy[2]:
-            e.speed["x"] = 0
-            e.speed["y"] = 0
-            e.position["x1"] = hitpointx[0] - 1
-            e.position["x2"] = hitpointx[0] + dx - 1
-            e.position["y1"] = hitpointy[1]
-            e.position["y2"] = hitpointy[1] + dy
-            print(hitpointx, hitpointy)
+        else:
+            e.hit = False
         #---end if---
-
-    return 0
+    #---end for---
 #---end hit---
 
 
 
 def move(ent, obj):
-    hit(ent, obj)
     hit(ent, obj)
     for e in ent:
         e.position["x1"] += e.speed["x"]
@@ -273,6 +283,14 @@ def move(ent, obj):
         e.position["y2"] += e.speed["y"]
     #---end for---
 #---end move---
+
+
+def worldUpdater(ent, obj, world, inp = {"jump" : [False], "right": [False], "left": [False]}):
+    ent[0].updatePlayerInput(inp)
+    acceleration(ent, obj, world)
+    speed(ent)
+    move(ent, obj)
+#---end worldUpdater---
 
 
 def save(id, area, level = 0, environment = 0, newname = ""):
@@ -319,17 +337,18 @@ def stateUpdater(obj):
             left = False
             for i in obj:
                 if i.keyChar == 'm' or i.keyChar == 'c':
-                    if i.position["x1"] == item.position["x2"] + 1:
+                    if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
                         right = True
-                    elif item.position["x1"] == i.position["x2"] + 1:
+                    elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
                         left = True
-                    elif i.position["y2"] == item.position["y1"] + 1:
+                    elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
                         up = True
-                    elif item.position["y2"] == i.position["y1"] + 1:
+                    elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
                         down = True
                     #---end if---
                 #---end if---
             #---end for---
+            print(item.position, up, down, right, left)
             if up == True:
                 if right == True:
                     item.updateState('[')

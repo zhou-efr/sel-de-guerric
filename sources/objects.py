@@ -19,7 +19,7 @@ class item:
     def __init__(self, keyChar, environment):
         self.keyChar = keyChar
         self.state = "default"
-        self.folder = "./files/environment" + str(environment) + "/" + keyChar + "/"
+        self.folder = "./files/environment" + str(environment) + "/items/" + keyChar + "/"
         self.pictureAdress = self.folder + self.state + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
         self.updateObjectPictureSize()
@@ -62,6 +62,7 @@ class entities (item):
         self.sprite = []
         self.internalClock = -1
         self.changed = False
+        self.hit = False
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
         try:
@@ -128,7 +129,24 @@ class player (entities):
 
     def __init__(self):
         super().__init__('p', 0)
+        self.walking = {"right" : False, "left" : False}
+        self.jump = {"jump" : False, "fastfall" : False}
+        self.inptime = 0
     #---end init---
+
+    def updatePlayerInput(self, inp):
+        self.walking["right"] = inp["right"][0]
+        self.walking["left"] = inp["left"][0]
+        self.jump["jump"] = inp["jump"][0]
+        if self.walking["right"] == True and self.walking["left"] == True:
+            self.walking = {"right" : False, "left" : False}
+            self.inptime = 0
+        elif self.walking["right"] == True or self.walking["left"] == True:
+            self.inptime += 1
+        else:
+            self.inptime = 0
+        #---end if---
+    #---end updateWalking---
 
     def changeState(self, dead = 0):
         super().changeState(dead)
