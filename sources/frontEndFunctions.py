@@ -14,7 +14,7 @@ Then we have :
         animate sprites
         report error (flemme on les laisse se debrouiller seul)    
 """
-from math import m
+import math as m
 from copy import deepcopy
 import pygame
 from pygame.locals import *
@@ -57,7 +57,7 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     #--end if---
 
     windowRect = window.get_rect()
-    windowSize =(int(windowRect.right/sizeOfTiles)),int(windowRect.bottom/sizeOfTiles)))
+    windowSize =(int(windowRect.right/sizeOfTiles)),int(windowRect.bottom/sizeOfTiles)
     entities = environment.getEntities()
     worldSize = (environment.getwidth(),environment.getHeight())
     abscissaPhaseShift = 0
