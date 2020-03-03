@@ -337,17 +337,18 @@ def stateUpdater(obj):
             left = False
             for i in obj:
                 if i.keyChar == 'm' or i.keyChar == 'c':
-                    if i.position["x1"] == item.position["x2"] + 1:
+                    if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
                         right = True
-                    elif item.position["x1"] == i.position["x2"] + 1:
+                    elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
                         left = True
-                    elif i.position["y2"] == item.position["y1"] + 1:
+                    elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
                         up = True
-                    elif item.position["y2"] == i.position["y1"] + 1:
+                    elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
                         down = True
                     #---end if---
                 #---end if---
             #---end for---
+            print(item.position, up, down, right, left)
             if up == True:
                 if right == True:
                     item.updateState('[')
