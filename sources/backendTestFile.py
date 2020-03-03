@@ -51,11 +51,11 @@ for i in range(5):
 '''
 
 #Test for simple list
-
+'''
 area = l.areaLoader(1, 1, 12)
 
 8/0
-
+'''
 
 #Test save
 '''
@@ -67,9 +67,8 @@ print(env.environment, env.currentLevel.level, env.currentLevel.position)
 '''
 load = l.environmentLoader(1)
 area = load.currentLevel.currentBoard
-for i in range(50):
+for i in range(75):
     print(area.entities[0].position)
-    b.worldUpdater(area.entities, area.item, 1, {"jump" : [True], "right": [False], "left": [False]})
-
+    b.worldUpdater(area.entities, area.item, 1, {"jump" : [False], "right": [False], "left": [True]})
 8/0
 '''

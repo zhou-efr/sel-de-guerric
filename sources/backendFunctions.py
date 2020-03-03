@@ -151,12 +151,12 @@ def acceleration(ent, obj, world):
     #---end for---
     #Move of the player(s)
     inpinfluence = {"x" : 0, "y" : 0}
-    if ent[0].jump["jump"] == True and ent[0].hit == True:
+    if ent[0].jump["jump"] == True and ent[0].hit != 0:
         inpinfluence = physicLoader("player_jump")
     elif ent[0].walking["right"] == True:
-        inpinfluence = physicLoader("player_right", 0, ent[0][0].speed, ent[0][0].inptime)
+        inpinfluence = physicLoader("player_right", 0, ent[0].speed, ent[0].inptime)
     elif ent[0].walking["left"] == True:
-        inpinfluence = physicLoader("player_left", 0, ent[0][0].speed, ent[0][0].inptime)
+        inpinfluence = physicLoader("player_left", 0, ent[0].speed, ent[0].inptime)
     #---end if---
     ent[0].acceleration["x"] += inpinfluence["x"]
     ent[0].acceleration["y"] += inpinfluence["y"]
@@ -227,7 +227,7 @@ def hit(ent, obj):
                 hitpoint["y"].append(hitposy)
             #---end if---
         #---end for---
-
+        
         hitpointx = []
         for x in hitpoint["x"]:
             if hitpointx == []:
@@ -246,7 +246,6 @@ def hit(ent, obj):
             #---end if---
         #---end for---
 
-        e.hit = True
         if hitpointx != [] and hitpointy != [] and hitpointx[2] == hitpointy[2]:
             e.speed["x"] = 0
             e.speed["y"] = 0
@@ -267,7 +266,7 @@ def hit(ent, obj):
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
         else:
-            e.hit = False
+            e.hit -= 1
         #---end if---
     #---end for---
 #---end hit---
@@ -275,6 +274,10 @@ def hit(ent, obj):
 
 
 def move(ent, obj):
+    for e in ent:
+        e.hit = 2
+    #---end for---
+    hit(ent, obj)
     hit(ent, obj)
     for e in ent:
         e.position["x1"] += e.speed["x"]
@@ -348,7 +351,6 @@ def stateUpdater(obj):
                     #---end if---
                 #---end if---
             #---end for---
-            print(item.position, up, down, right, left)
             if up == True:
                 if right == True:
                     item.updateState('[')
