@@ -118,7 +118,7 @@ def list(adress, environment):
     return player, entities, exit, walls
 #---end list---
 
-def physicLoader(id,distance = 1,dtime = 0,speed = 0, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
+def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
         influence = {"x" : -speed["x"]*0.05, "y" : -1} #natural decrease of speed and gravity
@@ -146,10 +146,21 @@ def physicLoader(id,distance = 1,dtime = 0,speed = 0, Vmax = 2.5): #give the inf
 def acceleration(ent, obj, world):
     #Execute the influence of the world on the entities
     for e in ent:
-        worldinfluence = physicLoader("world" + str(world),0,0,e.speed)
+        worldinfluence = physicLoader("world" + str(world),0,e.speed)
         e.acceleration["x"] += worldinfluence["x"]
         e.acceleration["y"] += worldinfluence["y"]
     #---end for---
+    #Move of the player(s)
+    inpinfluence = {"x" : 0, "y" : 0}
+    if ent[0][0].jump["jump"] == True:
+        inpinfluence = physicLoader("player_jump")
+    elif ent[0][0].walking["right"] == True:
+        inpinfluence = physicLoader("player_right", 0, ent[0][0].speed, ent[0][0].inptime)
+    elif ent[0][0].walking["left"] == True:
+        inpinfluence = physicLoader("player_left", 0, ent[0][0].speed, ent[0][0].inptime)
+    #---end if---
+    ent[0][0].acceleration["x"] += inpinfluence["x"]
+    ent[0][0].acceleration["y"] += inpinfluence["y"]
     #Check each entities/object and execute their influence on each entities 
     for ele in ent+obj:
         for e in ent:
@@ -159,7 +170,7 @@ def acceleration(ent, obj, world):
             else:
                 speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2)
             #---end if---
-            influence = physicLoader(ele.keyChar,distance,0,speed)
+            influence = physicLoader(ele.keyChar,distance,speed)
             e.acceleration["x"] += influence["x"]
             e.acceleration["y"] += influence["y"]
         #---end for---
@@ -236,6 +247,7 @@ def hit(ent, obj):
             #---end if---
         #---end for---
 
+        e.hit = True
         if hitpointx != [] and (hitpointy == [] or hitpointx[2] > hitpointy[2]):
             e.speed["x"] = 0
             e.position["x1"] = hitpointx[0] - 1
@@ -256,9 +268,10 @@ def hit(ent, obj):
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
             print(hitpointx, hitpointy)
+        else:
+            e.hit = False
         #---end if---
-
-    return 0
+    #---end for---
 #---end hit---
 
 
@@ -273,6 +286,14 @@ def move(ent, obj):
         e.position["y2"] += e.speed["y"]
     #---end for---
 #---end move---
+
+
+def worldUpdater(ent, obj, world, inp):
+    ent[0][0].updatePlayerInput(inp)
+    acceleration(ent, obj, world)
+    speed(ent)
+    move(ent, obj)
+#---end worldUpdater---
 
 
 def save(id, area, level = 0, environment = 0, newname = ""):
