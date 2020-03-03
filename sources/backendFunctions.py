@@ -22,13 +22,13 @@ def hitboxesFileReader(adress):  #Return the list of the objects with their type
             obj.append([])
             for char in line:
                 if char != " ":
-                    if c > 0 and char == obj[l][-1][0] and nospace == True:
-                        #Compact line object
-                        obj[l][-1][4] += 1
-                    else:
+                    if c == 0 or (len(obj[l]) > 0 and char != obj[l][-1][0]) or nospace == False:
                         #Add the new object tiles with his type, and his position
                         obj[l].append([char,l,c,l,c])
                         nospace = True
+                    else:
+                        #Compact line object
+                        obj[l][-1][4] += 1
                     #---end if---
                 else:
                     nospace = False
@@ -151,7 +151,7 @@ def acceleration(ent, obj, world):
     #---end for---
     #Move of the player(s)
     inpinfluence = {"x" : 0, "y" : 0}
-    if ent[0].jump["jump"] == True:
+    if ent[0].jump["jump"] == True and ent[0].hit == True:
         inpinfluence = physicLoader("player_jump")
     elif ent[0].walking["right"] == True:
         inpinfluence = physicLoader("player_right", 0, ent[0][0].speed, ent[0][0].inptime)
@@ -275,7 +275,6 @@ def hit(ent, obj):
 
 
 def move(ent, obj):
-    hit(ent, obj)
     hit(ent, obj)
     for e in ent:
         e.position["x1"] += e.speed["x"]
