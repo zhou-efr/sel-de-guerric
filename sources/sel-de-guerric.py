@@ -44,7 +44,7 @@ except (FileNotFoundError, IndexError) as identifier:
 #---end try---
 
 #------game------
-loaded = l.environmentLoader(1, 2, 11)
+loaded = l.environmentLoader(1, 1 ,11)
 clock = 0 #in ms
 
 #---Main Loop---
