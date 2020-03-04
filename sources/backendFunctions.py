@@ -72,50 +72,63 @@ def hitboxesFileReader(adress):  #Return the list of the objects with their type
 def simpleList(area):
     ent = []
     obj = []
-    for e in area.list[:2]:
+    zone = {"ent": [], "obj": []}
+    for e in area.list[:1]:
         ent += e
     #---endfor---
-    for e in area.list[2:]:
+    for e in area.list[1:2]:
         obj += e
     #---endfor---
-    return ent, obj
+    for e in area.list[2:3]:
+        zone["ent"] += e
+    #---end for---
+    for e in area.list[3:]:
+        zone["obj"] += e
+    #---end for---
+    return ent, obj, zone
 #---end simpleList---
 
-def list(adress, environment):
+def list(board):
     #lists to fill
     player = []
-    entities = []
     walls = []
+    cloud = []
     exit = []
     #fill the lists
-    for i in hitboxesFileReader(adress):
+    for i in hitboxesFileReader(board.boardAdress):
         if i[0] == "p":
             player.append(o.player())
             player[-1].position["y1"] = i[1]
             player[-1].position["y2"] = i[3]
             player[-1].position["x1"] = i[2]
             player[-1].position["x2"] = i[4]
-        elif i[0] == "e":
-            entities.append(o.entities("e", environment))
-            entities[-1].position["y1"] = i[1]
-            entities[-1].position["y2"] = i[3]
-            entities[-1].position["x1"] = i[2]
-            entities[-1].position["x2"] = i[4]
-        elif i[0] == "s":
-            exit.append(o.item("s", environment))
-            exit[-1].position["y1"] = i[1]
-            exit[-1].position["y2"] = i[3]
-            exit[-1].position["x1"] = i[2]
-            exit[-1].position["x2"] = i[4]
-        else:
-            walls.append(o.item(i[0], environment))
+        elif i[0] == "m" or i[0] == "c":
+            walls.append(o.item(i[0], board.environment))
             walls[-1].position["y1"] = i[1]
             walls[-1].position["y2"] = i[3]
             walls[-1].position["x1"] = i[2]
             walls[-1].position["x2"] = i[4]
         #---end if---
     #---end for---
-    return player, entities, exit, walls
+    for i in board.boardata["zone"]:
+        for j in board.boardata[i]:
+            if i == "nt":
+                cloud.append(o.entities("nt", board.environment))
+                cloud[-1].position["y1"] = j["y1"]
+                cloud[-1].position["y2"] = j["y2"]
+                cloud[-1].position["x1"] = j["x1"]
+                cloud[-1].position["x2"] = j["x2"]
+            #---end if---
+            if i == "ex":
+                exit.append(o.item("ex", board.environment))
+                exit[-1].position["y1"] = j["y1"]
+                exit[-1].position["y2"] = j["y2"]
+                exit[-1].position["x1"] = j["x1"]
+                exit[-1].position["x2"] = j["x2"]
+            #---end if---
+        #---end for---
+    #---end for---
+    return player, walls, cloud, exit
 #---end list---
 
 def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
@@ -190,14 +203,20 @@ def speed(ent):
 #---end speed---
 
 
-def hit(ent, obj):
-    for n in range(len(ent)):
-        e = ent[n]
+def hit(en, obj, zone):
+    for n in range(len(en) + len(zone["ent"])):
+        if n<len(en):
+            e = en[n]
+            ent = en[:n] + en[n:]
+        else:
+            e = zone["ent"][n-len(en)]
+            ent = []
+        #---end if---
         hitpoint = {"x" : [], "y" : []}
         dx = e.position["x2"]-e.position["x1"]
         dy = e.position["y2"]-e.position["y1"]
 
-        for ele in obj + ent[:n] + ent[n+1:]:
+        for ele in obj + ent:
             hitx = True
             if e.speed["x"] + 1 > ele.position["x1"] - e.position["x2"]>0:
                 hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
@@ -273,13 +292,13 @@ def hit(ent, obj):
 
 
 
-def move(ent, obj):
-    for e in ent:
+def move(ent, obj, zone):
+    for e in ent + zone["ent"]:
         e.hit = 2
     #---end for---
-    hit(ent, obj)
-    hit(ent, obj)
-    for e in ent:
+    hit(ent, obj, zone)
+    hit(ent, obj, zone)
+    for e in ent + zone["ent"]:
         e.position["x1"] += e.speed["x"]
         e.position["x2"] += e.speed["x"]
         e.position["y1"] += e.speed["y"] 
@@ -288,11 +307,11 @@ def move(ent, obj):
 #---end move---
 
 
-def worldUpdater(ent, obj, world, inp = {"jump" : [False], "right": [False], "left": [False]}):
+def worldUpdater(ent, obj, zone, world, inp = {"jump" : [False], "right": [False], "left": [False]}):
     ent[0].updatePlayerInput(inp)
-    acceleration(ent, obj, world)
-    speed(ent)
-    move(ent, obj)
+    acceleration(ent + zone["ent"], obj + zone["obj"], world)
+    speed(ent + zone["ent"])
+    move(ent, obj, zone)
 #---end worldUpdater---
 
 

@@ -212,10 +212,12 @@ class areaLoader:
         self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
-        self.list = b.list(self.boardAdress, environment)
+        self.boardata = fileLoader(self.adress, "/data.dat")
+        self.list = b.list(self)
         self.simpleList = b.simpleList(self)
         self.entities = self.simpleList[0]
         self.item = self.simpleList[1]
+        self.zone = self.simpleList[2]
 
         #beginning of initialazation 
         b.stateUpdater(self.item)

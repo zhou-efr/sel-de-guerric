@@ -22,12 +22,12 @@ class item:
         self.folder = "./files/environment" + str(environment) + "/items/" + keyChar + "/"
         self.pictureAdress = self.folder + self.state + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
-        self.updateObjectPictureSize()
+        #self.updateObjectPictureSize()
         self.position = {"x1" : 0, "y1" : 0, "x2" : 0, "y2" : 0}
     #---end init---
 
-    def updateObjectPictureSize(self, size = 120):
-        self.picture = pygame.transform.scale(self.picture.convert_alpha(), (size, size))
+    #def updateObjectPictureSize(self, size = 120):
+        #self.picture = pygame.transform.scale(self.picture.convert_alpha(), (size, size))
     #---end updatePictureSize---
 
     def updateState(self, newstate):
@@ -103,8 +103,8 @@ class entities (item):
 
     def updateSprite(self):
         self.sprite = []
-        for i in range(self.data[self.data["state"]]["index"]):
-            self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
+        #for i in range(self.data[self.data["state"]]["index"]):
+            #self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
         #---end for---
         self.updatePictureSize()
     #---end updateSprite---
