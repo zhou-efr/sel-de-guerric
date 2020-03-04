@@ -73,16 +73,16 @@ def simpleList(area):
     ent = []
     obj = []
     zone = {"ent": [], "obj": []}
-    for e in area.list[:1]:
+    for e in area.list[:2]:
         ent += e
     #---endfor---
-    for e in area.list[1:2]:
+    for e in area.list[2:4]:
         obj += e
     #---endfor---
-    for e in area.list[2:3]:
+    for e in area.list[4:6]:
         zone["ent"] += e
     #---end for---
-    for e in area.list[3:]:
+    for e in area.list[6:]:
         zone["obj"] += e
     #---end for---
     return ent, obj, zone
@@ -91,9 +91,13 @@ def simpleList(area):
 def list(board):
     #lists to fill
     player = []
+    fish = []
+    rat = []
+    fspot = []
     walls = []
     cloud = []
     exit = []
+    zrat = []
     #fill the lists
     for i in hitboxesFileReader(board.boardAdress):
         if i[0] == "p":
@@ -102,12 +106,30 @@ def list(board):
             player[-1].position["y2"] = i[3]
             player[-1].position["x1"] = i[2]
             player[-1].position["x2"] = i[4]
+        elif i[0] == "f":
+            fish.append(o.entities(i[0], board.environment))
+            fish[-1].position["y1"] = i[1]
+            fish[-1].position["y2"] = i[3]
+            fish[-1].position["x1"] = i[2]
+            fish[-1].position["x2"] = i[4]
+        elif i[0] == "r":
+            rat.append(o.entities(i[0], board.environment))
+            rat[-1].position["y1"] = i[1]
+            rat[-1].position["y2"] = i[3]
+            rat[-1].position["x1"] = i[2]
+            rat[-1].position["x2"] = i[4]
         elif i[0] == "m" or i[0] == "c":
             walls.append(o.item(i[0], board.environment))
             walls[-1].position["y1"] = i[1]
             walls[-1].position["y2"] = i[3]
             walls[-1].position["x1"] = i[2]
             walls[-1].position["x2"] = i[4]
+        elif i[0] == "s":
+            fspot.append(o.item(i[0], board.environment))
+            fspot[-1].position["y1"] = i[1]
+            fspot[-1].position["y2"] = i[3]
+            fspot[-1].position["x1"] = i[2]
+            fspot[-1].position["x2"] = i[4]
         #---end if---
     #---end for---
     for i in board.boardata["zone"]:
@@ -118,20 +140,25 @@ def list(board):
                 cloud[-1].position["y2"] = j["y2"]
                 cloud[-1].position["x1"] = j["x1"]
                 cloud[-1].position["x2"] = j["x2"]
-            #---end if---
-            if i == "ex":
+            elif i == "ex":
                 exit.append(o.item("ex", board.environment))
                 exit[-1].position["y1"] = j["y1"]
                 exit[-1].position["y2"] = j["y2"]
                 exit[-1].position["x1"] = j["x1"]
                 exit[-1].position["x2"] = j["x2"]
+            elif i == "zrat":
+                zrat.append(o.item("zrat", board.environment))
+                zrat[-1].position["y1"] = j["y1"]
+                zrat[-1].position["y2"] = j["y2"]
+                zrat[-1].position["x1"] = j["x1"]
+                zrat[-1].position["x2"] = j["x2"]
             #---end if---
         #---end for---
     #---end for---
-    return player, walls, cloud, exit
+    return player, fish, rat, fspot, walls, cloud, exit, zrat
 #---end list---
 
-def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
+def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
         influence = {"x" : -speed["x"]*0.05, "y" : -1} #natural decrease of speed and gravity
@@ -151,6 +178,15 @@ def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the 
             n = abs(1/dtime)
         #---endif---
         influence["x"] = -m.log(m.log(n+1)+1) * Vmax
+    elif ele[1].keyChar == "nt" and type(ele[0]) == type(ele[1]):
+        if ele[0].position["x1"] <= ele[1].position["x1"] <= ele[0].position["x2"] or ele[1].position["x1"] <= ele[0].position["x1"] <= ele[1].position["x2"]:
+            influence["y"] += 0.17 * ele[0].speed["y"]
+            influence["x"] += 0.03 * ele[0].speed["x"]
+        #---end if---
+        if ele[0].position["y1"] >= ele[1].position["y1"] >= ele[0].position["y2"] or ele[1].position["y1"] >= ele[0].position["y1"] >= ele[1].position["y2"]:
+            influence["y"] += 0.03 * ele[0].speed["y"]
+            influence["x"] += 0.17 * ele[0].speed["x"]
+        #---end if---
     #---end if---
     return influence
 #---end physicLoader---
@@ -158,7 +194,7 @@ def physicLoader(id, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the 
 def acceleration(ent, obj, world):
     #Execute the influence of the world on the entities
     for e in ent:
-        worldinfluence = physicLoader("world" + str(world),0,e.speed)
+        worldinfluence = physicLoader("world" + str(world), None, None,e.speed)
         e.acceleration["x"] += worldinfluence["x"]
         e.acceleration["y"] += worldinfluence["y"]
     #---end for---
@@ -167,9 +203,9 @@ def acceleration(ent, obj, world):
     if ent[0].jump["jump"] == True and ent[0].hit != 0:
         inpinfluence = physicLoader("player_jump")
     elif ent[0].walking["right"] == True:
-        inpinfluence = physicLoader("player_right", 0, ent[0].speed, ent[0].inptime)
+        inpinfluence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
     elif ent[0].walking["left"] == True:
-        inpinfluence = physicLoader("player_left", 0, ent[0].speed, ent[0].inptime)
+        inpinfluence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
     #---end if---
     ent[0].acceleration["x"] += inpinfluence["x"]
     ent[0].acceleration["y"] += inpinfluence["y"]
@@ -182,7 +218,7 @@ def acceleration(ent, obj, world):
             else:
                 speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2)
             #---end if---
-            influence = physicLoader(ele.keyChar,distance,speed)
+            influence = physicLoader(ele.keyChar,[ele,e],distance,speed)
             e.acceleration["x"] += influence["x"]
             e.acceleration["y"] += influence["y"]
         #---end for---
@@ -207,7 +243,7 @@ def hit(en, obj, zone):
     for n in range(len(en) + len(zone["ent"])):
         if n<len(en):
             e = en[n]
-            ent = en[:n] + en[n:]
+            ent = en[:n] + en[n+1:]
         else:
             e = zone["ent"][n-len(en)]
             ent = []
@@ -309,6 +345,7 @@ def move(ent, obj, zone):
 
 def worldUpdater(ent, obj, zone, world, inp = {"jump" : [False], "right": [False], "left": [False]}):
     ent[0].updatePlayerInput(inp)
+    stateUpdater(ent + zone["ent"])
     acceleration(ent + zone["ent"], obj + zone["obj"], world)
     speed(ent + zone["ent"])
     move(ent, obj, zone)
@@ -344,8 +381,8 @@ def loadsave(id):
     return l.environmentLoader(save[1], save[2], save[3])
 #---end loadsave---
 
-def stateUpdater(obj):
-    for item in obj:
+def stateUpdater(lists):
+    for item in lists:
         if item.keyChar == 'm':
             if abs(item.position["x2"] - item.position["x1"]) > abs(item.position["y2"] - item.position["y1"]):
                 item.updateState('t')
@@ -357,7 +394,7 @@ def stateUpdater(obj):
             down = False
             right = False
             left = False
-            for i in obj:
+            for i in lists:
                 if i.keyChar == 'm' or i.keyChar == 'c':
                     if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
                         right = True
