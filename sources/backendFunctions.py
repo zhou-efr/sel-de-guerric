@@ -73,13 +73,13 @@ def simpleList(area):
     ent = []
     obj = []
     zone = {"ent": [], "obj": []}
-    for e in area.list[:2]:
+    for e in area.list[:3]:
         ent += e
     #---endfor---
-    for e in area.list[2:4]:
+    for e in area.list[3:5]:
         obj += e
     #---endfor---
-    for e in area.list[4:6]:
+    for e in area.list[5:6]:
         zone["ent"] += e
     #---end for---
     for e in area.list[6:]:
@@ -178,14 +178,16 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 2.5)
             n = abs(1/dtime)
         #---endif---
         influence["x"] = -m.log(m.log(n+1)+1) * Vmax
-    elif ele[1].keyChar == "nt" and type(ele[0]) == type(ele[1]):
-        if ele[0].position["x1"] <= ele[1].position["x1"] <= ele[0].position["x2"] or ele[1].position["x1"] <= ele[0].position["x1"] <= ele[1].position["x2"]:
-            influence["y"] += 0.17 * ele[0].speed["y"]
-            influence["x"] += 0.03 * ele[0].speed["x"]
-        #---end if---
-        if ele[0].position["y1"] >= ele[1].position["y1"] >= ele[0].position["y2"] or ele[1].position["y1"] >= ele[0].position["y1"] >= ele[1].position["y2"]:
-            influence["y"] += 0.03 * ele[0].speed["y"]
-            influence["x"] += 0.17 * ele[0].speed["x"]
+    elif id == "nt" and (type(ele[0]) == type(ele[1]) or type(ele[0]) == o.player):
+        if speed != 0 and (ele[0].position["x1"] - ele[1].speed["x"] <= ele[1].position["x1"] <= ele[0].position["x2"] + ele[1].speed["x"] or ele[1].position["x1"] - ele[0].speed["x"] <= ele[0].position["x1"] <= ele[1].position["x2"] + ele[0].speed["x"]) and (ele[0].position["y1"] - ele[1].speed["y"] <= ele[1].position["y1"] <= ele[0].position["y2"] + ele[1].speed["y"] or ele[1].position["y1"] - ele[0].speed["y"] <= ele[0].position["y1"] <= ele[1].position["y2"] + ele[0].speed["y"]):
+            influence["x"] += 0.2 * (ele[0].speed["x"]**2 + ele[1].speed["x"]**2)**(1/2)
+            influence["y"] += 0.2 * (ele[0].speed["y"]**2 + ele[1].speed["y"]**2)**(1/2)
+        elif ele[0] == ele[1]:
+            if ele[1].inptime >= 113 or ele[1].inptime < 88:
+                ele[1].inptime = 88
+            #---end if---
+            influence["y"] += m.cos(ele[1].inptime/4) + 1
+            ele[1].inptime += 1
         #---end if---
     #---end if---
     return influence
@@ -203,22 +205,22 @@ def acceleration(ent, obj, world):
     if ent[0].jump["jump"] == True and ent[0].hit != 0:
         inpinfluence = physicLoader("player_jump")
     elif ent[0].walking["right"] == True:
-        inpinfluence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
+        inpinfluence = physicLoader("player_right", None, None, None, ent[0].inptime)
     elif ent[0].walking["left"] == True:
-        inpinfluence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
+        inpinfluence = physicLoader("player_left", None, None, None, ent[0].inptime)
     #---end if---
     ent[0].acceleration["x"] += inpinfluence["x"]
     ent[0].acceleration["y"] += inpinfluence["y"]
-    #Check each entities/object and execute their influence on each entities 
-    for ele in ent+obj:
-        for e in ent:
+    #Check each entities/object and execute the influence of each item on it 
+    for e in ent:
+        for ele in ent+obj:
             distance = ((ele.position["x1"]-e.position["x1"])**2 + (ele.position["y1"]-e.position["y1"])**2)**(1/2)
             if ele in ent:
                 speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2) - ((ele.speed["x"])**2 + (ele.speed["y"])**2)**(1/2)
             else:
                 speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2)
             #---end if---
-            influence = physicLoader(ele.keyChar,[ele,e],distance,speed)
+            influence = physicLoader(e.keyChar,[ele,e],distance,speed)
             e.acceleration["x"] += influence["x"]
             e.acceleration["y"] += influence["y"]
         #---end for---
@@ -253,10 +255,10 @@ def hit(en, obj, zone):
 
         for ele in obj + ent:
             hitx = True
-            if e.speed["x"] + 1 > ele.position["x1"] - e.position["x2"]>0:
+            if e.speed["x"] + 1 > ele.position["x1"] - e.position["x2"]>0 and e.speed["x"] != 0:
                 hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["x"] - 1 < ele.position["x2"] - e.position["x1"]<0:
+            elif e.speed["x"] - 1 < ele.position["x2"] - e.position["x1"]<0 and e.speed["x"] != 0:
                 hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             else:
@@ -264,10 +266,10 @@ def hit(en, obj, zone):
             #---end if---
 
             hity = True
-            if e.speed["y"] - 1 < ele.position["y1"] - e.position["y2"]<0:
+            if e.speed["y"] - 1 < ele.position["y1"] - e.position["y2"]<0 and e.speed["y"] != 0:
                 hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["y"] + 1 > ele.position["y2"] - e.position["y1"]>0:
+            elif e.speed["y"] + 1 > ele.position["y2"] - e.position["y1"]>0 and e.speed["y"] != 0:
                 hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - 1 - e.position["y2"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
             else:
@@ -281,7 +283,7 @@ def hit(en, obj, zone):
                 hitpoint["y"].append(hitposy)
             #---end if---
         #---end for---
-        
+
         hitpointx = []
         for x in hitpoint["x"]:
             if hitpointx == []:

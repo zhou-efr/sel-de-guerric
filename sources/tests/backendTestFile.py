@@ -1,5 +1,6 @@
 import backendFunctions as b
 import loaders as l
+import math as m
 
 '''
 This is backend Test File to see the input and out put, and the different interaction between backend's functions
@@ -17,7 +18,6 @@ print(b.hitboxesFileReader(adress))
 '''
 area = l.areaLoader(1, 1, 11)
 lists = area.list
-
 
 8/0 #The error allow to see the variables easly on Visual Code
 '''
@@ -57,7 +57,6 @@ area = l.areaLoader(1, 1, 11)
 8/0
 '''
 
-
 #Test save
 '''
 b.save(1, 11, 1)
@@ -67,13 +66,22 @@ print(env.environment, env.currentLevel.level, env.currentLevel.position)
 
 #Test worldUpdater
 '''
-load = l.environmentLoader(1)
-area = load.currentLevel.currentBoard
-for i in range(10):
-    print(area.simpleList[2]["ent"][0].position)
-    b.worldUpdater(area.entities, area.item, area.zone, 1, {"jump" : [False], "right": [False], "left": [True]})
+area = l.areaLoader(1,1,11)
+for i in range(50):
+    print(area.simpleList[2]["ent"][0].position["y1"])
+    b.worldUpdater(area.entities, area.item, area.zone, 1, {"jump" : [True], "right": [False], "left": [False]})
 
-
-print(area.simpleList[2]["ent"][0].position)
+print(area.simpleList[2]["ent"][0].position["y1"])
 8/0
+'''
+
+#Periode of m.cos round in the milliem
+'''
+l = []
+i = 0
+while round(m.cos(i/4)*1000)/1000 != -1:
+    l.append(round(m.cos(i/4)*1000)/1000)
+    i += 1
+
+print(i)
 '''
