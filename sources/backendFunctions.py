@@ -341,10 +341,14 @@ def move(ent, obj, zone):
     #---end for---
 #---end move---
 
-def worldUpdater(ent, obj, zone, world, inp = {"jump" : [False], "right": [False], "left": [False]}):
+def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]}):
+    ent = world.getEntities()
+    obj = world.getObjects()
+    zone = world.getZones()
+    
     ent[0].updatePlayerInput(inp)
     stateUpdater(ent + zone["ent"])
-    acceleration(ent + zone["ent"], obj + zone["obj"], world)
+    acceleration(ent + zone["ent"], obj + zone["obj"], world.environment)
     speed(ent + zone["ent"])
     move(ent, obj, zone)
 #---end worldUpdater---
