@@ -165,19 +165,21 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     elif id == "player_jump":
         influence["y"] = 0.75
     elif id == "player_right":
-        if dtime <= 1:
-            n = abs(-dtime^3+2*dtime)
-        else:
-            n = abs(1/dtime)
-        #---endif---
-        influence["x"] = m.log(m.log(n+1)+1) * Vmax
+        if speed["x"]<0:
+            influence["x"] = -speed["x"]
+        elif speed["x"]<Vmax:
+            d = 1/(1-speed["x"]/Vmax)+1
+            influence["x"] = 1/(1+d)**2
+        #---end if---
     elif id == "player_left":
-        if dtime <= 1:
-            n = abs(-dtime^3+2*dtime)
-        else:
-            n = abs(1/dtime)
-        #---endif---
-        influence["x"] = -m.log(m.log(n+1)+1) * Vmax
+        if speed["x"]>0:
+            influence["x"] = -speed["x"]
+        elif speed["x"]>-Vmax:
+            d = 1/(1+speed["x"]/Vmax)+1
+            influence["x"] = -1/(1+d)**2
+        #---end if---
+    elif id == "stopx":
+        influence["x"] == -speed["x"]
     elif id == "nt" and (type(ele[0]) == type(ele[1]) or type(ele[0]) == o.player):
         if speed != 0 and (ele[0].position["x1"] - ele[1].speed["x"] <= ele[1].position["x1"] <= ele[0].position["x2"] + ele[1].speed["x"] or ele[1].position["x1"] - ele[0].speed["x"] <= ele[0].position["x1"] <= ele[1].position["x2"] + ele[0].speed["x"]) and (ele[0].position["y1"] - ele[1].speed["y"] <= ele[1].position["y1"] <= ele[0].position["y2"] + ele[1].speed["y"] or ele[1].position["y1"] - ele[0].speed["y"] <= ele[0].position["y1"] <= ele[1].position["y2"] + ele[0].speed["y"]):
             influence["x"] += 0.2 * (ele[0].speed["x"]**2 + ele[1].speed["x"]**2)**(1/2)
@@ -205,9 +207,11 @@ def acceleration(ent, obj, world):
     if ent[0].jump["jump"] == True and ent[0].hit != 0:
         inpinfluence = physicLoader("player_jump")
     elif ent[0].walking["right"] == True:
-        inpinfluence = physicLoader("player_right", None, None, None, ent[0].inptime)
+        inpinfluence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
     elif ent[0].walking["left"] == True:
-        inpinfluence = physicLoader("player_left", None, None, None, ent[0].inptime)
+        inpinfluence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
+    elif ent[0].hit != 0:
+        inpinfluence = physicLoader("stopx", None, None, ent[0].speed)
     #---end if---
     ent[0].acceleration["x"] += inpinfluence["x"]
     ent[0].acceleration["y"] += inpinfluence["y"]

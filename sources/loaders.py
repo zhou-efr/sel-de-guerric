@@ -43,6 +43,9 @@ class environmentLoader:
     def getEntities(self):
         return self.currentLevel.currentBoard.entities
 
+    def getAllEntities(self):
+        return self.currentLevel.currentBoard.entities + self.currentLevel.currentBoard.zone["ent"]
+
     def getWidth(self):
         return self.currentLevel.currentBoard.boardata["width"]
     
@@ -51,6 +54,9 @@ class environmentLoader:
 
     def getObjects(self):
         return self.currentLevel.currentBoard.item
+
+    def getAllObjects(self):
+        return self.currentLevel.currentBoard.item + self.currentLevel.currentBoard.zone["obj"]
 
     def getZones(self):
         return self.currentLevel.currentBoard.zone
