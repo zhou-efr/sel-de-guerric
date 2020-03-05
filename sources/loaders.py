@@ -22,9 +22,10 @@ class environmentLoader:
         self.inventory = {}
         self.folder = "./files/environment" + str(environment) + "/"
         self.inventoryFile = "inventory.dat"
-        self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": surface.get_rect().right/16}
+        self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": int(surface.get_rect().right/16)}
         #initialazation
         self.initInventory()
+        self.sizeUpdate(self.windowData["sizeOfTiles"])
         self.currentLevel.currentBoard.resizeBackground((self.windowData["width"],self.windowData["height"]))
     #---end init--
 
@@ -55,8 +56,8 @@ class environmentLoader:
         return self.currentLevel.currentBoard.zone
 
     def sizeUpdate(self, size):
-        for i in self.inventory:
-            i[1].updatePictureSize(size)
+        for i in self.getObjects():
+            i.updateObjectPictureSize(size)
         #---end for---
     #---end nextLevel---
 

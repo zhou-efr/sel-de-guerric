@@ -1,7 +1,7 @@
 import time
 import pygame
 import frontEndFunctions as f
-import backendFunction as b
+import backendFunctions as b
 import objects as o
 import loaders as l
 
@@ -65,7 +65,7 @@ while lauched:
         clock += 1
         time.sleep(0.05)
         pygame.display.flip()
-        b.wordUpdater(loaded, inputs)
+        b.worldUpdater(loaded, inputs)
         #---end if---
     #---end second loop---
 #---end Main loop---

@@ -78,7 +78,9 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     window.blit(environment.getBackground(), (0,0))
 
     for i in objects:
-        window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
+        for j in range(int(i.position["x2"] - i.position["x1"])+1):
+            for k in range(int(m.fabs(i.position["y2"]- i.position["y1"]))+1):
+                window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift + j)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift + k)*sizeOfTiles))
 
     for i in entities:
         window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))

@@ -161,7 +161,7 @@ def list(board):
 def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
-        influence = {"x" : -speed["x"]*0.05, "y" : -1} #natural decrease of speed and gravity
+        influence = {"x" : -speed["x"]*0.05, "y" : -0.01} #natural decrease of speed and gravity
     elif id == "player_jump":
         influence["y"] = 5
     elif id == "player_right":
