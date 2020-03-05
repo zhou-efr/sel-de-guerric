@@ -1,4 +1,6 @@
 Vmax 2.5
 bouncing subDictionnary
 static subDictionnary
+foward subDictionnary
+backward subDictionnary
 state static

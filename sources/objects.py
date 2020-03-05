@@ -144,7 +144,7 @@ class player (entities):
         self.jump = {"jump" : False, "fastfall" : False}
     #---end init---
 
-    def updatePlayerInput(self, inp):
+    def updatePlayerInput(self, inp, running = False):
         self.walking["right"] = inp["right"][0]
         self.walking["left"] = inp["left"][0]
         self.jump["jump"] = inp["up"][0]
@@ -153,19 +153,19 @@ class player (entities):
             self.inptime = 0
         elif self.walking["right"] == True or self.walking["left"] == True:
             self.inptime += 1
+            if self.walking["right"] == True :
+                self.changeState("backward")
+            elif self.walking["left"] == True :
+                self.changeState("foward")
         else:
             self.inptime = 0
         #---end if---
     #---end updateWalking---
 
-    def changeState(self, dead = 0):
+    def changeState(self, state, dead = 0):
         super().changeState(dead)
         if not(dead):
-            if self.data["state"] == "bouncing" :
-                self.data["newState"] = "static"
-            elif self.data["state"] == "static":
-                self.data["newState"] = "bouncing"
-            #---end if---
+            self.data["newState"] = state
         #---end if---
     #---end changeState---
 #---end player---  
