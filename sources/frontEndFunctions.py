@@ -87,14 +87,30 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     #---end for---
 #---end windowUpdate---
 
-def inputReader(inputs):
+def inputReader(inputs, odlInputs):
     rInput = deepcopy(inputs)
     fInput = {}
+    events = pygame.event.get()
     for i, j in rInput.items():
         rInput[i] = (False, i)
     #---end for---
+    if odlInputs:
+        for i in odlInputs.items():
+            if i[1]:
+                for e in events:
+                    buff1 = list(inputs.values())
+                    buff2 = buff1.index(i[0])
+                    buff = list(inputs.keys())[buff2]
+                    if e.type == KEYUP and e.key != inputs[buff]:
+                        rInput[e.key] = (True, e.key)
+                    #---end if---
+                #---end for---
+            #---end if---
+        #---end for---
+    #---end if---
 
-    for e in pygame.event.get() :
+    #---end if---
+    for e in events:
         if e.type == QUIT:
             rInput[e.type] = (True, e.type)
         elif e.type == KEYDOWN:
