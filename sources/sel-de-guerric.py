@@ -47,7 +47,14 @@ except (FileNotFoundError, IndexError) as identifier:
 #------game------
 loaded = l.environmentLoader(window, 1, 1, 11)
 clock = 0 #in ms
-inputs = 0
+inputs = {"up" : (False, 0),
+        "down" : (False, 0),
+        "right" : (False, 0),
+        "left" : (False, 0),
+        "action1" : (False, 0),
+        "action2" : (False, 0),
+        "pause" : (False, 0),
+        "quit" : (False, 0)}
 #---Main Loop---
 lauched = True
 while lauched:

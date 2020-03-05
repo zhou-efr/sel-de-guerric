@@ -92,33 +92,15 @@ def inputReader(inputs, odlInputs):
     fInput = {}
     events = pygame.event.get()
     for i, j in rInput.items():
-        rInput[i] = (False, i)
+        rInput[i] = (odlInputs[j][0], i)
     #---end for---
-    if odlInputs:
-        for i in odlInputs.items():
-            if i[1]:
-                for e in events:
-                    buff1 = list(inputs.values())
-                    buff2 = buff1.index(i[0])
-                    buff = list(inputs.keys())[buff2]
-                    if e.type == KEYUP and e.key != inputs[buff]:
-                        rInput[e.key] = (True, e.key)
-                    #---end if---
-                #---end for---
-            #---end if---
-        #---end for---
-    #---end if---
-
-    #---end if---
     for e in events:
         if e.type == QUIT:
-            rInput[e.type] = (True, e.type)
-        elif e.type == KEYDOWN:
-            if e.key in inputs.keys():
-                rInput[e.key] = (True, e.key)
-            else:
-                rInput[e.key] = (False, e.key)
-            #---end if---
+            rInput[e.type] = (True, e.type)            
+        elif e.type == KEYDOWN and e.key in inputs.keys():
+            rInput[e.key] = (True, e.key)
+        elif e.type == KEYUP and e.key in inputs.keys():
+            rInput[e.key] = (False, e.key)
         #---end if---
     #---end for---
 
