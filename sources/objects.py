@@ -65,6 +65,7 @@ class entities (item):
         self.hit = False
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
+        self.inptime = 0
         try:
             self.data = l.fileLoader(self.dataFolder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
@@ -131,7 +132,6 @@ class player (entities):
         super().__init__('p', 0)
         self.walking = {"right" : False, "left" : False}
         self.jump = {"jump" : False, "fastfall" : False}
-        self.inptime = 0
     #---end init---
 
     def updatePlayerInput(self, inp):
