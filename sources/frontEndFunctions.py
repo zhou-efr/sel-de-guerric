@@ -75,6 +75,8 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
             ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)*sizeOfTiles
         #---end if---
     #---end if---
+    window.blit(environment.getBackground(), (0,0))
+
     for i in objects:
         window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
 

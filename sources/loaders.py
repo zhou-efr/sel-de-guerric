@@ -36,6 +36,9 @@ class environmentLoader:
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def getBackground(self):
+        return self.currentLevel.currentBoard.getBackground()
+
     def getEntities(self):
         return self.currentLevel.currentBoard.entities
 
