@@ -158,19 +158,19 @@ def list(board):
     return player, fish, rat, fspot, walls, cloud, exit, zrat
 #---end list---
 
-def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 2.5): #give the influence of somthing on the acceleration of an other
+def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
-        influence = {"x" : -speed["x"]*0.05, "y" : -0.01} #natural decrease of speed and gravity
+        influence = {"x" : -speed["x"]*0.15, "y" : -0.05} #natural decrease of speed and gravity
     elif id == "player_jump":
-        influence["y"] = 5
+        influence["y"] = 0.75
     elif id == "player_right":
         if dtime <= 1:
             n = abs(-dtime^3+2*dtime)
         else:
             n = abs(1/dtime)
         #---endif---
-        influence["x"] = m.log(m.log(n+1)+1)
+        influence["x"] = m.log(m.log(n+1)+1) * Vmax
     elif id == "player_left":
         if dtime <= 1:
             n = abs(-dtime^3+2*dtime)
