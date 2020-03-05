@@ -61,6 +61,7 @@ class entities (item):
         self.data = {}
         self.sprite = []
         self.internalClock = -1
+        self.clock = -1
         self.changed = False
         self.hit = False
         self.speed = {"x" : 0,"y" : 0}
@@ -80,7 +81,16 @@ class entities (item):
         if (self.internalClock >= (self.data[self.data["state"]]["index"] - 1)):
             self.internalClock = -1
         #---end if---
-        self.internalClock += 1
+
+        if (self.clock >= (self.data[self.data["state"]]["duration"] - 1)):
+            self.clock = -1
+        #---end if---
+
+        if (self.clock == -1):
+            self.internalClock += 1
+        #---end if---
+
+        self.clock += 1
     #--end iternalClockUpdate---
 
     def getPicture(self):
