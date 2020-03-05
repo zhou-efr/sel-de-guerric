@@ -48,6 +48,9 @@ class environmentLoader:
     def getObjects(self):
         return self.currentLevel.currentBoard.item
 
+    def getZones(self):
+        return self.currentLevel.currentBoard.zone
+
     def sizeUpdate(self, size):
         for i in self.inventory:
             i[1].updatePictureSize(size)

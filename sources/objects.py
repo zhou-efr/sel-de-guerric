@@ -137,7 +137,7 @@ class player (entities):
     def updatePlayerInput(self, inp):
         self.walking["right"] = inp["right"][0]
         self.walking["left"] = inp["left"][0]
-        self.jump["jump"] = inp["jump"][0]
+        self.jump["jump"] = inp["up"][0]
         if self.walking["right"] == True and self.walking["left"] == True:
             self.walking = {"right" : False, "left" : False}
             self.inptime = 0
