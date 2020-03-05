@@ -3,6 +3,7 @@
     it's the file containing all the loaders class and their needed functions
 
 """
+import pygame
 import objects as o
 import backendFunctions as b
 
@@ -14,20 +15,20 @@ class environmentLoader:
             levels
             >> beasts
     """
-    def __init__(self, environment, level = 1, area = 11):
+    def __init__(self, surface, environment, level = 1, area = 11):
         #attributs settings
         self.environment = environment
         self.currentLevel = levelLoader(environment, level, area)
         self.inventory = {}
         self.folder = "./files/environment" + str(environment) + "/"
         self.inventoryFile = "inventory.dat"
-
+        self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": surface.get_rect().right/16}
         #initialazation
         self.initInventory()
+        self.currentLevel.currentBoard.resizeBackground((self.windowData["width"],self.windowData["height"]))
     #---end init--
 
     def initInventory(self):
-        #inventory initialazation
         self.inventory = fileLoader(self.folder, self.inventoryFile)
     #---end initInventory---
 
@@ -38,8 +39,11 @@ class environmentLoader:
     def getEntities(self):
         return self.currentLevel.currentBoard.entities
 
-    def getwidth(self):
-        return self.currentLevel.currentBoard.board
+    def getWidth(self):
+        return self.currentLevel.currentBoard.boardata["width"]
+    
+    def getHeight(self):
+        return self.currentLevel.currentBoard.boardata["height"]
 
     def getObjects(self):
         return self.currentLevel.currentBoard.item
@@ -202,7 +206,6 @@ class areaLoader:
         41 42 43 44
         
         the player always spawn at board's index 00 and the arival board is always index 99
-
     """
     def __init__(self,environment, level, board):
         #setting internal variables
@@ -212,6 +215,7 @@ class areaLoader:
         self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
+        self.background = pygame.image.load(self.backAdress)
         self.boardata = fileLoader(self.adress, "/data.dat")
         self.list = b.list(self)
         self.simpleList = b.simpleList(self)
@@ -229,6 +233,12 @@ class areaLoader:
 
     def getBoardAdress(self):
         return self.boardAdress
+
+    def getBackground(self):
+        return self.background
+    
+    def resizeBackground(self, size):
+        self.background = pygame.transform.scale(self.background, size)
 
     def getAdress(self):
         return self.adress

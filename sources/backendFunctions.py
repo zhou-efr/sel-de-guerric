@@ -238,7 +238,6 @@ def speed(ent):
     return ent
 #---end speed---
 
-
 def hit(en, obj, zone):
     for n in range(len(en) + len(zone["ent"])):
         if n<len(en):
@@ -326,8 +325,6 @@ def hit(en, obj, zone):
     #---end for---
 #---end hit---
 
-
-
 def move(ent, obj, zone):
     for e in ent + zone["ent"]:
         e.hit = 2
@@ -342,7 +339,6 @@ def move(ent, obj, zone):
     #---end for---
 #---end move---
 
-
 def worldUpdater(ent, obj, zone, world, inp = {"jump" : [False], "right": [False], "left": [False]}):
     ent[0].updatePlayerInput(inp)
     stateUpdater(ent + zone["ent"])
@@ -350,7 +346,6 @@ def worldUpdater(ent, obj, zone, world, inp = {"jump" : [False], "right": [False
     speed(ent + zone["ent"])
     move(ent, obj, zone)
 #---end worldUpdater---
-
 
 def save(id, area, level = 0, environment = 0, newname = ""):
     fileAdress = "./files/environment0/saves/" + str(id) + ".dat"

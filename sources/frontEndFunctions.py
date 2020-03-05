@@ -60,25 +60,26 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     windowSize =(int(windowRect.right/sizeOfTiles),int(windowRect.bottom/sizeOfTiles))
     entities = environment.getEntities()
     objects = environment.getObjects()
-    worldSize = (environment.getwidth(),environment.getHeight())
+    worldSize = (environment.getWidth(),environment.getHeight())
     abscissaPhaseShift = 0
     ordinatePhaseShift = 0
-    player = entities.pop(0)
-    phaseShift = lambda x, y: int((x/m.abs(x))*((0,6/m.abs(y))*x))
+    if (len(entities) > 0):
+        player = entities[0]
+        phaseShift = lambda x, y: int((x/m.fabs(x))*((0,6/m.abs(y))*x))
 
-    if ((worldSize[0] >= windowSize[0]) and (player.x >= windowSize[0])):
-        abscissaPhaseShift = phaseShift(player.speed['x'], player.vXMax)*sizeOfTiles
+        if ((worldSize[0] >= windowSize[0]) and (player.position["x1"] >= windowSize[0])):
+            abscissaPhaseShift = phaseShift(player.speed['x'], player.vXMax)*sizeOfTiles
+        #---end if---
+
+        if ((worldSize[1] >= windowSize[1]) and (player.position["y1"] >= windowSize[1])):
+            ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)*sizeOfTiles
+        #---end if---
     #---end if---
-
-    if ((worldSize[1] >= windowSize[1]) and (player.x >= windowSize[1])):
-        ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)*sizeOfTiles
-    #---end if---
-
     for i in objects:
-        window.blit(i.getPicture(), (i.position['x'] + abscissaPhaseShift, i.position['y'] + ordinatePhaseShift))
+        window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
 
     for i in entities:
-        window.blit(i.getPicture(), (i.position['x'] + abscissaPhaseShift, i.position['y'] + ordinatePhaseShift))
+        window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
     #---end for---
 #---end windowUpdate---
 

@@ -69,7 +69,7 @@ class entities (item):
             self.data = l.fileLoader(self.dataFolder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
             print(identifier)
-            self.data = {"state" : 0}
+            self.data = {"state" : "na", "na" : {"index" : 0}}
         #---end try---
         self.data["newState"] = None
         self.updateSprite()

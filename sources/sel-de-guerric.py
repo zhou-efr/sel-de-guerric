@@ -44,7 +44,7 @@ except (FileNotFoundError, IndexError) as identifier:
 #---end try---
 
 #------game------
-loaded = l.environmentLoader(1, 1 ,11)
+loaded = l.environmentLoader(window, 1, 1, 11)
 clock = 0 #in ms
 
 #---Main Loop---
@@ -58,8 +58,6 @@ while lauched:
         inputs = f.inputReader(keyMap)
         if inputs["pause"][0]:
             game = False
-        elif inputs["action1"][0]:
-            test.changeState()
         elif inputs["quit"][0]:
             game = False
             lauched = False
