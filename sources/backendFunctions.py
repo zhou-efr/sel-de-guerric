@@ -179,7 +179,7 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
             influence["x"] = -1/(1+d)**2
         #---end if---
     elif id == "stopx":
-        influence["x"] == -speed["x"]
+        influence["x"] = -speed["x"]*0.8
     elif id == "nt" and (type(ele[0]) == type(ele[1]) or type(ele[0]) == o.player):
         if speed != 0 and (ele[0].position["x1"] - ele[1].speed["x"] <= ele[1].position["x1"] <= ele[0].position["x2"] + ele[1].speed["x"] or ele[1].position["x1"] - ele[0].speed["x"] <= ele[0].position["x1"] <= ele[1].position["x2"] + ele[0].speed["x"]) and (ele[0].position["y1"] - ele[1].speed["y"] <= ele[1].position["y1"] <= ele[0].position["y2"] + ele[1].speed["y"] or ele[1].position["y1"] - ele[0].speed["y"] <= ele[0].position["y1"] <= ele[1].position["y2"] + ele[0].speed["y"]):
             influence["x"] += 0.2 * (ele[0].speed["x"]**2 + ele[1].speed["x"]**2)**(1/2)
