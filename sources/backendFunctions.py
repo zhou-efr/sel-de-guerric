@@ -163,14 +163,16 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     if id == "world1":
         influence = {"x" : -speed["x"]*0.15, "y" : -0.05} #natural decrease of speed and gravity
     elif id == "player_jump":
-        influence["y"] = 0.75
+        influence["y"] = (1/dtime - 1/10)*0.75
     elif id == "player_wall_jump":
-        influence["y"] = 0.3
+        influence["y"] = 1
         if ele == 0:
-            influence["x"] = 0.75
+            influence["x"] = 1
         else:
-            influence["x"] = -0.75
+            influence["x"] = -1
         #---end if---
+    elif id == "player_fastfall":
+        influence["y"] = -0.85
     elif id == "player_right":
         if speed["x"]<0:
             influence["x"] = -speed["x"]
@@ -187,6 +189,8 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
         #---end if---
     elif id == "stopx":
         influence["x"] = -speed["x"]*0.8
+    elif id == "wall":
+        influence["y"] = -speed["y"]*0.4
     elif id == "nt" and (type(ele[0]) == type(ele[1]) or type(ele[0]) == o.player):
         if speed != 0 and (ele[0].position["x1"] - ele[1].speed["x"] <= ele[1].position["x1"] <= ele[0].position["x2"] + ele[1].speed["x"] or ele[1].position["x1"] - ele[0].speed["x"] <= ele[0].position["x1"] <= ele[1].position["x2"] + ele[0].speed["x"]) and (ele[0].position["y1"] - ele[1].speed["y"] <= ele[1].position["y1"] <= ele[0].position["y2"] + ele[1].speed["y"] or ele[1].position["y1"] - ele[0].speed["y"] <= ele[0].position["y1"] <= ele[1].position["y2"] + ele[0].speed["y"]):
             influence["x"] += 0.2 * (ele[0].speed["x"]**2 + ele[1].speed["x"]**2)**(1/2)
@@ -212,21 +216,36 @@ def acceleration(ent, obj, world):
     #Move of the player(s)
     inp = False
     inpinfluence = {"x" : 0, "y" : 0}
-    if ent[0].jump["jump"] == True:
+    if ent[0].hit["floor"]:
+        ent[0].cdw = {"walljump": True, "jump": True}
+    if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
+        influence = physicLoader("wall", None, None, ent[0].speed)
+        inpinfluence["y"] += influence["y"]
+    
+    if ent[0].jump["jump"]:
         inp = True
-        if ent[0].hit["floor"]:
-            influence = physicLoader("player_jump")
+        if ent[0].cdw["jump"]:
+            influence = physicLoader("player_jump", None, None, None, ent[0].inptime)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
-        '''elif ent[0].hit["lwall"]:
+        elif ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 0)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
-        elif ent[0].hit["rwall"]:
+            ent[0].cdw["walljump"] = False
+        elif ent[0].hit["rwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 1)
             inpinfluence["x"] += influence["x"]
-            inpinfluence["y"] += influence["y"]'''
+            inpinfluence["y"] += influence["y"]
+            ent[0].cdw["walljump"] = False
         #---end if---
+    elif ent[0].cdw["jump"]:
+        ent[0].cdw["jump"] = False
+        ent[0].inpinfluence = 1
+    
+    if ent[0].jump["fastfall"]:
+        influence = physicLoader("player_fastfall")
+        inpinfluence["y"] += influence["y"]
     if ent[0].walking["right"] == True:
         inp = True
         influence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)

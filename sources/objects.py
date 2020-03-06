@@ -144,25 +144,36 @@ class player (entities):
         super().__init__('p', 0)
         self.walking = {"right" : False, "left" : False}
         self.jump = {"jump" : False, "fastfall" : False}
+        self.inptime = 1
+        self.cdw = {"walljump": True, "jump": True}
     #---end init---
 
     def updatePlayerInput(self, inp, running = False):
         self.walking["right"] = inp["right"][0]
         self.walking["left"] = inp["left"][0]
         self.jump["jump"] = inp["up"][0]
+        self.jump["fastfall"] = inp["down"][0]
         if self.walking["right"] == True and self.walking["left"] == True:
             self.walking = {"right" : False, "left" : False}
-            self.inptime = 0
         elif self.walking["right"] == False and self.walking["left"] == False:
             self.changeState("static")
         elif self.walking["right"] == True or self.walking["left"] == True:
-            self.inptime += 1
             if self.walking["right"] == True :
                 self.changeState("backward")
             elif self.walking["left"] == True :
                 self.changeState("foward")
+            #---end if---
+        #---end if---
+        if self.jump["jump"] and self.jump["fastfall"]:
+            self.jump = {"jump": False, "fastfall": False}
+        elif self.jump["jump"]:
+            if self.inptime < 10:
+                self.inptime += 1
+            #---end if---
         else:
-            self.inptime = 0
+            self.inptime = 1
+        '''elif self.jump["fastfall"]:
+            self.changeState("fastfall")'''
         #---end if---
     #---end updateWalking---
 
