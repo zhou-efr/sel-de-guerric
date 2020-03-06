@@ -63,7 +63,7 @@ class entities (item):
         self.internalClock = -1
         self.clock = -1
         self.changed = False
-        self.hit = {"wall": False, "floor": False, "ceil": "False"}
+        self.hit = {"rwall": False, "lwall": False, "floor": False, "ceil": False}
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
         self.inptime = 0

@@ -164,6 +164,13 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
         influence = {"x" : -speed["x"]*0.15, "y" : -0.05} #natural decrease of speed and gravity
     elif id == "player_jump":
         influence["y"] = 0.75
+    elif id == "player_wall_jump":
+        influence["y"] = 0.3
+        if ele == 0:
+            influence["x"] = 0.75
+        else:
+            influence["x"] = -0.75
+        #---end if---
     elif id == "player_right":
         if speed["x"]<0:
             influence["x"] = -speed["x"]
@@ -203,16 +210,36 @@ def acceleration(ent, obj, world):
         e.acceleration["y"] += worldinfluence["y"]
     #---end for---
     #Move of the player(s)
+    inp = False
     inpinfluence = {"x" : 0, "y" : 0}
-    if ent[0].jump["jump"] == True and ent[0].hit["floor"]:
-        inpinfluence = physicLoader("player_jump")
-    elif ent[0].walking["right"] == True:
-        inpinfluence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
-    elif ent[0].walking["left"] == True:
-        inpinfluence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
-    elif ent[0].hit["floor"]:
+    if ent[0].jump["jump"] == True:
+        inp = True
+        if ent[0].hit["floor"]:
+            influence = physicLoader("player_jump")
+            inpinfluence["x"] += influence["x"]
+            inpinfluence["y"] += influence["y"]
+        '''elif ent[0].hit["lwall"]:
+            influence = physicLoader("player_wall_jump", 0)
+            inpinfluence["x"] += influence["x"]
+            inpinfluence["y"] += influence["y"]
+        elif ent[0].hit["rwall"]:
+            influence = physicLoader("player_wall_jump", 1)
+            inpinfluence["x"] += influence["x"]
+            inpinfluence["y"] += influence["y"]'''
+        #---end if---
+    if ent[0].walking["right"] == True:
+        inp = True
+        influence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
+        inpinfluence["x"] += influence["x"]
+        inpinfluence["y"] += influence["y"]
+    if ent[0].walking["left"] == True:
+        inp = True
+        influence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
+        inpinfluence["x"] += influence["x"]
+        inpinfluence["y"] += influence["y"]
+    if ent[0].hit["floor"] and not(inp):
         inpinfluence = physicLoader("stopx", None, None, ent[0].speed)
-    #---end if---
+    #---end ifs---
     ent[0].acceleration["x"] += inpinfluence["x"]
     ent[0].acceleration["y"] += inpinfluence["y"]
     #Check each entities/object and execute the influence of each item on it 
@@ -260,10 +287,10 @@ def hit(en, obj, zone):
         for ele in obj + ent:
             hitx = True
             if e.speed["x"] > ele.position["x1"] - e.position["x2"] - 1 >= 0:
-                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"] - 1)*e.speed["y"]/e.speed["x"], "dist" : 0}
+                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"] - 1)*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "r"}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             elif e.speed["x"] < ele.position["x2"] + 1 - e.position["x1"] <= 0:
-                hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
+                hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "l"}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             else:
                 hitx = False
@@ -279,11 +306,11 @@ def hit(en, obj, zone):
             else:
                 hity = False
             #---end if---
-            if hitx and (ele.position["y1"]>hitposx["y"]>ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
+            if hitx and (ele.position["y1"]>=hitposx["y"]>ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
                 hitpoint["x"].append(hitposx)
             #---end if---
             
-            if hity and (ele.position["x1"]<hitposy["x"]<ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
+            if hity and (ele.position["x1"]<=hitposy["x"]<ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
                 hitpoint["y"].append(hitposy)
             #---end if---
         #---end for---
@@ -291,9 +318,9 @@ def hit(en, obj, zone):
         hitpointx = []
         for x in hitpoint["x"]:
             if hitpointx == []:
-                hitpointx = [x["x"], x["y"], x["dist"]]
+                hitpointx = [x["x"], x["y"], x["dist"], x["id"]]
             elif x["dist"] < hitpointx[2]:
-                hitpointx = [x["x"], x["y"], x["dist"]]
+                hitpointx = [x["x"], x["y"], x["dist"], x["id"]]
             #---end if---
         #---end for---
 
@@ -314,14 +341,14 @@ def hit(en, obj, zone):
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
             e.hit[hitpointy[3]] = True
-            e.hit["wall"] = True
+            e.hit[hitpointx[3] + "wall"] = True
         elif hitpointx != [] and (hitpointy == [] or hitpointx[2] < hitpointy[2]):
             e.speed["x"] = 0
             e.position["x1"] = hitpointx[0]
             e.position["x2"] = hitpointx[0] + dx
             e.position["y1"] = hitpointx[1]
             e.position["y2"] = hitpointx[1] + dy
-            e.hit["wall"] = True
+            e.hit[hitpointx[3] + "wall"] = True
         elif hitpointy != [] and (hitpointx == [] or hitpointx[2] > hitpointy[2]):
             e.speed["y"] = 0
             e.position["x1"] = hitpointy[0]
@@ -335,7 +362,7 @@ def hit(en, obj, zone):
 
 def move(ent, obj, zone):
     for e in ent + zone["ent"]:
-        e.hit = {"wall": False, "floor": False, "ceil": False}
+        e.hit = {"rwall": False, "lwall": False, "floor": False, "ceil": False}
     #---end for---
     hit(ent, obj, zone)
     hit(ent, obj, zone)
