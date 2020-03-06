@@ -67,6 +67,8 @@ class entities (item):
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
         self.inptime = 0
+        self.vXMax = 1
+        self.vYMax = 1
         try:
             self.data = l.fileLoader(self.dataFolder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
@@ -151,6 +153,8 @@ class player (entities):
         if self.walking["right"] == True and self.walking["left"] == True:
             self.walking = {"right" : False, "left" : False}
             self.inptime = 0
+        elif self.walking["right"] == False and self.walking["left"] == False:
+            self.changeState("static")
         elif self.walking["right"] == True or self.walking["left"] == True:
             self.inptime += 1
             if self.walking["right"] == True :

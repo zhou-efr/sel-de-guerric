@@ -70,3 +70,6 @@ print(t.index(type(float)))"""
 y = 10
 phaseShift = lambda x: m.log(x, y)
 print(phaseShift(10))"""
+import math as m
+x = 1
+a = m.log(0.6, 10)

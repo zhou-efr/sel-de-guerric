@@ -65,7 +65,7 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     ordinatePhaseShift = 0
     if (len(entities) > 0):
         player = entities[0]
-        phaseShift = lambda x, y: int((x/m.fabs(x))*((0,6/m.abs(y))*x))
+        phaseShift = lambda x, y: int((x/m.fabs(x))*(m.log(0.6, m.fabs(y))*y))
 
         if ((worldSize[0] >= windowSize[0]) and (player.position["x1"] >= windowSize[0])):
             abscissaPhaseShift = phaseShift(player.speed['x'], player.vXMax)*sizeOfTiles
