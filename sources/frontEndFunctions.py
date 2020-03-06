@@ -15,6 +15,7 @@ Then we have :
         report error (flemme on les laisse se debrouiller seul)    
 """
 import math as m
+from numpy import sign
 from copy import deepcopy
 import pygame
 from pygame.locals import *
@@ -65,15 +66,18 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     ordinatePhaseShift = 0
     if (len(entities) > 0):
         player = entities[0]
-        phaseShift = lambda x, y: int((x/m.fabs(x))*(m.log(0.6, m.fabs(y))*y))
+        abscissaPhaseShift = worldSize[0] - windowSize[0] + player.position["x1"]
+        ordinatePhaseShift = 0
+        print(abscissaPhaseShift)
+        '''     phaseShift = lambda x, y: int(sign(x)*(0.6*y*x))
 
         if ((worldSize[0] >= windowSize[0]) and (player.position["x1"] >= windowSize[0])):
-            abscissaPhaseShift = phaseShift(player.speed['x'], player.vXMax)*sizeOfTiles
+            abscissaPhaseShift = 
         #---end if---
 
         if ((worldSize[1] >= windowSize[1]) and (player.position["y1"] >= windowSize[1])):
-            ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)*sizeOfTiles
-        #---end if---
+            ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)
+        #---end if---'''
     #---end if---
     window.blit(environment.getBackground(), (0,0))
 
