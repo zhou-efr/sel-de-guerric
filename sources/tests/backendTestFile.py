@@ -65,15 +65,15 @@ print(env.environment, env.currentLevel.level, env.currentLevel.position)
 '''
 
 #Test worldUpdater
-'''
+
 area = l.areaLoader(1,1,11)
 for i in range(50):
-    print(area.simpleList[0][0].position["y1"])
-    b.worldUpdater(area.entities, area.item, area.zone, 1, {"up" : [True], "right": [False], "left": [False]})
+    print(area.simpleList[0][0].position)
+    b.worldUpdater(area.entities, area.item, area.zone, 1, {"up" : [False], "right": [False], "left": [True]})
 
-print(area.simpleList[0][0].position["y1"])
+print(area.simpleList[0][0].position)
 8/0
-'''
+
 
 #Periode of m.cos round in the milliem
 '''

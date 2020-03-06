@@ -259,10 +259,10 @@ def hit(en, obj, zone):
 
         for ele in obj + ent:
             hitx = True
-            if e.speed["x"] + 1 > ele.position["x1"] - e.position["x2"]>0 and e.speed["x"] != 0:
-                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - 1 - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
+            if e.speed["x"] > ele.position["x1"] - e.position["x2"] - 1 >= 0:
+                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"] - 1)*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["x"] - 1 < ele.position["x2"] - e.position["x1"]<0 and e.speed["x"] != 0:
+            elif e.speed["x"] < ele.position["x2"] + 1 - e.position["x1"] <= 0:
                 hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             else:
@@ -270,20 +270,20 @@ def hit(en, obj, zone):
             #---end if---
 
             hity = True
-            if e.speed["y"] - 1 < ele.position["y1"] - e.position["y2"]<0 and e.speed["y"] != 0:
+            if e.speed["y"] < ele.position["y1"] - e.position["y2"] + 1 <= 0:
                 hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0, "id": "floor"}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["y"] + 1 > ele.position["y2"] - e.position["y1"]>0 and e.speed["y"] != 0:
-                hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - 1 - e.position["y2"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
+            elif e.speed["y"] > ele.position["y2"] - 1 - e.position["y1"] >= 0:
+                hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - e.position["y2"] - 1)*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
             else:
                 hity = False
             #---end if---
-            if hitx and (ele.position["y1"]>=hitposx["y"]>=ele.position["y2"] or hitposx["y"]>=ele.position["y1"]>=hitposx["y"]+dy):
+            if hitx and (ele.position["y1"]>hitposx["y"]>ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
                 hitpoint["x"].append(hitposx)
             #---end if---
             
-            if hity and (ele.position["x1"]<=hitposy["x"]<=ele.position["x2"] or hitposy["x"]<=ele.position["x1"]<=hitposy["x"]+dx):
+            if hity and (ele.position["x1"]<hitposy["x"]<ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
                 hitpoint["y"].append(hitposy)
             #---end if---
         #---end for---
@@ -314,6 +314,7 @@ def hit(en, obj, zone):
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
             e.hit[hitpointy[3]] = True
+            e.hit["wall"] = True
         elif hitpointx != [] and (hitpointy == [] or hitpointx[2] < hitpointy[2]):
             e.speed["x"] = 0
             e.position["x1"] = hitpointx[0]
@@ -327,7 +328,6 @@ def hit(en, obj, zone):
             e.position["x2"] = hitpointy[0] + dx
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
-            e.hit["wall"] = True
             e.hit[hitpointy[3]] = True
         #---end if---
     #---end for---
@@ -351,7 +351,7 @@ def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]
     ent = world.getEntities()
     obj = world.getObjects()
     zone = world.getZones()
-    
+
     ent[0].updatePlayerInput(inp)
     stateUpdater(ent + zone["ent"])
     acceleration(ent + zone["ent"], obj + zone["obj"], world.environment)
