@@ -68,10 +68,10 @@ print(env.environment, env.currentLevel.level, env.currentLevel.position)
 '''
 area = l.areaLoader(1,1,11)
 for i in range(50):
-    print(area.simpleList[2]["ent"][0].position["y1"])
-    b.worldUpdater(area.entities, area.item, area.zone, 1, {"jump" : [True], "right": [False], "left": [False]})
+    print(area.simpleList[0][0].position["y1"])
+    b.worldUpdater(area.entities, area.item, area.zone, 1, {"up" : [True], "right": [False], "left": [False]})
 
-print(area.simpleList[2]["ent"][0].position["y1"])
+print(area.simpleList[0][0].position["y1"])
 8/0
 '''
 

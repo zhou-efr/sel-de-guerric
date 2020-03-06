@@ -204,13 +204,13 @@ def acceleration(ent, obj, world):
     #---end for---
     #Move of the player(s)
     inpinfluence = {"x" : 0, "y" : 0}
-    if ent[0].jump["jump"] == True and ent[0].hit != 0:
+    if ent[0].jump["jump"] == True and ent[0].hit["floor"]:
         inpinfluence = physicLoader("player_jump")
     elif ent[0].walking["right"] == True:
         inpinfluence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
     elif ent[0].walking["left"] == True:
         inpinfluence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
-    elif ent[0].hit != 0:
+    elif ent[0].hit["floor"]:
         inpinfluence = physicLoader("stopx", None, None, ent[0].speed)
     #---end if---
     ent[0].acceleration["x"] += inpinfluence["x"]
@@ -260,10 +260,10 @@ def hit(en, obj, zone):
         for ele in obj + ent:
             hitx = True
             if e.speed["x"] + 1 > ele.position["x1"] - e.position["x2"]>0 and e.speed["x"] != 0:
-                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
+                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - 1 - e.position["x2"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             elif e.speed["x"] - 1 < ele.position["x2"] - e.position["x1"]<0 and e.speed["x"] != 0:
-                hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
+                hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0}
                 hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
             else:
                 hitx = False
@@ -271,10 +271,10 @@ def hit(en, obj, zone):
 
             hity = True
             if e.speed["y"] - 1 < ele.position["y1"] - e.position["y2"]<0 and e.speed["y"] != 0:
-                hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0}
+                hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0, "id": "floor"}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
             elif e.speed["y"] + 1 > ele.position["y2"] - e.position["y1"]>0 and e.speed["y"] != 0:
-                hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - 1 - e.position["y2"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0}
+                hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - 1 - e.position["y2"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
                 hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
             else:
                 hity = False
@@ -300,9 +300,9 @@ def hit(en, obj, zone):
         hitpointy = []
         for y in hitpoint["y"]:
             if hitpointy == []:
-                hitpointy = [y["x"], y["y"], y["dist"]]
+                hitpointy = [y["x"], y["y"], y["dist"], y["id"]]
             elif y["dist"] < hitpointy[2]:
-                hitpointy = [y["x"], y["y"], y["dist"]]
+                hitpointy = [y["x"], y["y"], y["dist"], y["id"]]
             #---end if---
         #---end for---
 
@@ -313,27 +313,29 @@ def hit(en, obj, zone):
             e.position["x2"] = hitpointx[0] + dx
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
+            e.hit[hitpointy[3]] = True
         elif hitpointx != [] and (hitpointy == [] or hitpointx[2] < hitpointy[2]):
             e.speed["x"] = 0
             e.position["x1"] = hitpointx[0]
             e.position["x2"] = hitpointx[0] + dx
             e.position["y1"] = hitpointx[1]
             e.position["y2"] = hitpointx[1] + dy
+            e.hit["wall"] = True
         elif hitpointy != [] and (hitpointx == [] or hitpointx[2] > hitpointy[2]):
             e.speed["y"] = 0
             e.position["x1"] = hitpointy[0]
             e.position["x2"] = hitpointy[0] + dx
             e.position["y1"] = hitpointy[1]
             e.position["y2"] = hitpointy[1] + dy
-        else:
-            e.hit -= 1
+            e.hit["wall"] = True
+            e.hit[hitpointy[3]] = True
         #---end if---
     #---end for---
 #---end hit---
 
 def move(ent, obj, zone):
     for e in ent + zone["ent"]:
-        e.hit = 2
+        e.hit = {"wall": False, "floor": False, "ceil": False}
     #---end for---
     hit(ent, obj, zone)
     hit(ent, obj, zone)
