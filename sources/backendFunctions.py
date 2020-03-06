@@ -418,10 +418,27 @@ def loadsave(id):
 def stateUpdater(lists):
     for item in lists:
         if item.keyChar == 'm':
-            if abs(item.position["x2"] - item.position["x1"]) > abs(item.position["y2"] - item.position["y1"]):
-                item.updateState('t')
-            elif abs(item.position["x2"] - item.position["x1"]) < abs(item.position["y2"] - item.position["y1"]):
+            up = False
+            down = False
+            right = False
+            left = False
+            for i in lists:
+                if i.keyChar == 'c':
+                    if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
+                        right = True
+                    elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
+                        left = True
+                    elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
+                        up = True
+                    elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
+                        down = True
+                    #---end if---
+                #---end if---
+            #---end for---
+            if up and down:
                 item.updateState('b')
+            elif right and left:
+                item.updateState('t')
             #---end if---
         elif item.keyChar == 'c':
             up = False
