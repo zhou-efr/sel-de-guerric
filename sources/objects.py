@@ -63,7 +63,7 @@ class entities (item):
         self.internalClock = -1
         self.clock = -1
         self.changed = False
-        self.hit = {"wall": False, "floor": False, "ceil": "False"}
+        self.hit = {"rwall": False, "lwall": False, "floor": False, "ceil": False}
         self.speed = {"x" : 0,"y" : 0}
         self.acceleration = {"x" : 0,"y" : 0}
         self.inptime = 0
@@ -144,26 +144,95 @@ class player (entities):
         super().__init__('p', 0)
         self.walking = {"right" : False, "left" : False}
         self.jump = {"jump" : False, "fastfall" : False}
+        self.inptime = 1
+        self.cdw = {"walljump": True, "jump": True, "action": True}
+        self.rice = 100
+        self.coef = 1
+        self.ricesize = "high"
     #---end init---
 
     def updatePlayerInput(self, inp, running = False):
         self.walking["right"] = inp["right"][0]
         self.walking["left"] = inp["left"][0]
         self.jump["jump"] = inp["up"][0]
+        self.jump["fastfall"] = inp["down"][0]
+
+        if inp["action1"][0]:
+            if self.cdw["action"]:
+                self.cdw["action"] = False
+                if self.state == "bouncing":
+                    self.state = "default"
+                    self.cdw["double_jump"] = True
+                else:
+                    self.state = "bouncing"
+                #---end if---
+            #---end if---
+        elif self.hit["floor"]:
+            self.cdw["action"] = True
+        #---end if---
+
+
+        if self.state == "bouncing":
+            self.jump["jump"] = True
+            self.jump["fastfall"] = False
+        #---end if---
+
         if self.walking["right"] == True and self.walking["left"] == True:
             self.walking = {"right" : False, "left" : False}
-            self.inptime = 0
-        elif self.walking["right"] == False and self.walking["left"] == False:
-            self.changeState("static")
+        if self.walking["right"] == False and self.walking["left"] == False:
+            if self.data["state"] == "backward" or self.data["state"] == "staticb":
+                self.changeState("staticb")
+            else:
+                self.changeState("static")
+            #---end if---
         elif self.walking["right"] == True or self.walking["left"] == True:
-            self.inptime += 1
             if self.walking["right"] == True :
                 self.changeState("backward")
             elif self.walking["left"] == True :
                 self.changeState("foward")
-        else:
-            self.inptime = 0
+            #---end if---
         #---end if---
+
+        if self.jump["fastfall"] and not(self.hit["floor"]):
+            self.changeState("fastfall")
+        elif self.data["state"] == "fastfall" and self.hit["floor"]:
+            self.changeState("static")
+        #---end if---
+        
+        if self.jump["jump"] and self.jump["fastfall"]:
+            self.jump = {"jump": False, "fastfall": False}
+        elif self.hit["floor"]:
+            self.inptime = 1
+        elif self.jump["jump"]:
+            if self.inptime < 10:
+                self.inptime += 1
+            #---end if---
+        else:
+            self.inptime = 1
+        #---end if---
+
+        if self.jump["jump"]:
+            if self.hit["floor"]:
+                self.changeState("floor_jump")
+            elif self.cdw["double_jump"]:
+                self.changeState("double_jump")
+            elif self.hit["rwall"] and self.cdw["walljump"]:
+                self.changeState("rwall_jump")
+            elif self.hit["lwall"] and self.cdw["walljump"]:
+                self.changeState("lwall_jump")
+            #---end if---
+        #---end if--- 
+
+        self.rice -= (self.speed["x"]**2 + self.speed["y"]**2)**(1/2) * self.coef
+        if self.rice >= 75:
+            self.ricesize = "high"
+        elif self.rice > 25:
+            self.ricesize = "normal"
+        elif self.rice > 0:
+            self.ricesize = "low"
+        else:
+            self.changeState("dead")
+        #---end if--- 
     #---end updateWalking---
 
     def changeState(self, state, dead = 0):
