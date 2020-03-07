@@ -146,6 +146,9 @@ class player (entities):
         self.jump = {"jump" : False, "fastfall" : False}
         self.inptime = 1
         self.cdw = {"walljump": True, "jump": True, "action": True}
+        self.rice = 100
+        self.coef = 1
+        self.ricesize = "high"
     #---end init---
 
     def updatePlayerInput(self, inp, running = False):
@@ -168,7 +171,6 @@ class player (entities):
             self.cdw["action"] = True
         #---end if---
 
-        #---end if---
 
         if self.state == "bouncing":
             self.jump["jump"] = True
@@ -219,7 +221,18 @@ class player (entities):
             elif self.hit["lwall"] and self.cdw["walljump"]:
                 self.changeState("lwall_jump")
             #---end if---
-        #---end if---   
+        #---end if--- 
+
+        self.rice -= (self.speed["x"]**2 + self.speed["y"]**2)**(1/2) * self.coef
+        if self.rice >= 75:
+            self.ricesize = "high"
+        elif self.rice > 25:
+            self.ricesize = "normal"
+        elif self.rice > 0:
+            self.ricesize = "low"
+        else:
+            self.changeState("dead")
+        #---end if--- 
     #---end updateWalking---
 
     def changeState(self, state, dead = 0):

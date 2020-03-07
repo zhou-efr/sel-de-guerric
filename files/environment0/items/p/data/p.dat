@@ -9,4 +9,5 @@ floor_jump subDictionnary
 lwall_jump subDictionnary
 rwall_jump subDictionnary
 double_jump subDictionnary
+dead subDictionnary
 state static
