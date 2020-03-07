@@ -72,7 +72,7 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
             abscissaPhaseShift = deepcopy(-old[0])
         #---end if---
         
-        old[1] = old[3] - 2 + windowSize[1] if (old[3] - 1 + windowSize[1]) < 0 else old[3] - 2 + windowSize[1] - (old[3] - 2 + windowSize[1])#2 car -1 pour le sol et -1 pour la taille du perso
+        old[1] = old[3] - 2 + windowSize[1] if (old[3] - 1 + windowSize[1]) < worldSize[1]-windowSize[1] else old[3] - 2 + windowSize[1] - (old[3] - 2 + windowSize[1])#2 car -1 pour le sol et -1 pour la taille du perso
         ordinatePhaseShift = deepcopy(old[1])
 
         old[2] = player.position["x1"]
