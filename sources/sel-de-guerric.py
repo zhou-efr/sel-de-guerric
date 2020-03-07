@@ -57,12 +57,13 @@ inputs = {"up" : (False, 0),
         "quit" : (False, 0)}
 #---Main Loop---
 lauched = True
+old = [0,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
 while lauched:
     lauched = False
     #---Second Loop---
     game = True
     while game:
-        f.windowUpdate(window, loaded, TILE_SIZE)
+        old = f.windowUpdate(window, loaded, old, TILE_SIZE)
         inputs = f.inputReader(keyMap, inputs)
         if inputs["pause"][0]:
             game = False

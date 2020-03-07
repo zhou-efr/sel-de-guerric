@@ -44,7 +44,7 @@ def printer(testIDE, window, sizeOfTiles, xWorld = 0, yWorld = 0): #WIP
     return xWorld, yWorld
 #---end devPrinter---
 
-def windowUpdate(window, environment, sizeOfTiles = -1):
+def windowUpdate(window, environment, old, sizeOfTiles = -1):
     """"the function which blit everything 
         For more readability I assume that ALL COORDINATES has the form (x,y) as
         y 
@@ -62,22 +62,18 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
     entities = environment.getEntities()
     objects = environment.getObjects()
     worldSize = (environment.getWidth(),environment.getHeight())
-    abscissaPhaseShift = 0
-    ordinatePhaseShift = 0
+    abscissaPhaseShift = deepcopy(-old[0]) if (worldSize[0]!=windowSize[0]) else 0
+    ordinatePhaseShift = deepcopy(-old[1]) if (worldSize[1]!=windowSize[1]) else 0
     if (len(entities) > 0):
         player = entities[0]
-        abscissaPhaseShift = worldSize[0] - windowSize[0] + player.position["x1"]
-        ordinatePhaseShift = 0
-        print(abscissaPhaseShift)
-        '''     phaseShift = lambda x, y: int(sign(x)*(0.6*y*x))
 
-        if ((worldSize[0] >= windowSize[0]) and (player.position["x1"] >= windowSize[0])):
-            abscissaPhaseShift = 
+        if (old[0] - old[2] + player.position['x1']) > 0:
+            old[0] += player.position['x1'] - old[2]
+            abscissaPhaseShift = deepcopy(-old[0])
         #---end if---
-
-        if ((worldSize[1] >= windowSize[1]) and (player.position["y1"] >= windowSize[1])):
-            ordinatePhaseShift = phaseShift(player.speed['y'], player.vYMax)
-        #---end if---'''
+        
+        old[2] = player.position["x1"]
+        old[3] = player.position["y1"]
     #---end if---
     window.blit(environment.getBackground(), (0,0))
 
@@ -85,10 +81,14 @@ def windowUpdate(window, environment, sizeOfTiles = -1):
         for j in range(int(i.position["x2"] - i.position["x1"])+1):
             for k in range(int(m.fabs(i.position["y2"]- i.position["y1"]))+1):
                 window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift + j)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift + k)*sizeOfTiles))
+            #---end for---
+        #---end for---
+    #---end for---
 
     for i in entities:
         window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
     #---end for---
+    return old
 #---end windowUpdate---
 
 def inputReader(inputs, odlInputs):
