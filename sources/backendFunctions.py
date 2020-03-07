@@ -22,7 +22,7 @@ def hitboxesFileReader(adress):  #Return the list of the objects with their type
             obj.append([])
             for char in line:
                 if char != " ":
-                    if c == 0 or (len(obj[l]) > 0 and char != obj[l][-1][0]) or nospace == False:
+                    if c == 0 or (len(obj[l]) > 0 and char != obj[l][-1][0]) or nospace == False or char == "c":
                         #Add the new object tiles with his type, and his position
                         obj[l].append([char,l,c,l,c])
                         nospace = True
@@ -46,7 +46,7 @@ def hitboxesFileReader(adress):  #Return the list of the objects with their type
                 j = 0
                 k = 1
                 while i+k < l and j < len(obj[i+k]):
-                    if o[2] == obj[i+k][j][2] and o[4] == obj[i+k][j][4] and o[0] == obj[i+k][j][0]:
+                    if o[2] == obj[i+k][j][2] and o[4] == obj[i+k][j][4] and o[0] == obj[i+k][j][0] and o[0] != 'c':
                         hu[-1][3] += 1
                         obj[i+k].remove(obj[i+k][j])
                         k += 1
@@ -163,9 +163,11 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     if id == "world1":
         influence = {"x" : -speed["x"]*0.15, "y" : -0.05} #natural decrease of speed and gravity
     elif id == "player_jump":
-        influence["y"] = (1/dtime - 1/10)*0.75
+        influence["y"] = (1/dtime - 1/10)*0.4
+    elif id == "player_double_jump":
+        influence["y"] = -speed["y"] + 0.6
     elif id == "player_wall_jump":
-        influence["y"] = 1
+        influence["y"] = 0.75
         if ele == 0:
             influence["x"] = 1
         else:
@@ -217,7 +219,7 @@ def acceleration(ent, obj, world):
     inp = False
     inpinfluence = {"x" : 0, "y" : 0}
     if ent[0].hit["floor"]:
-        ent[0].cdw = {"walljump": True, "jump": True}
+        ent[0].cdw = {"walljump": True, "jump": True, "double_jump": False, "action": ent[0].cdw["action"]}
     if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
         influence = physicLoader("wall", None, None, ent[0].speed)
         inpinfluence["y"] += influence["y"]
@@ -228,17 +230,22 @@ def acceleration(ent, obj, world):
             influence = physicLoader("player_jump", None, None, None, ent[0].inptime)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
-        elif ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
+        if ent[0].cdw["double_jump"]:
+            influence = physicLoader("player_double_jump", None, None, ent[0].speed, ent[0].inptime)
+            inpinfluence["x"] += influence["x"]
+            inpinfluence["y"] += influence["y"]
+            ent[0].cdw["double_jump"] = False
+        if ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 0)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
             ent[0].cdw["walljump"] = False
-        elif ent[0].hit["rwall"] and ent[0].cdw["walljump"]:
+        if ent[0].hit["rwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 1)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
             ent[0].cdw["walljump"] = False
-        #---end if---
+        #---end ifs---
     elif ent[0].cdw["jump"]:
         ent[0].cdw["jump"] = False
         ent[0].inpinfluence = 1
@@ -477,17 +484,65 @@ def stateUpdater(lists):
                     #---end if---
                 #---end if---
             #---end for---
-            if up == True:
-                if right == True:
-                    item.updateState('[')
-                elif left == True:
-                    item.updateState(']')
+            if up:
+                if down:
+                    if right:
+                        if left:
+                            item.updateState("+")
+                        else:
+                            item.updateState("}")
+                        #---end if---
+                    else:
+                        if left:
+                            item.updateState("{")
+                        else:
+                            item.updateState("b")
+                        #---end if---
+                    #---end if---
+                else:
+                    if right:
+                        if left:
+                            item.updateState("-")
+                        else:
+                            item.updateState("[")
+                        #---end if---
+                    else:
+                        if left:
+                            item.updateState("]")
+                        else:
+                            item.updateState("'")
+                        #---end if---
+                    #---end if---
                 #---end if---
-            elif down == True:
-                if right == True:
-                    item.updateState('(')
-                elif left == True:
-                    item.updateState(')')
+            else:
+                if down:
+                    if right:
+                        if left:
+                            item.updateState("_")
+                        else:
+                            item.updateState("(")
+                        #---end if---
+                    else:
+                        if left:
+                            item.updateState(")")
+                        else:
+                            item.updateState(",")
+                        #---end if---
+                    #---end if---
+                else:
+                    if right:
+                        if left:
+                            item.updateState("t")
+                        else:
+                            item.updateState("c")
+                        #---end if---
+                    else:
+                        if left:
+                            item.updateState("d")
+                        else:
+                            item.updateState("default")
+                        #---end if---
+                    #---end if---
                 #---end if---
             #---end if---
         #---end if---

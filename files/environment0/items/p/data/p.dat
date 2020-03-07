@@ -1,6 +1,12 @@
 Vmax 2.5
 bouncing subDictionnary
 static subDictionnary
+staticb subDictionnary
 foward subDictionnary
 backward subDictionnary
+fastfall subDictionnary
+floor_jump subDictionnary
+lwall_jump subDictionnary
+rwall_jump subDictionnary
+double_jump subDictionnary
 state static
