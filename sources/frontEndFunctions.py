@@ -63,15 +63,18 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
     objects = environment.getObjects()
     worldSize = (environment.getWidth(),environment.getHeight())
     abscissaPhaseShift = deepcopy(-old[0]) if (worldSize[0]!=windowSize[0]) else 0
-    ordinatePhaseShift = deepcopy(-old[1]) if (worldSize[1]!=windowSize[1]) else 0
+    ordinatePhaseShift = deepcopy(old[1]) if (worldSize[1]!=windowSize[1]) else 0
     if (len(entities) > 0):
         player = entities[0]
-
-        if (old[0] - old[2] + player.position['x1']) > 0:
-            old[0] += player.position['x1'] - old[2]
+    
+        if (old[0] - old[2] + player.position['x1']) > 0 :
+            old[0] = old[0] + player.position["x1"] - old[2] if old[0] + player.position["x1"] - old[2] < worldSize[0]-windowSize[0] else worldSize[0]-windowSize[0]
             abscissaPhaseShift = deepcopy(-old[0])
         #---end if---
         
+        old[1] = old[3] - 2 + windowSize[1] if (old[3] - 1 + windowSize[1]) < 0 else old[3] - 2 + windowSize[1] - (old[3] - 2 + windowSize[1])#2 car -1 pour le sol et -1 pour la taille du perso
+        ordinatePhaseShift = deepcopy(old[1])
+
         old[2] = player.position["x1"]
         old[3] = player.position["y1"]
     #---end if---
