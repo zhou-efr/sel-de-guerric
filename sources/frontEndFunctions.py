@@ -66,20 +66,20 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
     ordinatePhaseShift = deepcopy(old[1]) if (worldSize[1]!=windowSize[1]) else 0
     if (len(entities) > 0):
         player = entities[0]
-    
-        if (old[0] - old[2] + player.position['x1']) > 0 :
+
+        if (old[0] - old[2] + player.position['x1']) > 0 and player.position['x1'] > windowSize[0]*(1/3) and windowSize[0]*(2/3) > player.position['x1']-old[0]:
             old[0] = old[0] + player.position["x1"] - old[2] if old[0] + player.position["x1"] - old[2] < worldSize[0]-windowSize[0] else worldSize[0]-windowSize[0]
             abscissaPhaseShift = deepcopy(-old[0])
         #---end if---
-        
-        old[1] = player.position["y1"] - 2 + windowSize[1] if player.position["y1"] - 2 + windowSize[1] < 0 else 0
-        #-2 car -1 pour le sol et -1 pour la taille du perso
+        if not player.hit["floor"]:
+            old[1] = player.position["y1"] - 2 + windowSize[1] if player.position["y1"] - 2 + windowSize[1] < 0 else 0
+            #-2 car -1 pour le sol et -1 pour la taille du perso
         ordinatePhaseShift = deepcopy(old[1])
 
         old[2] = player.position["x1"]
         old[3] = player.position["y1"]
     #---end if---
-    window.blit(environment.getBackground(), (0,0))
+    window.blit(environment.getBackground(), (abscissaPhaseShift, ordinatePhaseShift))
 
     for i in objects:
         for j in range(int(i.position["x2"] - i.position["x1"])+1):
