@@ -57,7 +57,7 @@ inputs = {"up" : (False, 0),
         "quit" : (False, 0)}
 #---Main Loop---
 lauched = True
-old = [0,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
+old = [0,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"], 0]
 while lauched:
     lauched = False
     #---Second Loop---
