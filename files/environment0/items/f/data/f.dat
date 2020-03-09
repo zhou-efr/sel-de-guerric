@@ -1,0 +1,10 @@
+default subDictionnary
+attack_left subDictionnary
+attack_right subDictionnary
+go_left subDictionnary
+go_right subDictionnary
+ground_left subDictionnary
+ground_right subDictionnary
+ground subDictionnary
+dead subDictionnary
+state default

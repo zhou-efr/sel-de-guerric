@@ -141,12 +141,12 @@ def list(board):
                 exit[-1].position["y2"] = j["y2"]
                 exit[-1].position["x1"] = j["x1"]
                 exit[-1].position["x2"] = j["x2"]
-            elif i[0] == "s":
-                fspot.append(o.item(i[0], board.environment))
-                fspot[-1].position["y1"] = i[1]
-                fspot[-1].position["y2"] = i[3]
-                fspot[-1].position["x1"] = i[2]
-                fspot[-1].position["x2"] = i[4]
+            elif i == "s":
+                fspot.append(o.item(i, board.environment))
+                fspot[-1].position["y1"] = j["y1"]
+                fspot[-1].position["y2"] = j["y2"]
+                fspot[-1].position["x1"] = j["x1"]
+                fspot[-1].position["x2"] = j["x2"]
             elif i == "zrat":
                 zrat.append(o.item("zrat", board.environment))
                 zrat[-1].position["y1"] = j["y1"]
@@ -162,7 +162,7 @@ def list(board):
 def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
-        influence = {"x" : -speed["x"]*0.15, "y" : -0.05} #natural decrease of speed and gravity
+        influence = {"x" : 0, "y" : -0.05} #natural decrease of speed and gravity
     elif id == "player_jump":
         influence["y"] = (1/dtime - 1/10)*0.4
     elif id == "player_double_jump":
@@ -170,9 +170,9 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     elif id == "player_wall_jump":
         influence["y"] = 0.75
         if ele == 0:
-            influence["x"] = 0.7
+            influence["x"] = 0.4
         else:
-            influence["x"] = -0.7
+            influence["x"] = -0.4
         #---end if---
     elif id == "player_fastfall":
         influence["y"] = -0.85
@@ -206,15 +206,28 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
             ele[1].inptime += 1
         #---end if---
     elif id == "f":
-        if ele[1].state == "jump":
-            if ele[1].data["state"] == "go_right":
-                target = ele[1].r_spot
-            else:
-                target = ele[1].l_spot
+        if ele[0] == ele[1]:
+            if ele[1].state == "jump" and ele[1].hit["floor"]:
+                if ele[1].data["state"] == "go_right" or ele[1].data["newState"] == "go_right":
+                    target = ele[1].r_spot
+                else:
+                    target = ele[1].l_spot
+                #---end if---
+                distance = ((target.position["x1"] - ele[1].position["x1"])**2 + (target.position["y1"] - ele[1].position["y1"])**2)**(1/2)
+                influence["x"] += (target.position["x1"] - ele[1].position["x1"])/(2 *distance) - ele[1].acceleration["x"]*distance
+                influence["y"] += (target.position["y1"] - ele[1].position["y1"])/(2 *distance) - ele[1].acceleration["y"]*distance
+            elif ele[1].state == "ground" and ele[1].hit["floor"]:
+                if ele[1].data["state"] == "ground_left":
+                    influence["x"] = -0.1 - ele[1].speed["x"]
+                elif ele[1].data["state"] == "ground_right":
+                    influence["x"] = 0.1 - ele[1].speed["x"]
+                #---end if---
+            elif ele[1].hit["floor"]:
+                influence["x"] = -ele[1].speed["x"]*0.8
             #---end if---
-            distance = ((target.position["x1"] - ele[1].position["x1"])**2 + (target.position["y1"] - ele[1].position["y1"])**2)**(1/2)
-            influence["x"] += (target.position["x1"] - ele[0].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
-            influence["y"] += (target.position["y1"] - ele[0].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
+        elif ele[1].state == "attack" and type(ele[0]) == o.player and ele[1].hit["floor"]:
+            influence["x"] += (ele[0].position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
+            influence["y"] += (ele[0].position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
         #---end if---
     #---end if---
     return influence
@@ -229,7 +242,7 @@ def acceleration(ent, obj, world):
     #---end for---
     #Move of the player(s)
     inp = False
-    inpinfluence = {"x" : 0, "y" : 0}
+    inpinfluence = {"x" : -0.2 * ent[0].speed["x"], "y" : 0}
     if ent[0].hit["floor"]:
         ent[0].cdw = {"walljump": True, "jump": True, "double_jump": False, "action": ent[0].cdw["action"]}
     if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
@@ -287,7 +300,7 @@ def acceleration(ent, obj, world):
             if ele in ent:
                 speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2) - ((ele.speed["x"])**2 + (ele.speed["y"])**2)**(1/2)
             else:
-                speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2)
+                speed = e.speed
             #---end if---
             influence = physicLoader(e.keyChar,[ele,e],distance,speed)
             e.acceleration["x"] += influence["x"]
@@ -418,7 +431,7 @@ def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]
     zone = world.getZones()
 
     ent[0].updatePlayerInput(inp)
-    stateUpdater(ent + zone["ent"])
+    stateUpdater(ent + zone["ent"], world)
     acceleration(ent + zone["ent"], obj + zone["obj"], world.environment)
     speed(ent + zone["ent"])
     move(ent, obj, zone)
@@ -453,7 +466,7 @@ def loadsave(id):
     return l.environmentLoader(save[1], save[2], save[3])
 #---end loadsave---
 
-def stateUpdater(lists):
+def stateUpdater(lists, world):
     for item in lists:
         if item.keyChar == 'm':
             up = False
@@ -558,36 +571,44 @@ def stateUpdater(lists):
                 #---end if---
             #---end if---
         elif item.keyChar == 'f':
+            item.sdetector(world.getBoard())
+            if item.spot != None:
+                item.changeState('default')
+                item.state = 'default'
             if item.state == "default":
-                item.jump = True
-                item.r_jump = int(r.random() * 2000)
+                item.rjump = int(r.random() * 125)
                 if ((lists[0].position["x1"]-item.position["x1"])**2 + (lists[0].position["y1"]-item.position["y1"])**2)**(1/2) <= item.view:
                     item.state = 'attack'
                     if lists[0].position["x1"] < item.position["x1"]:
-                        item.updateState('attack_left')
+                        item.changeState('attack_left')
                     else:
-                        item.updateState('attack_right')
+                        item.changeState('attack_right')
                     #---end if---
                 elif item.rjump == 0 and item.r_spot != None:
-                    item.updateState('go_right')
+                    item.changeState('go_right')
                     item.state = 'jump'
                 elif item.rjump == 1 and item.l_spot != None:
-                    item.updateState('go_left')
+                    item.changeState('go_left')
                     item.state = 'jump'
-                else:
-                    item.jump = False
-                    item.updateState('default')
-                    item.state = 'default'
                 #---end if---
-            elif item.state != 'ground' and item.ground == True:
+            elif item.hit["floor"] and item.spot == None:
                 item.state = 'ground'
-                if item.state[-5:] == 'right':
-                    item.updateState('ground_left')
-                elif item.state[-4:] == 'left':
-                    item.updateState('ground_right')
+                if item.r_spot != None and item.l_spot != None:
+                    distr = item.position["x1"]-item.r_spot.position["x1"]
+                    distl = item.position["x1"]-item.l_spot.position["x1"]
+                    if (distr < distl or item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]:
+                        item.changeState('ground_right')
+                    elif (distr < distl or item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]:
+                        item.changeState('ground_left')
+                    else:
+                        item.changeState('ground')
+                    #---end if---
+                elif item.r_spot != None:
+                    item.changeState('ground_right')
+                elif item.l_spot != None:
+                    item.changeState('ground_left')
                 else:
-                    item.updateState('ground')
-                #---end if---
+                    item.changeState('ground')
             #---end if---
         #---end if---
     #---end for---

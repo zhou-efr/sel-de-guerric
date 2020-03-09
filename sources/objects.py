@@ -32,8 +32,10 @@ class item:
 
     def updateState(self, newstate):
         self.state = newstate
-        self.pictureAdress = self.folder + self.state + ".png"
-        self.picture = pygame.image.load(self.pictureAdress)
+        if type(self) == item:
+            self.pictureAdress = self.folder + self.state + ".png"
+            self.picture = pygame.image.load(self.pictureAdress)
+        #---end if---
     #---end updateState---
 
     #---beginning accessors
@@ -124,11 +126,13 @@ class entities (item):
         self.updatePictureSize( self.size)
     #---end updateSprite---
 
-    def changeState(self, dead = 0):
+    def changeState(self, state = "default", dead = 0):
         if dead:
             self.data["state"] = "dead"
         #---end if---
         self.changed = True
+        if not(dead):
+            self.data["newState"] = state
     #---end changeState---
 
     #---beginning accessors---
@@ -236,31 +240,31 @@ class player (entities):
             self.changeState("dead")
         #---end if--- 
     #---end updateWalking---
-
-    def changeState(self, state, dead = 0):
-        super().changeState(dead)
-        if not(dead):
-            self.data["newState"] = state
-        #---end if---
-    #---end changeState---
 #---end player--- 
 
 class fish(entities):
 
     def __init__(self, keyChar, board):
-        super().__init__(keyChar, board.environment)
-        self.spot = True
-        self.jump = False
-        self.ground = False
+        super().__init__(keyChar, 0)
         self.rjump = 2
         self.r_spot = None
         self.l_spot = None
+        self.spot = None
         self.view = 5
     #---end init---
 
     def sdetector(self, board):
+        self.l_spot = None
+        self.r_spot = None
+        self.spot = None
         for s in board.list[6]:
-            if s.position["x1"] < self.position["x1"] and s.position["x2"] < self.position["x2"] and (self.r_spot == None or s.position["x1"] < self.r_spot.position["x1"]):
+            if (self.position["x1"]-0.5 <= s.position["x1"] <= self.position["x1"]+0.5 or self.position["x2"]-0.5 <= s.position["x2"] <= self.position["x2"]+0.5) and (self.position["y1"]-0.5 <= s.position["y1"] <= self.position["y1"]+0.5 or self.position["y2"]-0.5 <= s.position["y2"] <= self.position["y2"]+0.5) and self.hit["floor"]:
+                self.spot = s
+                self.position["x1"] = s.position["x1"]
+                self.position["x2"] = s.position["x2"]
+                self.position["y1"] = s.position["y1"]
+                self.position["y2"] = s.position["y2"]
+            elif s.position["x1"] < self.position["x1"] and s.position["x2"] < self.position["x2"] and (self.r_spot == None or s.position["x1"] < self.r_spot.position["x1"]):
                 self.l_spot = s
             elif s.position["x1"] > self.position["x1"] and s.position["x2"] > self.position["x2"] and (self.r_spot == None or s.position["x1"] > self.r_spot.position["x1"]):
                 self.r_spot = s

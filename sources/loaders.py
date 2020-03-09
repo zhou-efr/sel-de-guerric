@@ -81,6 +81,9 @@ class environmentLoader:
     def getLevel(self):
         return self.currentLevel
 
+    def getBoard(self):
+        return self.currentLevel.currentBoard
+
     def getInventory(self):
         return self.inventory
 
@@ -241,7 +244,7 @@ class areaLoader:
         self.zone = self.simpleList[2]
 
         #beginning of initialazation 
-        b.stateUpdater(self.item)
+        b.stateUpdater(self.item, self)
     #---end init---
 
     #---Beginning of accessors---
