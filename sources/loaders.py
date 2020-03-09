@@ -65,6 +65,10 @@ class environmentLoader:
         for i in self.getObjects():
             i.updateObjectPictureSize(size)
         #---end for---
+
+        for i in self.getEntities():
+            i.updatePictureSize(size)
+
     #---end nextLevel---
 
     #---Beginning accessor---

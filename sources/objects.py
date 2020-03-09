@@ -69,6 +69,7 @@ class entities (item):
         self.inptime = 0
         self.vXMax = 1
         self.vYMax = 1
+        self.size = 120
         try:
             self.data = l.fileLoader(self.dataFolder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
@@ -104,9 +105,10 @@ class entities (item):
         return self.sprite[self.internalClock]
     #---end getPicture---
 
-    def updatePictureSize(self, size = 120):
+    def updatePictureSize(self, size):
+        self.size = size
         for i in range(len(self.sprite)):
-            self.sprite[i] = pygame.transform.scale(self.sprite[i].convert_alpha(), (size, size))
+            self.sprite[i] = pygame.transform.scale(self.sprite[i].convert_alpha(), (self.size, self.size))
         #---end for---
     #---end updatePictureSize---
 
@@ -119,7 +121,7 @@ class entities (item):
         for i in range(self.data[self.data["state"]]["index"]):
             self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
         #---end for---
-        self.updatePictureSize()
+        self.updatePictureSize( self.size)
     #---end updateSprite---
 
     def changeState(self, dead = 0):
