@@ -243,4 +243,28 @@ class player (entities):
             self.data["newState"] = state
         #---end if---
     #---end changeState---
-#---end player---  
+#---end player--- 
+
+class fish(entities):
+
+    def __init__(self, keyChar, board):
+        super().__init__(keyChar, board.environment)
+        self.spot = True
+        self.jump = False
+        self.ground = False
+        self.rjump = 2
+        self.r_spot = None
+        self.l_spot = None
+        self.view = 5
+    #---end init---
+
+    def sdetector(self, board):
+        for s in board.list[6]:
+            if s.position["x1"] < self.position["x1"] and s.position["x2"] < self.position["x2"] and (self.r_spot == None or s.position["x1"] < self.r_spot.position["x1"]):
+                self.l_spot = s
+            elif s.position["x1"] > self.position["x1"] and s.position["x2"] > self.position["x2"] and (self.r_spot == None or s.position["x1"] > self.r_spot.position["x1"]):
+                self.r_spot = s
+            #---end if---
+        #---end for---
+    #---end sdetector---
+#---end fish---

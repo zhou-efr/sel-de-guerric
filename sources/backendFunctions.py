@@ -5,6 +5,7 @@ author : la tribut des zhou
 import objects as o
 import math as m
 import loaders as l
+import random as r
 
 def hitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
     #Load the fill
@@ -76,13 +77,13 @@ def simpleList(area):
     for e in area.list[:3]:
         ent += e
     #---endfor---
-    for e in area.list[3:5]:
+    for e in area.list[3:4]:
         obj += e
     #---endfor---
-    for e in area.list[5:6]:
+    for e in area.list[4:5]:
         zone["ent"] += e
     #---end for---
-    for e in area.list[6:]:
+    for e in area.list[5:]:
         zone["obj"] += e
     #---end for---
     return ent, obj, zone
@@ -107,7 +108,7 @@ def list(board):
             player[-1].position["x1"] = i[2]
             player[-1].position["x2"] = i[4]
         elif i[0] == "f":
-            fish.append(o.entities(i[0], board.environment))
+            fish.append(o.fish(i[0], board))
             fish[-1].position["y1"] = i[1]
             fish[-1].position["y2"] = i[3]
             fish[-1].position["x1"] = i[2]
@@ -124,12 +125,6 @@ def list(board):
             walls[-1].position["y2"] = i[3]
             walls[-1].position["x1"] = i[2]
             walls[-1].position["x2"] = i[4]
-        elif i[0] == "s":
-            fspot.append(o.item(i[0], board.environment))
-            fspot[-1].position["y1"] = i[1]
-            fspot[-1].position["y2"] = i[3]
-            fspot[-1].position["x1"] = i[2]
-            fspot[-1].position["x2"] = i[4]
         #---end if---
     #---end for---
     for i in board.boardata["zone"]:
@@ -146,6 +141,12 @@ def list(board):
                 exit[-1].position["y2"] = j["y2"]
                 exit[-1].position["x1"] = j["x1"]
                 exit[-1].position["x2"] = j["x2"]
+            elif i[0] == "s":
+                fspot.append(o.item(i[0], board.environment))
+                fspot[-1].position["y1"] = i[1]
+                fspot[-1].position["y2"] = i[3]
+                fspot[-1].position["x1"] = i[2]
+                fspot[-1].position["x2"] = i[4]
             elif i == "zrat":
                 zrat.append(o.item("zrat", board.environment))
                 zrat[-1].position["y1"] = j["y1"]
@@ -155,7 +156,7 @@ def list(board):
             #---end if---
         #---end for---
     #---end for---
-    return player, fish, rat, fspot, walls, cloud, exit, zrat
+    return player, fish, rat, walls, cloud, exit, fspot, zrat
 #---end list---
 
 def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
@@ -169,9 +170,9 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     elif id == "player_wall_jump":
         influence["y"] = 0.75
         if ele == 0:
-            influence["x"] = 1
+            influence["x"] = 0.7
         else:
-            influence["x"] = -1
+            influence["x"] = -0.7
         #---end if---
     elif id == "player_fastfall":
         influence["y"] = -0.85
@@ -203,6 +204,17 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
             #---end if---
             influence["y"] += m.cos(ele[1].inptime/4) + 1
             ele[1].inptime += 1
+        #---end if---
+    elif id == "f":
+        if ele[1].state == "jump":
+            if ele[1].data["state"] == "go_right":
+                target = ele[1].r_spot
+            else:
+                target = ele[1].l_spot
+            #---end if---
+            distance = ((target.position["x1"] - ele[1].position["x1"])**2 + (target.position["y1"] - ele[1].position["y1"])**2)**(1/2)
+            influence["x"] += (target.position["x1"] - ele[0].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
+            influence["y"] += (target.position["y1"] - ele[0].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
         #---end if---
     #---end if---
     return influence
@@ -543,6 +555,38 @@ def stateUpdater(lists):
                             item.updateState("default")
                         #---end if---
                     #---end if---
+                #---end if---
+            #---end if---
+        elif item.keyChar == 'f':
+            if item.state == "default":
+                item.jump = True
+                item.r_jump = int(r.random() * 2000)
+                if ((lists[0].position["x1"]-item.position["x1"])**2 + (lists[0].position["y1"]-item.position["y1"])**2)**(1/2) <= item.view:
+                    item.state = 'attack'
+                    if lists[0].position["x1"] < item.position["x1"]:
+                        item.updateState('attack_left')
+                    else:
+                        item.updateState('attack_right')
+                    #---end if---
+                elif item.rjump == 0 and item.r_spot != None:
+                    item.updateState('go_right')
+                    item.state = 'jump'
+                elif item.rjump == 1 and item.l_spot != None:
+                    item.updateState('go_left')
+                    item.state = 'jump'
+                else:
+                    item.jump = False
+                    item.updateState('default')
+                    item.state = 'default'
+                #---end if---
+            elif item.state != 'ground' and item.ground == True:
+                item.state = 'ground'
+                if item.state[-5:] == 'right':
+                    item.updateState('ground_left')
+                elif item.state[-4:] == 'left':
+                    item.updateState('ground_right')
+                else:
+                    item.updateState('ground')
                 #---end if---
             #---end if---
         #---end if---
