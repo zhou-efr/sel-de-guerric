@@ -37,6 +37,9 @@ class environmentLoader:
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def getPlayer(self):
+        return self.currentLevel.currentBoard.entities[0]
+
     def getRect(self):
         return self.currentLevel.currentBoard.rect
 

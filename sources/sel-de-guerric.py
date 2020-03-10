@@ -58,14 +58,14 @@ inputs = {"up" : (False, 0),
 #---Main Loop---
 lauched = True
 
-old = [0,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
+old = [0,loaded.getPlayer().position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
 while lauched:
     lauched = False
     #---Second Loop---
     game = True
     while game:
         if loaded.isChanged():
-            old = [0,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
+            old = [0,loaded.getPlayer().position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
         #---end if---
         old = f.windowUpdate(window, loaded, old, TILE_SIZE)
         inputs = f.inputReader(keyMap, inputs)
