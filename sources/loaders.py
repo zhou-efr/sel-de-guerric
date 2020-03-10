@@ -37,6 +37,12 @@ class environmentLoader:
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def getRect(self):
+        return self.currentLevel.currentBoard.rect
+
+    def getYcollideRects(self):
+        return self.currentLevel.currentBoard.collidesRect
+
     def getBackground(self):
         return self.currentLevel.currentBoard.getBackground()
 
@@ -68,8 +74,15 @@ class environmentLoader:
 
         for i in self.getEntities():
             i.updatePictureSize(size)
-
     #---end nextLevel---
+
+    def isChanged(self):
+        if self.currentLevel.BoardChanged:
+            self.currentLevel.BoardChanged = False
+            return True
+        #---end if---
+        return False
+    #---end if---
 
     #---Beginning accessor---
     def getInventoryAdress(self):
@@ -124,7 +137,7 @@ class levelLoader:
         self.levelStructure = []
         self.position = area #11 being the starting board
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
-
+        self.BoardChanged = False
         #initialazation
         self.initStructure()
     #---end init---
@@ -164,6 +177,7 @@ class levelLoader:
         else:
             self.position += 0 #
 
+        self.BoardChanged = True
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
     #---end boardChange
 
@@ -227,6 +241,8 @@ class areaLoader:
         
         the player always spawn at board's index 00 and the arival board is always index 99
     """
+
+
     def __init__(self,environment, level, board):
         #setting internal variables
         self.environment = environment
@@ -242,7 +258,8 @@ class areaLoader:
         self.entities = self.simpleList[0]
         self.item = self.simpleList[1]
         self.zone = self.simpleList[2]
-
+        self.rect = pygame.Rect(0,0,self.boardata["width"], self.boardata["height"]);
+        self.collidesRect = [pygame.Rect(0,0,self.boardata["width"], 0),pygame.Rect(0,self.boardata["height"]-4,self.boardata["width"], 4)]
         #beginning of initialazation 
         b.stateUpdater(self.item, self)
     #---end init---
