@@ -153,7 +153,7 @@ class player (entities):
         self.inptime = 1
         self.cdw = {"walljump": True, "jump": True, "action": True}
         self.rice = 100
-        self.coef = 1
+        self.coef = 0.1
         self.ricesize = "high"
     #---end init---
 
@@ -272,3 +272,67 @@ class fish(entities):
         #---end for---
     #---end sdetector---
 #---end fish---
+
+class zrat(item):
+
+
+    def __init__(self, keyChar, environment):
+        super().__init__(self, keyChar, environment)
+        self.min = None
+        self.max = None
+    #---end init---
+#---end zrat---
+
+class rat(entities):
+
+    def __init__(self, keyChar, environment):
+        super().__init__(keyChar, environment)
+        self.territory = None
+        self.max = None
+        self.min = None
+        self.retract = False
+    #---end init---
+
+    def updateTerritory(self, board):
+        if self.territory == None:
+            for z in board.list[7]:
+                if (self.position["x1"] <= z.min["x1"] <= self.position["x1"]+1 or z.position["x1"] <= self.min["x1"] <= z.position["x1"]+1) and (self.position["y1"] <= z.min["y1"] <= self.position["y1"]+1 or z.position["y1"] <= self.min["y1"] <= z.position["y1"]+1):
+                    self.territory = z.min
+                    self.min = z.min
+                    self.max = z.max
+                #---end if---
+            #---end for---
+        else:
+            if self.state == 'default':
+                self.territory["x1"] -= 0.025
+                self.territory["x2"] += 0.025
+                self.territory["y1"] += 0.025
+                self.territory["y2"] -= 0.025
+                if self.territory["x1"] < self.max["x1"]:
+                    self.territory["x1"] = self.max["x1"]
+                if self.territory["x2"] > self.max["x2"]:
+                    self.territory["x2"] = self.max["x2"]
+                if self.territory["y1"] > self.max["y1"]:
+                    self.territory["y1"] = self.max["y1"]
+                if self.territory["y2"] < self.max["y2"]:
+                    self.territory["y2"] = self.max["y2"]
+                #---end ifs---
+            elif self.retract:
+                self.retract = False
+                self.territory["x1"] += 1
+                self.territory["x2"] -= 1
+                self.territory["y1"] -= 1
+                self.territory["y2"] += 1
+                if self.territory["x1"] > self.min["x1"]:
+                    self.territory["x1"] = self.min["x1"]
+                if self.territory["x2"] < self.min["x2"]:
+                    self.territory["x2"] = self.min["x2"]
+                if self.territory["y1"] < self.min["y1"]:
+                    self.territory["y1"] = self.min["y1"]
+                if self.territory["y2"] > self.min["y2"]:
+                    self.territory["y2"] = self.min["y2"]
+                #---end ifs---
+            #---end if---
+        #---end if---
+    #---end updateTerritory---
+#---end rat---

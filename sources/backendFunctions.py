@@ -114,7 +114,7 @@ def list(board):
             fish[-1].position["x1"] = i[2]
             fish[-1].position["x2"] = i[4]
         elif i[0] == "r":
-            rat.append(o.entities(i[0], board.environment))
+            rat.append(o.rat(i[0], board.environment))
             rat[-1].position["y1"] = i[1]
             rat[-1].position["y2"] = i[3]
             rat[-1].position["x1"] = i[2]
@@ -148,11 +148,15 @@ def list(board):
                 fspot[-1].position["x1"] = j["x1"]
                 fspot[-1].position["x2"] = j["x2"]
             elif i == "zrat":
-                zrat.append(o.item("zrat", board.environment))
-                zrat[-1].position["y1"] = j["y1"]
-                zrat[-1].position["y2"] = j["y2"]
-                zrat[-1].position["x1"] = j["x1"]
-                zrat[-1].position["x2"] = j["x2"]
+                zrat.append(o.zrat("zrat", board.environment))
+                zrat[-1].min["y1"] = j[0]["y1"]
+                zrat[-1].min["y2"] = j[0]["y2"]
+                zrat[-1].min["x1"] = j[0]["x1"]
+                zrat[-1].min["x2"] = j[0]["x2"]
+                zrat[-1].max["y1"] = j[1]["y1"]
+                zrat[-1].max["y2"] = j[1]["y2"]
+                zrat[-1].max["x1"] = j[1]["x1"]
+                zrat[-1].max["x2"] = j[1]["x2"]
             #---end if---
         #---end for---
     #---end for---
@@ -164,15 +168,15 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     if id == "world1":
         influence = {"x" : 0, "y" : -0.05} #natural decrease of speed and gravity
     elif id == "player_jump":
-        influence["y"] = (1/dtime - 1/10)*0.4
+        influence["y"] = (1/dtime - 1/10)*0.3
     elif id == "player_double_jump":
         influence["y"] = -speed["y"] + 0.6
     elif id == "player_wall_jump":
-        influence["y"] = 0.75
+        influence["y"] = 0.6
         if ele == 0:
-            influence["x"] = 0.4
+            influence["x"] = 0.7
         else:
-            influence["x"] = -0.4
+            influence["x"] = -0.7
         #---end if---
     elif id == "player_fastfall":
         influence["y"] = -0.85
@@ -248,7 +252,6 @@ def acceleration(ent, obj, world):
     if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
         influence = physicLoader("wall", None, None, ent[0].speed)
         inpinfluence["y"] += influence["y"]
-    
     if ent[0].jump["jump"]:
         inp = True
         if ent[0].cdw["jump"]:
@@ -570,7 +573,7 @@ def stateUpdater(lists, world):
                     #---end if---
                 #---end if---
             #---end if---
-        elif item.keyChar == 'f':
+        elif item.keyChar == 'f' and item.state != 'dead':
             item.sdetector(world.getBoard())
             if item.spot != None:
                 item.changeState('default')
@@ -609,6 +612,10 @@ def stateUpdater(lists, world):
                     item.changeState('ground_left')
                 else:
                     item.changeState('ground')
+                #---end if---
+            if lists[0].position["y2"] == item.position["y1"]+1 and (lists[0].position["x1"] <= item.position["x1"] <= lists[0].position["x2"]+1 or item.position["x1"] <= lists[0].position["x1"] <= item.position["x2"]+1):
+                item.changeState('dead')
+                item.state = 'dead'
             #---end if---
         #---end if---
     #---end for---
