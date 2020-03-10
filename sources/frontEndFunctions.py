@@ -76,20 +76,15 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
         #---end if---
 
         if player.hit["floor"]:
-            old[8] = True
+            old[1] = 0
         #---end if---
 
         if(worldSize[1]!=windowSize[1]):
-            if player.position["y1"] < (-worldSize[1]+4):
-                #print("------------")
-                if old[3] <= player.position["y1"] and old[8]:
-                    ordinatePhaseShift = -(worldSize[1] - windowSize[1])
-                #---end if---
+            if player.position["y1"] < (-worldSize[1]+5):
+                ordinatePhaseShift = -(worldSize[1] - windowSize[1])
             else:
-                print("on the top of the world")
-                old[1] += old[3]-player.position["y1"] if -old[1] < 0 else 0
-                ordinatePhaseShift = deepcopy(-old[1]) 
-                old[8] = False
+                old[1] += old[3]-player.position["y1"] if (0 < -1*(old[1]+old[3]-player.position["y1"]+windowSize[1]) < worldSize[1]) else 0
+                ordinatePhaseShift = deepcopy(-old[1])
             #---end if---
         #---end if---
         print(old[1])
