@@ -157,6 +157,7 @@ def list(board):
                 zrat[-1].max["y2"] = j[1]["y2"]
                 zrat[-1].max["x1"] = j[1]["x1"]
                 zrat[-1].max["x2"] = j[1]["x2"]
+                zrat[-1].position = zrat[-1].min
             #---end if---
         #---end for---
     #---end for---
@@ -232,6 +233,20 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
         elif ele[1].state == "attack" and type(ele[0]) == o.player and ele[1].hit["floor"]:
             influence["x"] += (ele[0].position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
             influence["y"] += (ele[0].position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
+        #---end if---
+    elif id == 'r':
+        if ele[1].state == 'move':
+            if ele[1].rmove == 1:
+                if ele[1].speed["x"]>-1:
+                    d = 1/(1-ele[1].speed["x"])
+                    influence["x"] = -1/(1+d)**2
+                #---end if---
+            elif ele[1].rmove == 2:
+                if ele[1].speed["x"]<1:
+                    d = 1/(1+ele[1].speed["x"])
+                    influence["x"] = 1/(1+d)**2
+                #---end if---
+            #---end if---
         #---end if---
     #---end if---
     return influence
@@ -616,6 +631,39 @@ def stateUpdater(lists, world):
             if lists[0].position["y2"] == item.position["y1"]+1 and (lists[0].position["x1"] <= item.position["x1"] <= lists[0].position["x2"]+1 or item.position["x1"] <= lists[0].position["x1"] <= item.position["x2"]+1):
                 item.changeState('dead')
                 item.state = 'dead'
+            #---end if---
+        elif item.keyChar == 'r':
+            if item.inptime >= 100:
+                item.state = 'default'
+                item.changeState('default')
+                item.inptime = 0
+            elif lists[0].position["y2"] == item.position["y1"]+1 and (lists[0].position["x1"] <= item.position["x1"] <= lists[0].position["x2"]+1 or item.position["x1"] <= lists[0].position["x1"] <= item.position["x2"]+1) or item.state == 'afraid':
+                item.state = 'afraid'
+                if item.speed["x"] > 0:
+                    item.changeState('afraid_right')
+                else:
+                    item.changeState('afraid_left')
+                #---end if---
+                item.inptime += 1
+            elif item.territory["x1"] <= lists[0].position["x1"] <= item.territory["x2"] and  item.territory["y1"] <= lists[0].position["y1"] <= item.territory["y2"] or item.state == 'attack':
+                item.state = 'attack'
+                if item.speed["x"] > 0:
+                    item.changeState('attack_right')
+                else:
+                    item.changeState('attack_left')
+                #---end if---
+                item.inptime += 1
+            elif item.state == 'default':
+                item.rmove = int(r.random()*75)
+                if item.rmove == 1:
+                    item.changeState('go_left')
+                    item.state = 'move'
+                elif item.rmove == 2:
+                    item.changeState('go_right')
+                    item.state = 'move'
+                #---end if---
+            else:
+                item.inptime += 1
             #---end if---
         #---end if---
     #---end for---

@@ -275,7 +275,6 @@ class fish(entities):
 
 class zrat(item):
 
-
     def __init__(self, keyChar, environment):
         super().__init__(self, keyChar, environment)
         self.min = None
@@ -291,6 +290,7 @@ class rat(entities):
         self.max = None
         self.min = None
         self.retract = False
+        self.rmove = 0
     #---end init---
 
     def updateTerritory(self, board):
@@ -303,7 +303,7 @@ class rat(entities):
                 #---end if---
             #---end for---
         else:
-            if self.state == 'default':
+            if self.state != 'afraid':
                 self.territory["x1"] -= 0.025
                 self.territory["x2"] += 0.025
                 self.territory["y1"] += 0.025
