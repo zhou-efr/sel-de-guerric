@@ -151,7 +151,7 @@ class player (entities):
         self.walking = {"right" : False, "left" : False}
         self.jump = {"jump" : False, "fastfall" : False}
         self.inptime = 1
-        self.cdw = {"walljump": True, "jump": True, "action": True}
+        self.cdw = {"walljump": True, "jump": True, "action": True, "double_jump": False}
         self.rice = 100
         self.coef = 0.1
         self.ricesize = "high"

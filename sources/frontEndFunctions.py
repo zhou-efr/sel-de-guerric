@@ -64,7 +64,7 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
     worldSize = (environment.getWidth(),environment.getHeight())
     worldRect = environment.getYcollideRects()
     abscissaPhaseShift = deepcopy(-old[0]) if (worldSize[0]!=windowSize[0]) else 0
-    ordinatePhaseShift = deepcopy(old[1]) if (worldSize[1]!=windowSize[1]) else 0
+    ordinatePhaseShift = 0
     if (len(entities) > 0):
         player = entities[0]
 
@@ -75,20 +75,24 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
             #---end if---
         #---end if---
 
-        if player.hit["floor"]:
-            old[1] = player.position["y1"] -3
-        #---end if---
-
-        if(worldSize[1]!=windowSize[1]):
+        if(worldSize[1]!=windowSize[1]): 
             if player.position["y1"] < (-worldSize[1]+5):
-                ordinatePhaseShift = -(worldSize[1] - windowSize[1])
+                old[1] = -(worldSize[1] - windowSize[1])
+                print("case 1")
+            elif player.position["y1"] > (-5):
+                old[1] = 0
             else:
-                old[1] += old[3]-player.position["y1"] if (0 < -1*(old[1]+old[3]-player.position["y1"]+windowSize[1]) < worldSize[1]) else 0
-                ordinatePhaseShift = deepcopy(-old[1])
+                if (windowSize[1]+old[1]+m.fabs(old[3])-m.fabs(player.position["y1"]) < worldSize[1]-4):
+                    old[1] += m.fabs(old[3])-m.fabs(player.position["y1"])
+                    print("case 2")
+                else:
+                    old[1] = -(worldSize[1] - windowSize[1])
+                    print("case 3")
+                #---end if---
             #---end if---
         #---end if---
-        print(old[1]);
-        print("-------------------")
+        print("position = ", player.position["y1"])
+        ordinatePhaseShift = deepcopy(old[1])
         old[2] = player.position["x1"]
         old[3] = player.position["y1"]
     #---end if---
