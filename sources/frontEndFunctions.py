@@ -78,25 +78,21 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
         if(worldSize[1]!=windowSize[1]): 
             if player.position["y1"] < (-worldSize[1]+5):
                 old[1] = -(worldSize[1] - windowSize[1])
-                print("case 1")
             elif player.position["y1"] > (-5):
                 old[1] = 0
             else:
                 if (windowSize[1]+old[1]+m.fabs(old[3])-m.fabs(player.position["y1"]) < worldSize[1]-4):
                     old[1] += m.fabs(old[3])-m.fabs(player.position["y1"])
-                    print("case 2")
                 else:
                     old[1] = -(worldSize[1] - windowSize[1])
-                    print("case 3")
                 #---end if---
             #---end if---
         #---end if---
-        print("position = ", player.position["y1"])
         ordinatePhaseShift = deepcopy(old[1])
         old[2] = player.position["x1"]
         old[3] = player.position["y1"]
     #---end if---
-    window.blit(environment.getBackground(), (abscissaPhaseShift, ordinatePhaseShift))
+    window.blit(environment.getBackground(), (0,0))
 
     for i in objects:
         for j in range(int(i.position["x2"] - i.position["x1"])+1):
