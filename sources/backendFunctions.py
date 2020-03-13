@@ -219,8 +219,8 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
                     target = ele[1].l_spot
                 #---end if---
                 distance = ((target.position["x1"] - ele[1].position["x1"])**2 + (target.position["y1"] - ele[1].position["y1"])**2)**(1/2)
-                influence["x"] += (target.position["x1"] - ele[1].position["x1"])/(2 *distance) - ele[1].acceleration["x"]*distance
-                influence["y"] += (target.position["y1"] - ele[1].position["y1"])/(2 *distance) - ele[1].acceleration["y"]*distance
+                influence["x"] += (target.position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
+                influence["y"] += (target.position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
             elif ele[1].state == "ground" and ele[1].hit["floor"]:
                 if ele[1].data["state"] == "ground_left":
                     influence["x"] = -0.1 - ele[1].speed["x"]
@@ -614,9 +614,9 @@ def stateUpdater(lists, world):
                 if item.r_spot != None and item.l_spot != None:
                     distr = item.position["x1"]-item.r_spot.position["x1"]
                     distl = item.position["x1"]-item.l_spot.position["x1"]
-                    if (distr < distl or item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]:
+                    if (distr < distl or (item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]):
                         item.changeState('ground_right')
-                    elif (distr < distl or item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]:
+                    elif (distr < distl or (item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]):
                         item.changeState('ground_left')
                     else:
                         item.changeState('ground')

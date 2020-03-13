@@ -264,9 +264,15 @@ class fish(entities):
                 self.position["x2"] = s.position["x2"]
                 self.position["y1"] = s.position["y1"]
                 self.position["y2"] = s.position["y2"]
-            elif s.position["x1"] < self.position["x1"] and s.position["x2"] < self.position["x2"] and (self.r_spot == None or s.position["x1"] < self.r_spot.position["x1"]):
+            elif self.state == 'ground':
+                if s.position["x1"] < self.position["x1"] and s.position["x2"] < self.position["x2"] and self.position["y2"] >= s.position["y1"] and (self.r_spot == None or s.position["x1"] < self.r_spot.position["x1"]):
+                    self.l_spot = s
+                elif s.position["x1"] > self.position["x1"] and s.position["x2"] > self.position["x2"] and self.position["y2"] >= s.position["y1"] and (self.r_spot == None or s.position["x1"] > self.r_spot.position["x1"]):
+                    self.r_spot = s
+                #---end if---
+            elif s.position["x1"] < self.position["x1"] and s.position["x2"] < self.position["x2"] and (self.r_spot == None or (s.position["x1"]**2 + s.position["y1"]**2)**(1/2) < (self.position["x1"]**2 + self.position["y1"]**2)**(1/2)):
                 self.l_spot = s
-            elif s.position["x1"] > self.position["x1"] and s.position["x2"] > self.position["x2"] and (self.r_spot == None or s.position["x1"] > self.r_spot.position["x1"]):
+            elif s.position["x1"] > self.position["x1"] and s.position["x2"] > self.position["x2"] and (self.r_spot == None or (s.position["x1"]**2 + s.position["y1"]**2)**(1/2) < (self.position["x1"]**2 + self.position["y1"]**2)**(1/2)):
                 self.r_spot = s
             #---end if---
         #---end for---
