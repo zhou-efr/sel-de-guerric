@@ -69,8 +69,12 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
         player = entities[0]
 
         if(worldSize[0]!=windowSize[0]):
-            if (old[0] - old[2] + player.position['x1']) > 0 and player.position['x1'] > windowSize[0]*(1/3) and (windowSize[0]*(2/3) > player.position['x1']-old[0] and old[0]>=0):
-                old[0] = old[0] + player.position["x1"] - old[2] if old[0] + player.position["x1"] - old[2] < worldSize[0]-windowSize[0] else worldSize[0]-windowSize[0]
+            if (old[0] - old[2] + player.position['x1']) > 0:
+                if player.position['x1'] > windowSize[0]*(1/3) and old[0] <= old[0] + player.position["x1"] - old[2]:
+                    old[0] = old[0] + player.position["x1"] - old[2] if old[0] + player.position["x1"] - old[2] < worldSize[0]-windowSize[0] else worldSize[0]-windowSize[0]
+                if (windowSize[0]*(2/3) > player.position['x1']-old[0] and old[0]>=old[0] + player.position["x1"] - old[2]):
+                    old[0] = old[0] + player.position["x1"] - old[2] if old[0] + player.position["x1"] - old[2] < worldSize[0]-windowSize[0] else worldSize[0]-windowSize[0]
+                #---end if---
                 abscissaPhaseShift = deepcopy(-old[0])
             #---end if---
         #---end if---
