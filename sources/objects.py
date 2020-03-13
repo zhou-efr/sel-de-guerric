@@ -258,7 +258,7 @@ class fish(entities):
         self.r_spot = None
         self.spot = None
         for s in board.list[6]:
-            if (self.position["x1"]-0.5 <= s.position["x1"] <= self.position["x1"]+0.5 or self.position["x2"]-0.5 <= s.position["x2"] <= self.position["x2"]+0.5) and (self.position["y1"]-0.5 <= s.position["y1"] <= self.position["y1"]+0.5 or self.position["y2"]-0.5 <= s.position["y2"] <= self.position["y2"]+0.5) and self.hit["floor"]:
+            if (self.position["x1"]-0.2 <= s.position["x1"] <= self.position["x1"]+0.2 or self.position["x2"]-0.2 <= s.position["x2"] <= self.position["x2"]+0.2) and (self.position["y1"]-0.2 <= s.position["y1"] <= self.position["y1"]+0.2 or self.position["y2"]-0.2 <= s.position["y2"] <= self.position["y2"]+0.2) and self.hit["floor"]:
                 self.spot = s
                 self.position["x1"] = s.position["x1"]
                 self.position["x2"] = s.position["x2"]

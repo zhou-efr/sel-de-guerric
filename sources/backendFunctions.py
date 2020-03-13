@@ -594,7 +594,7 @@ def stateUpdater(lists, world):
                 item.changeState('default')
                 item.state = 'default'
             if item.state == "default":
-                item.rjump = int(r.random() * 125)
+                item.rjump = int(r.random() * 50)
                 if ((lists[0].position["x1"]-item.position["x1"])**2 + (lists[0].position["y1"]-item.position["y1"])**2)**(1/2) <= item.view:
                     item.state = 'attack'
                     if lists[0].position["x1"] < item.position["x1"]:
