@@ -8,9 +8,9 @@ import loaders as l
 #---Initialazation---
 #------pygame------
 pygame.init()
-width = 1280
-height = 720
-window = pygame.display.set_mode((width, height))
+width = 1366
+height = 768
+window = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 """resolutions
     for 16*9 tiles
         for 720p
@@ -78,7 +78,7 @@ while lauched:
             game = False
             lauched = False
         clock += 1
-        time.sleep(0.05)
+        time.sleep(0.01)
         pygame.display.flip()
         b.worldUpdater(loaded, inputs)
         #---end if---
