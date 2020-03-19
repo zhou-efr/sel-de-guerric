@@ -10,7 +10,7 @@ import loaders as l
 pygame.init()
 width = 1366
 height = 768
-window = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
+window = pygame.display.set_mode((width, height))
 """resolutions
     for 16*9 tiles
         for 720p
@@ -19,6 +19,8 @@ window = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
             Tile Size = 120 
 """
 TILE_SIZE = int(height/9)
+icon = pygame.image.load("./files/panda.png")
+pygame.display.set_icon(icon)
 
 #------keyboard------
 keyMap = {}
