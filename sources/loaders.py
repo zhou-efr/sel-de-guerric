@@ -266,7 +266,7 @@ class areaLoader:
         #beginning of initialazation 
         for e in self.item:
             if isinstance(e, o.entities):
-                b.stateUpdater(e, self.item, self)
+                e.stateUpdater(self.item, self)
             else:
                 b.wallUpdater(e, self.item, self)
             #---end if---

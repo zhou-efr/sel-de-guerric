@@ -285,48 +285,50 @@ class fish(entities):
     #---end sdetector---
 
     def stateUpdater(self, lists, world):
-        self.sdetector(world.getBoard())
-        if self.spot != None:
-            self.changeState('default')
-            self.state = 'default'
-        if self.state == "default":
-            self.rjump = int(r.random() * 50)
-            if ((lists[0].position["x1"]-self.position["x1"])**2 + (lists[0].position["y1"]-self.position["y1"])**2)**(1/2) <= self.view:
-                self.state = 'attack'
-                if lists[0].position["x1"] < self.position["x1"]:
-                    self.changeState('attack_left')
-                else:
-                    self.changeState('attack_right')
+        if self.state != 'dead':
+            self.sdetector(world.getBoard())
+            if self.spot != None:
+                self.changeState('default')
+                self.state = 'default'
+            if self.state == "default":
+                self.rjump = int(r.random() * 50)
+                if ((lists[0].position["x1"]-self.position["x1"])**2 + (lists[0].position["y1"]-self.position["y1"])**2)**(1/2) <= self.view:
+                    self.state = 'attack'
+                    if lists[0].position["x1"] < self.position["x1"]:
+                        self.changeState('attack_left')
+                    else:
+                        self.changeState('attack_right')
+                    #---end if---
+                elif self.rjump == 0 and self.r_spot != None:
+                    self.changeState('go_right')
+                    self.state = 'jump'
+                elif self.rjump == 1 and self.l_spot != None:
+                    self.changeState('go_left')
+                    self.state = 'jump'
                 #---end if---
-            elif self.rjump == 0 and self.r_spot != None:
-                self.changeState('go_right')
-                self.state = 'jump'
-            elif self.rjump == 1 and self.l_spot != None:
-                self.changeState('go_left')
-                self.state = 'jump'
-            #---end if---
-        elif self.hit["floor"] and self.spot == None:
-            self.state = 'ground'
-            if self.r_spot != None and self.l_spot != None:
-                distr = self.position["x1"]-self.r_spot.position["x1"]
-                distl = self.position["x1"]-self.l_spot.position["x1"]
-                if (distr < distl or (self.position["y1"] < self.l_spot.position["y1"]) and self.position["y1"] >= self.r_spot.position["y1"]):
+            elif self.hit["floor"] and self.spot == None:
+                self.state = 'ground'
+                if self.r_spot != None and self.l_spot != None:
+                    distr = self.position["x1"]-self.r_spot.position["x1"]
+                    distl = self.position["x1"]-self.l_spot.position["x1"]
+                    if (distr < distl or (self.position["y1"] < self.l_spot.position["y1"]) and self.position["y1"] >= self.r_spot.position["y1"]):
+                        self.changeState('ground_right')
+                    elif (distr < distl or (self.position["y1"] < self.l_spot.position["y1"]) and self.position["y1"] >= self.r_spot.position["y1"]):
+                        self.changeState('ground_left')
+                    else:
+                        self.changeState('ground')
+                    #---end if---
+                elif self.r_spot != None:
                     self.changeState('ground_right')
-                elif (distr < distl or (self.position["y1"] < self.l_spot.position["y1"]) and self.position["y1"] >= self.r_spot.position["y1"]):
+                elif self.l_spot != None:
                     self.changeState('ground_left')
                 else:
                     self.changeState('ground')
                 #---end if---
-            elif self.r_spot != None:
-                self.changeState('ground_right')
-            elif self.l_spot != None:
-                self.changeState('ground_left')
-            else:
-                self.changeState('ground')
+            if lists[0].position["y2"] == self.position["y1"]+1 and (lists[0].position["x1"] <= self.position["x1"] <= lists[0].position["x2"]+1 or self.position["x1"] <= lists[0].position["x1"] <= self.position["x2"]+1):
+                self.changeState('dead')
+                self.state = 'dead'
             #---end if---
-        if lists[0].position["y2"] == self.position["y1"]+1 and (lists[0].position["x1"] <= self.position["x1"] <= lists[0].position["x2"]+1 or self.position["x1"] <= lists[0].position["x1"] <= self.position["x2"]+1):
-            self.changeState('dead')
-            self.state = 'dead'
         #---end if---
     #---end stateUpdater---
 #---end fish---
@@ -395,37 +397,39 @@ class rat(entities):
     #---end updateTerritory---
 
     def stateUpdater(self,lists, world):
-        if self.inptime >= 100:
-            self.state = 'default'
-            self.changeState('default')
-            self.inptime = 0
-        elif lists[0].position["y2"] == self.position["y1"]+1 and (lists[0].position["x1"] <= self.position["x1"] <= lists[0].position["x2"]+1 or self.position["x1"] <= lists[0].position["x1"] <= self.position["x2"]+1) or self.state == 'afraid':
-            self.state = 'afraid'
-            if self.speed["x"] > 0:
-                self.changeState('afraid_right')
+        if item.state != 'dead':
+            if self.inptime >= 100:
+                self.state = 'default'
+                self.changeState('default')
+                self.inptime = 0
+            elif lists[0].position["y2"] == self.position["y1"]+1 and (lists[0].position["x1"] <= self.position["x1"] <= lists[0].position["x2"]+1 or self.position["x1"] <= lists[0].position["x1"] <= self.position["x2"]+1) or self.state == 'afraid':
+                self.state = 'afraid'
+                if self.speed["x"] > 0:
+                    self.changeState('afraid_right')
+                else:
+                    self.changeState('afraid_left')
+                #---end if---
+                self.inptime += 1
+            elif self.territory["x1"] <= lists[0].position["x1"] <= self.territory["x2"] and  self.territory["y1"] <= lists[0].position["y1"] <= self.territory["y2"] or self.state == 'attack':
+                self.state = 'attack'
+                if self.speed["x"] > 0:
+                    self.changeState('attack_right')
+                else:
+                    self.changeState('attack_left')
+                #---end if---
+                self.inptime += 1
+            elif self.state == 'default':
+                self.rmove = int(r.random()*75)
+                if self.rmove == 1:
+                    self.changeState('go_left')
+                    self.state = 'move'
+                elif self.rmove == 2:
+                    self.changeState('go_right')
+                    self.state = 'move'
+                #---end if---
             else:
-                self.changeState('afraid_left')
-            #---end if---
-            self.inptime += 1
-        elif self.territory["x1"] <= lists[0].position["x1"] <= self.territory["x2"] and  self.territory["y1"] <= lists[0].position["y1"] <= self.territory["y2"] or self.state == 'attack':
-            self.state = 'attack'
-            if self.speed["x"] > 0:
-                self.changeState('attack_right')
-            else:
-                self.changeState('attack_left')
-            #---end if---
-            self.inptime += 1
-        elif self.state == 'default':
-            self.rmove = int(r.random()*75)
-            if self.rmove == 1:
-                self.changeState('go_left')
-                self.state = 'move'
-            elif self.rmove == 2:
-                self.changeState('go_right')
-                self.state = 'move'
-            #---end if---
-        else:
-            self.inptime += 1
+                self.inptime += 1
+            #---end if
         #---end if---
-
+    #---end stateUpdater---
 #---end rat---
