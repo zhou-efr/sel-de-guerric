@@ -19,13 +19,13 @@ window = pygame.display.set_mode((width, height))
             Tile Size = 120 
 """
 TILE_SIZE = int(height/9)
-icon = pygame.image.load("./files/panda.png")
+icon = pygame.image.load("../files/panda.png")
 pygame.display.set_icon(icon)
 
 #------keyboard------
 keyMap = {}
 try:
-    with open("./files/keyboard.dat", 'r') as target:
+    with open("../files/keyboard.dat", 'r') as target:
         contents = target.read().split("\n")
     #---end with---
 

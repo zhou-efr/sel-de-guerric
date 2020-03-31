@@ -20,7 +20,7 @@ class environmentLoader:
         self.environment = environment
         self.currentLevel = levelLoader(environment, level, area)
         self.inventory = {}
-        self.folder = "./files/environment" + str(environment) + "/"
+        self.folder = "../files/environment" + str(environment) + "/"
         self.inventoryFile = "inventory.dat"
         self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": int(surface.get_rect().right/16)}
         #initialazation
@@ -134,7 +134,7 @@ class levelLoader:
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "./files/environment" + str(environment) + "/level" + str(level)
+        self.folder = "../files/environment" + str(environment) + "/level" + str(level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
@@ -251,7 +251,7 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.adress = "../files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
         self.background = pygame.image.load(self.backAdress)
@@ -264,7 +264,13 @@ class areaLoader:
         self.rect = pygame.Rect(0,0,self.boardata["width"], self.boardata["height"]);
         self.collidesRect = [pygame.Rect(0,0,self.boardata["width"], 0),pygame.Rect(0,self.boardata["height"]-4,self.boardata["width"], 4)]
         #beginning of initialazation 
-        b.stateUpdater(self.item, self)
+        for e in self.item:
+            if isinstance(e, o.entities):
+                b.stateUpdater(e, self.item, self)
+            else:
+                b.wallUpdater(e, self.item, self)
+            #---end if---
+        #---end for---
     #---end init---
 
     #---Beginning of accessors---

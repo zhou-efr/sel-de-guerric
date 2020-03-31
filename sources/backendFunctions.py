@@ -252,13 +252,13 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
     return influence
 #---end physicLoader---
 
-def acceleration(ent, obj, world):
+def acceleration(ent, obj, world, trueWorld):
     #Execute the influence of the world on the entities
     for e in ent:
+        e.stateUpdater(ent, trueWorld)
         worldinfluence = physicLoader("world" + str(world), None, None,e.speed)
         e.acceleration["x"] += worldinfluence["x"]
         e.acceleration["y"] += worldinfluence["y"]
-    #---end for---
     #Move of the player(s)
     inp = False
     inpinfluence = {"x" : -0.2 * ent[0].speed["x"], "y" : 0}
@@ -447,16 +447,14 @@ def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]
     ent = world.getEntities()
     obj = world.getObjects()
     zone = world.getZones()
-
     ent[0].updatePlayerInput(inp)
-    stateUpdater(ent + zone["ent"], world)
-    acceleration(ent + zone["ent"], obj + zone["obj"], world.environment)
+    acceleration(ent + zone["ent"], obj + zone["obj"], world.environment, world)
     speed(ent + zone["ent"])
     move(ent, obj, zone)
 #---end worldUpdater---
 
 def save(id, area, level = 0, environment = 0, newname = ""):
-    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
+    fileAdress = "../files/environment0/saves/" + str(id) + ".dat"
     try:
         save = open(fileAdress, 'r').read().split('\n')
         save[3] = int(area)
@@ -479,192 +477,114 @@ def save(id, area, level = 0, environment = 0, newname = ""):
 #---end save---
 
 def loadsave(id):
-    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
+    fileAdress = "../files/environment0/saves/" + str(id) + ".dat"
     save = open(fileAdress, 'r').read().split('\n')
     return l.environmentLoader(save[1], save[2], save[3])
 #---end loadsave---
 
-def stateUpdater(lists, world):
-    for item in lists:
-        if item.keyChar == 'm':
-            up = False
-            down = False
-            right = False
-            left = False
-            for i in lists:
-                if i.keyChar == 'c':
-                    if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
-                        right = True
-                    elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
-                        left = True
-                    elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
-                        up = True
-                    elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
-                        down = True
-                    #---end if---
+def wallUpdater(item, lists, world):
+
+    if item.keyChar == 'm':
+        up = False
+        down = False
+        right = False
+        left = False
+        for i in lists:
+            if i.keyChar == 'c':
+                if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
+                    right = True
+                elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
+                    left = True
+                elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
+                    up = True
+                elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
+                    down = True
                 #---end if---
-            #---end for---
-            if up and down:
-                item.updateState('b')
-            elif right and left:
-                item.updateState('t')
             #---end if---
-        elif item.keyChar == 'c':
-            up = False
-            down = False
-            right = False
-            left = False
-            for i in lists:
-                if i.keyChar == 'm' or i.keyChar == 'c':
-                    if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
-                        right = True
-                    elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
-                        left = True
-                    elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
-                        up = True
-                    elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
-                        down = True
-                    #---end if---
+        #---end for---
+        if up and down:
+            item.updateState('b')
+        elif right and left:
+            item.updateState('t')
+        #---end if---
+    elif item.keyChar == 'c':
+        up = False
+        down = False
+        right = False
+        left = False
+        for i in lists:
+            if i.keyChar == 'm' or i.keyChar == 'c':
+                if i.position["x1"] == item.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
+                    right = True
+                elif item.position["x1"] == i.position["x2"] + 1 and (i.position["y1"] <= item.position["y1"] <= i.position["y2"] or item.position["y1"] <= i.position["y1"] <= item.position["y2"]):
+                    left = True
+                elif i.position["y2"] == item.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
+                    up = True
+                elif item.position["y2"] == i.position["y1"] + 1 and (i.position["x1"] <= item.position["x1"] <= i.position["x2"] or item.position["x1"] <= i.position["x1"] <= item.position["x2"]):
+                    down = True
                 #---end if---
-            #---end for---
-            if up:
-                if down:
-                    if right:
-                        if left:
-                            item.updateState("+")
-                        else:
-                            item.updateState("}")
-                        #---end if---
+            #---end if---
+        #---end for---
+        if up:
+            if down:
+                if right:
+                    if left:
+                        item.updateState("+")
                     else:
-                        if left:
-                            item.updateState("{")
-                        else:
-                            item.updateState("b")
-                        #---end if---
+                        item.updateState("}")
                     #---end if---
                 else:
-                    if right:
-                        if left:
-                            item.updateState("-")
-                        else:
-                            item.updateState("[")
-                        #---end if---
+                    if left:
+                        item.updateState("{")
                     else:
-                        if left:
-                            item.updateState("]")
-                        else:
-                            item.updateState("'")
-                        #---end if---
+                        item.updateState("b")
                     #---end if---
                 #---end if---
             else:
-                if down:
-                    if right:
-                        if left:
-                            item.updateState("_")
-                        else:
-                            item.updateState("(")
-                        #---end if---
+                if right:
+                    if left:
+                        item.updateState("-")
                     else:
-                        if left:
-                            item.updateState(")")
-                        else:
-                            item.updateState(",")
-                        #---end if---
+                        item.updateState("[")
                     #---end if---
                 else:
-                    if right:
-                        if left:
-                            item.updateState("t")
-                        else:
-                            item.updateState("c")
-                        #---end if---
+                    if left:
+                        item.updateState("]")
                     else:
-                        if left:
-                            item.updateState("d")
-                        else:
-                            item.updateState("default")
-                        #---end if---
+                        item.updateState("'")
                     #---end if---
                 #---end if---
             #---end if---
-        elif item.keyChar == 'f' and item.state != 'dead':
-            item.sdetector(world.getBoard())
-            if item.spot != None:
-                item.changeState('default')
-                item.state = 'default'
-            if item.state == "default":
-                item.rjump = int(r.random() * 50)
-                if ((lists[0].position["x1"]-item.position["x1"])**2 + (lists[0].position["y1"]-item.position["y1"])**2)**(1/2) <= item.view:
-                    item.state = 'attack'
-                    if lists[0].position["x1"] < item.position["x1"]:
-                        item.changeState('attack_left')
+        else:
+            if down:
+                if right:
+                    if left:
+                        item.updateState("_")
                     else:
-                        item.changeState('attack_right')
+                        item.updateState("(")
                     #---end if---
-                elif item.rjump == 0 and item.r_spot != None:
-                    item.changeState('go_right')
-                    item.state = 'jump'
-                elif item.rjump == 1 and item.l_spot != None:
-                    item.changeState('go_left')
-                    item.state = 'jump'
-                #---end if---
-            elif item.hit["floor"] and item.spot == None:
-                item.state = 'ground'
-                if item.r_spot != None and item.l_spot != None:
-                    distr = item.position["x1"]-item.r_spot.position["x1"]
-                    distl = item.position["x1"]-item.l_spot.position["x1"]
-                    if (distr < distl or (item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]):
-                        item.changeState('ground_right')
-                    elif (distr < distl or (item.position["y1"] < item.l_spot.position["y1"]) and item.position["y1"] >= item.r_spot.position["y1"]):
-                        item.changeState('ground_left')
+                else:
+                    if left:
+                        item.updateState(")")
                     else:
-                        item.changeState('ground')
+                        item.updateState(",")
                     #---end if---
-                elif item.r_spot != None:
-                    item.changeState('ground_right')
-                elif item.l_spot != None:
-                    item.changeState('ground_left')
-                else:
-                    item.changeState('ground')
-                #---end if---
-            if lists[0].position["y2"] == item.position["y1"]+1 and (lists[0].position["x1"] <= item.position["x1"] <= lists[0].position["x2"]+1 or item.position["x1"] <= lists[0].position["x1"] <= item.position["x2"]+1):
-                item.changeState('dead')
-                item.state = 'dead'
-            #---end if---
-        elif item.keyChar == 'r':
-            if item.inptime >= 100:
-                item.state = 'default'
-                item.changeState('default')
-                item.inptime = 0
-            elif lists[0].position["y2"] == item.position["y1"]+1 and (lists[0].position["x1"] <= item.position["x1"] <= lists[0].position["x2"]+1 or item.position["x1"] <= lists[0].position["x1"] <= item.position["x2"]+1) or item.state == 'afraid':
-                item.state = 'afraid'
-                if item.speed["x"] > 0:
-                    item.changeState('afraid_right')
-                else:
-                    item.changeState('afraid_left')
-                #---end if---
-                item.inptime += 1
-            elif item.territory["x1"] <= lists[0].position["x1"] <= item.territory["x2"] and  item.territory["y1"] <= lists[0].position["y1"] <= item.territory["y2"] or item.state == 'attack':
-                item.state = 'attack'
-                if item.speed["x"] > 0:
-                    item.changeState('attack_right')
-                else:
-                    item.changeState('attack_left')
-                #---end if---
-                item.inptime += 1
-            elif item.state == 'default':
-                item.rmove = int(r.random()*75)
-                if item.rmove == 1:
-                    item.changeState('go_left')
-                    item.state = 'move'
-                elif item.rmove == 2:
-                    item.changeState('go_right')
-                    item.state = 'move'
                 #---end if---
             else:
-                item.inptime += 1
+                if right:
+                    if left:
+                        item.updateState("t")
+                    else:
+                        item.updateState("c")
+                    #---end if---
+                else:
+                    if left:
+                        item.updateState("d")
+                    else:
+                        item.updateState("default")
+                    #---end if---
+                #---end if---
             #---end if---
         #---end if---
-    #---end for---
-#---end stateDetection---
+#---end wallUpdater---
+

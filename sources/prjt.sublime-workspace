@@ -1,0 +1,975 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"list",
+				"lists"
+			],
+			[
+				"sta",
+				"stateUpdater"
+			],
+			[
+				"rea",
+				"read_date"
+			],
+			[
+				"head",
+				"head_free"
+			],
+			[
+				"pri",
+				"printDate"
+			],
+			[
+				"b",
+				"borne2"
+			],
+			[
+				"bor",
+				"borne1"
+			],
+			[
+				"mono",
+				"monoOnes"
+			],
+			[
+				"mon",
+				"monoPos"
+			],
+			[
+				"f",
+				"for\tFor Loop"
+			],
+			[
+				"gene",
+				"generatedDye"
+			],
+			[
+				"p",
+				"phase"
+			],
+			[
+				"a",
+				"army1"
+			],
+			[
+				"arm",
+				"army1"
+			],
+			[
+				"c",
+				"comandment"
+			],
+			[
+				"x",
+				"x1"
+			],
+			[
+				"mo",
+				"movement"
+			],
+			[
+				"ke",
+				"keyCode"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"ba",
+				"background-color\tproperty"
+			],
+			[
+				"fle",
+				"flex-direction\tproperty"
+			],
+			[
+				"symbo",
+				"symbols"
+			],
+			[
+				"al",
+				"align-items\tproperty"
+			],
+			[
+				"ma",
+				"margin-right\tproperty"
+			],
+			[
+				"mar",
+				"margin-top\tproperty"
+			],
+			[
+				"max",
+				"max-width\tproperty"
+			],
+			[
+				"i",
+				"img"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"fo",
+				"footer\tTag"
+			],
+			[
+				"st",
+				"style\tTag"
+			],
+			[
+				"set",
+				"set_cartes"
+			],
+			[
+				"lenY",
+				"_lenY"
+			],
+			[
+				"car",
+				"characterMap"
+			],
+			[
+				"threa",
+				"thread_pic"
+			],
+			[
+				"s",
+				"statut"
+			],
+			[
+				"pos",
+				"posX"
+			],
+			[
+				"po",
+				"posX"
+			],
+			[
+				"_Ca",
+				"_cartePerso"
+			],
+			[
+				"jo",
+				"_joueur"
+			],
+			[
+				"cove",
+				"convert_alpha"
+			],
+			[
+				"cell",
+				"_cellX"
+			],
+			[
+				"ran",
+				"rang"
+			],
+			[
+				"w",
+				"window"
+			],
+			[
+				"hov",
+				"hovering"
+			],
+			[
+				"cellL",
+				"cellLenX"
+			],
+			[
+				"map",
+				"mapLenX"
+			],
+			[
+				"Ca",
+				"Carre"
+			],
+			[
+				"can",
+				"Canevas"
+			],
+			[
+				"in",
+				"introduce"
+			],
+			[
+				"lo",
+				"load"
+			],
+			[
+				"ti",
+				"timeRemain"
+			],
+			[
+				"play",
+				"played"
+			],
+			[
+				"me",
+				"message"
+			],
+			[
+				"qui",
+				"quit"
+			],
+			[
+				"choix",
+				"choix_facile"
+			],
+			[
+				"pla",
+				"played"
+			],
+			[
+				"bu",
+				"buttonApply"
+			],
+			[
+				"__",
+				"__init__"
+			],
+			[
+				"m",
+				"music"
+			],
+			[
+				"fl",
+				"flyingMouse"
+			],
+			[
+				"r",
+				"rBuilding"
+			],
+			[
+				"time",
+				"timeRemain"
+			],
+			[
+				"pnj",
+				"pnjRect"
+			],
+			[
+				"get",
+				"get"
+			],
+			[
+				"class",
+				"Class"
+			],
+			[
+				"clas",
+				"class"
+			],
+			[
+				"musi",
+				"musique"
+			],
+			[
+				"K_",
+				"K_ESCAPE"
+			],
+			[
+				"fina",
+				"finalRect"
+			],
+			[
+				"final",
+				"finalWindow"
+			],
+			[
+				"name",
+				"nameUse"
+			],
+			[
+				"na",
+				"nombreDePersonnages"
+			],
+			[
+				"nam",
+				"nameUse"
+			],
+			[
+				"choo",
+				"chooseWindow"
+			],
+			[
+				"pers",
+				"personnageSelect"
+			],
+			[
+				"per",
+				"personnageSelect"
+			],
+			[
+				"nom",
+				"nombreDePersonnages"
+			],
+			[
+				"pic",
+				"pictures"
+			],
+			[
+				"temps",
+				"tempsRect"
+			],
+			[
+				"conv",
+				"convert_alpha"
+			],
+			[
+				"choose",
+				"chooseWindow"
+			],
+			[
+				"Cho",
+				"choose"
+			],
+			[
+				"back",
+				"background"
+			],
+			[
+				"perso",
+				"personnage"
+			],
+			[
+				"ch",
+				"choixPhase"
+			],
+			[
+				"aff",
+				"affichageBase"
+			],
+			[
+				"t",
+				"type"
+			],
+			[
+				"io",
+				"iostream\tstandard header"
+			],
+			[
+				"bre",
+				"bouger"
+			],
+			[
+				"inc",
+				"inc\t#include <…>"
+			],
+			[
+				"n",
+				"n_X"
+			],
+			[
+				"i_",
+				"i_Y"
+			],
+			[
+				"def",
+				"def\t#ifndef … #define … #endif"
+			],
+			[
+				"se",
+				"setVie"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"point",
+				"pointer"
+			],
+			[
+				"cal",
+				"calX"
+			],
+			[
+				"dega",
+				"degatFait"
+			],
+			[
+				"dire",
+				"directiones"
+			],
+			[
+				"direction",
+				"directionDeTir"
+			],
+			[
+				"ob",
+				"objets"
+			],
+			[
+				"sc",
+				"score"
+			],
+			[
+				"v",
+				"valMedBas"
+			],
+			[
+				"poi",
+				"pointer"
+			],
+			[
+				"Vr",
+				"VRx"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "sel-de-guerric.py",
+			"settings":
+			{
+				"buffer_size": 2806,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "loaders.py",
+			"settings":
+			{
+				"buffer_size": 10064,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "objects.py",
+			"settings":
+			{
+				"buffer_size": 16881,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "backendFunctions.py",
+			"settings":
+			{
+				"buffer_size": 24353,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Python/Python.sublime-build",
+					""
+				],
+				[
+					"Packages/Python/Python.sublime-build",
+					"Syntax Check"
+				]
+			],
+			[
+				"Packages/Python/Python.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/User/Gpp.sublime-build",
+					""
+				],
+				[
+					"Packages/User/Gpp.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/User/Gpp.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/User/languageC.sublime-build",
+					""
+				],
+				[
+					"Packages/User/languageC.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/User/languageC.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources"
+	],
+	"file_history":
+	[
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/loaders.py",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/backendFunctions.py",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/objects.py",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/frontEndFunctions.py",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/sel-de-guerric.py",
+		"/C/Users/gundamzhou/Downloads/LinkedLisArray.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/algorithms 2/mars23.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/algorithms 2/mars23-0.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/programming in C/Algorithms/trenteMars2k20.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/algorithms 2/mars23-2.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/programming in C/project 1/tetris-like/src/project1c.cpp",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/programming in C/project 1/tetris-like/include/project1c.h",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/programming in C/project 1/tetris-like/main.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/programming in C/TD 4/masterMindConsol/masterMain.c",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/algorithms 2/mars23-2",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example04.py",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example03.py",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example02.py",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example01.py",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/wp-admin/users.php",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/wp-admin/admin.php",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/wp-config.php",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/wp-login.php",
+		"/C/Users/gundamzhou/sepefrei/web/wordpress/wp-config.php",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/wp-content/index.php",
+		"/C/Users/gundamzhou/Downloads/antcraft2/wp-config.php",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/wp-signup.php",
+		"/C/Users/gundamzhou/sepefrei/web/antcraft2/._wp-config.php",
+		"/C/Users/gundamzhou/Downloads/antcraft2/wp-admin/install.php",
+		"/C/Users/gundamzhou/sepefrei/web/phpMyAdmin-5.0.1-all-languages/setup/index.php",
+		"/C/Users/gundamzhou/Downloads/wordpress-5.3.2/wordpress/wp-admin/install.php",
+		"/C/Users/gundamzhou/sepefrei/antcraft2/index.php",
+		"/C/Users/gundamzhou/sepefrei/antcraft2/wp-login.php",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/backendTestFile.py",
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/.vscode/launch.json",
+		"/C/Users/gundamzhou/eclipse-workspace/black&white/projectTwo/functions.py",
+		"/C/Users/gundamzhou/Documents/code/projectv0.1/village complet.png",
+		"/C/Users/gundamzhou/eclipse-workspace/black&white/projectTwo/window.py",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 1/Code/Definitive Edition Python/Definitive Edition Python/4/finalWithFunctions.py",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 1/Code/Project/3.3.9(final file version).py",
+		"/C/Users/gundamzhou/Desktop/a.exe",
+		"/C/Users/gundamzhou/Documents/code/tacticalBase/userinterface.cpp",
+		"/C/Users/gundamzhou/Documents/code/python/warhammer40K/functions.py",
+		"/C/Users/gundamzhou/Google Drive/pygameTests/ProjetFonctionnel/Projet/gundam.py",
+		"/C/Users/gundamzhou/Google Drive/pygameTests/ProjetFonctionnel/Projet/functions.py",
+		"/C/Users/gundamzhou/Documents/travail/ecoleEfrei'/L1 2019- 2020/Semestre 1/algorithm/TD 06 12 2019.as",
+		"/C/Users/gundamzhou/eclipse-workspace/black&white/projectTwo/Main.py",
+		"/C/Users/gundamzhou/Documents/jeux/warhammer/another win.html",
+		"/C/Users/gundamzhou/Desktop/1000 pts tau 3.html",
+		"/C/Users/gundamzhou/Desktop/1000 pts tau.html",
+		"/C/Users/gundamzhou/Documents/TD4python.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.3/ex03.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.4/01/functions.py",
+		"/C/Users/gundamzhou/Documents/code/python/warhammer40K/launch.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/keep/4/finalWithFunctions.py",
+		"/C/Users/gundamzhou/Documents/code/Cpp/chat/chat/client/FenClient.ui",
+		"/C/Users/gundamzhou/Documents/code/Cpp/chat/chat/client/FenClient.cpp",
+		"/C/Users/gundamzhou/Documents/code/OnlineCpp/reception/chat.cpp",
+		"/C/Users/gundamzhou/Documents/code/Cpp/chat/chat/client/FenClient.h",
+		"/C/Users/gundamzhou/Desktop/open.html",
+		"/C/Users/gundamzhou/Documents/code/python/warhammer40K/classes.py",
+		"/C/Users/gundamzhou/Documents/code/python/warhammer40K/battle.py",
+		"/C/Users/gundamzhou/Desktop/finalWithFunctions(ex05).py",
+		"/C/Users/gundamzhou/Desktop/finalWhile.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.3/ex02.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.4/01/ex05.py",
+		"/C/Users/gundamzhou/Desktop/finalWithFunctions.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.3/ex01H.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.3/ex04.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.4/01/schursNumbers(ex02).py",
+		"/C/Users/gundamzhou/Documents/travail/Project/3.3/ex04H.py",
+		"/C/Users/gundamzhou/Documents/travail/algo/ALGOsnake.txt",
+		"/C/Users/gundamzhou/Documents/travail/algorithm/ALGO",
+		"/C/Users/gundamzhou/Google Drive/pygameTests/Projet/functions.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/final/schursNumbers.py",
+		"/C/Users/gundamzhou/Documents/travail/Project/final/functions.py",
+		"/C/Users/gundamzhou/Google Drive/pygameTests/Projet/gundam.py",
+		"/C/Users/gundamzhou/Desktop/projetFinalYourCrimeAprilKillianEmilieDarius/Projet/gundam.py",
+		"/C/Users/gundamzhou/Documents/travail/python/minimumOfNNumber.py",
+		"/C/Users/gundamzhou/Documents/travail/python/C/ex04.c",
+		"/C/Users/gundamzhou/AppData/Roaming/Sublime Text 3/Packages/User/C.sublime-build",
+		"/C/Users/gundamzhou/Documents/travail/python/C/ex11.c",
+		"/C/Users/gundamzhou/Documents/travail/python/C/CodeEnC.txt",
+		"/C/Users/gundamzhou/Documents/travail/python/sumOfTwoNumber.py",
+		"/C/Users/gundamzhou/Documents/travail/python/roots.py",
+		"/C/Users/gundamzhou/Documents/travail/python/sumOfThreeNumbers.py",
+		"/C/Users/gundamzhou/Documents/travail/python/rectangle.py",
+		"/C/Users/gundamzhou/Documents/travail/python/maximumOfThreeNumber.py",
+		"/C/Users/gundamzhou/Documents/travail/python/leapYears.py",
+		"/C/Users/gundamzhou/Documents/travail/python/hello.py",
+		"/C/Users/gundamzhou/Documents/travail/python/F.py",
+		"/C/Users/gundamzhou/Documents/travail/python/evenOrOdd.py",
+		"/C/Users/gundamzhou/Documents/travail/python/equality.py",
+		"/C/Users/gundamzhou/Documents/travail/python/ConverterDays.py",
+		"/C/Users/gundamzhou/Documents/travail/python/calculator.py",
+		"/C/Users/gundamzhou/Documents/travail/python/C.py",
+		"/C/Users/gundamzhou/Documents/travail/python/averageOfThreeNumbers.py",
+		"/C/Users/gundamzhou/Documents/travail/python/C",
+		"/C/Users/gundamzhou/AppData/Roaming/Sublime Text 3/Packages/User/languageC.sublime-build",
+		"/C/Users/gundamzhou/Documents/code/webGame/main.js",
+		"/C/Users/gundamzhou/Documents/code/webGame/main.html",
+		"/C/Users/gundamzhou/Documents/code/webGame/style.css",
+		"/C/Users/gundamzhou/Documents/code/python/RPG/tests.py",
+		"/C/Users/gundamzhou/Documents/code/python/RPG/launch.py",
+		"/C/Users/gundamzhou/Documents/code/python/RPG/main.py",
+		"/C/Users/gundamzhou/Documents/code/javascript/openclassroom.js",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/timedAlarm/backend.h",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/timedAlarm/backend.cpp",
+		"/C/Users/gundamzhou/Documents/code/python/RPG/testbiwind.py",
+		"/C/Users/gundamzhou/Documents/code/python/RPG/function.py",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/timedAlarm/main.qml",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/timedAlarm/android/AndroidManifest.xml",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/alarme/mainwindow.h",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/alarme/mainwindow.cpp",
+		"/C/Users/gundamzhou/Documents/code/Cpp/_QT/timedAlarm/main.cpp",
+		"/C/Users/gundamzhou/Documents/code/Cpp/des/window.cpp",
+		"/C/Users/gundamzhou/Documents/code/python/Pygame_Functions-master/demos/animationDemo2.py",
+		"/C/Users/gundamzhou/Documents/code/python/Pygame_Functions-master/demos/Agent (Animation Demo).py",
+		"/C/Users/gundamzhou/Documents/code/java/client/window.cpp",
+		"/C/Users/gundamzhou/Documents/code/python/tests py ga fu/launch.py",
+		"/C/Users/gundamzhou/Documents/code/python/tests py ga fu/tests.py",
+		"/C/Users/gundamzhou/Documents/code/python/tests.py",
+		"/C/Users/gundamzhou/Documents/code/python/Pygame_Functions-master/demos/scrollDemo.py",
+		"/C/Users/gundamzhou/Downloads/Pygame_Functions-master/pygame_functions.py",
+		"/C/Users/gundamzhou/Documents/code/java/client/window.h",
+		"/C/Users/gundamzhou/Documents/code/java/client/testClient.java",
+		"/C/Users/gundamzhou/Documents/code/java/client/test.java",
+		"/C/Users/gundamzhou/AppData/Roaming/Sublime Text 3/Packages/User/runJava.sublime-build"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"item",
+			"\"./",
+			"\"../",
+			"acceleration",
+			"worldinfluence",
+			"world",
+			"\"./"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"self",
+			"\"../",
+			"\"./",
+			"worldEnvironment",
+			"\"../"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "sel-de-guerric.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2806,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								978,
+								978
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 166.4,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "loaders.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10064,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7347,
+								7347
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3236.8,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "objects.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16881,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								161,
+								161
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "backendFunctions.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24353,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								112,
+								37
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 22.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 156.8
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 114.0
+	},
+	"pinned_build_system": "Packages/Python/Python.sublime-build",
+	"project": "prjt.sublime-project",
+	"replace":
+	{
+		"height": 72.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
