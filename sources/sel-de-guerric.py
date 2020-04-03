@@ -51,7 +51,7 @@ except (FileNotFoundError, IndexError) as identifier:
 #---end try---
 
 #------game------
-loaded = l.environmentLoader(window, 1, 1, 12)
+loaded = l.environmentLoader(window, 1, 1, 11)
 clock = 0 #in ms
 inputs = {"up" : (False, 0),
         "down" : (False, 0),

@@ -121,7 +121,7 @@ def list(board):
             rat[-1].position["x1"] = i[2]
             rat[-1].position["x2"] = i[4]
         elif i[0] == "t":
-            trash.append(o.trash(i[0], board.environment, i[1], i[2], i[3], i[4]))
+            trash.append(o.trash(i[0], board.environment, i[2], i[4], i[1], i[3]))
         elif i[0] == "m" or i[0] == "c":
             walls.append(o.item(i[0], board.environment))
             walls[-1].position["y1"] = i[1]
@@ -213,6 +213,8 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
             influence["y"] += m.cos(ele[1].inptime/4) + 1
             ele[1].inptime += 1
         #---end if---
+    elif id == 't':
+        pass
     elif id == "f":
         if ele[0] == ele[1]:
             if ele[1].state == "jump" and ele[1].hit["floor"]:

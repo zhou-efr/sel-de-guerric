@@ -444,14 +444,21 @@ class trash(entities):
         self.position["x2"] = x2
         self.position["y1"] = y1
         self.position["y2"] = y2
-        self.rect = pygame.Rect(x1, 0, x2, 0)
     #---end init---
 
     def stateUpdater(self, entities, world):
-        playerRect = pygame.Rect(entities[0].position["x1"], entities[0].position["y1"], (entities[0].position["x2"]-entities[0].position["x1"]), (entities[0].position["y2"]-entities[0].position["y1"]))
-        if self.rect.colliderect(playerRect):
-            self.data["state"] = "targetLock"
-            print("nice bro")
+        print("-----")
+        if self.data["state"] != "dead":
+            #print("trash : (", self.position["x1"], ",", self.position["x1"] , ") " , "player : (",  entities[0].position["x1"], ",", entities[0].position["x1"] , ") ")
+            if self.position["x1"] < entities[0].position["x1"] < self.position["x2"]+1 or self.position["x1"] < entities[0].position["x2"]+1 < self.position["x2"]+1:
+                self.data["state"] = "jump" if self.hit["floor"] else self.data["state"]
+                if self.position["y1"] == entities[0].position["y1"]-1 and entities[0].data["state"] != "dead":
+                    entities[0].changeState("dead")
+                elif self.position["y1"] <= entities[0].position["y1"]-1 and self.hit["floor"]:
+                    self.speed["y"] = 1
+                    print("jumping")
+                #---end if---
+            #---end if---
         #---end if---
     #---end stateUpdater---
 #---end trash---
