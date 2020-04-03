@@ -214,7 +214,9 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
             ele[1].inptime += 1
         #---end if---
     elif id == 't':
-        pass
+        if ele[1].data["state"] == "jump":
+            ele[1].acceleration["y"] = 0.6
+        #---end if---
     elif id == "f":
         if ele[0] == ele[1]:
             if ele[1].state == "jump" and ele[1].hit["floor"]:

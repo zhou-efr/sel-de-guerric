@@ -135,6 +135,7 @@ class entities (item):
     def changeState(self, state = "default", dead = 0):
         if dead:
             self.data["state"] = "dead"
+            self.data["newState"] = state
         #---end if---
         self.changed = True
         if not(dead):
@@ -447,16 +448,16 @@ class trash(entities):
     #---end init---
 
     def stateUpdater(self, entities, world):
-        print("-----")
-        if self.data["state"] != "dead":
+        if self.data["state"] != "dead" and entities[0].data["state"] != "dead":
             #print("trash : (", self.position["x1"], ",", self.position["x1"] , ") " , "player : (",  entities[0].position["x1"], ",", entities[0].position["x1"] , ") ")
             if self.position["x1"] < entities[0].position["x1"] < self.position["x2"]+1 or self.position["x1"] < entities[0].position["x2"]+1 < self.position["x2"]+1:
-                self.data["state"] = "jump" if self.hit["floor"] else self.data["state"]
-                if self.position["y1"] == entities[0].position["y1"]-1 and entities[0].data["state"] != "dead":
-                    entities[0].changeState("dead")
+                if self.position["y1"] == entities[0].position["y1"]-1:
+                    entities[0].changeState("dead", True)
+                    self.data["state"] = "static"
                 elif self.position["y1"] <= entities[0].position["y1"]-1 and self.hit["floor"]:
-                    self.speed["y"] = 1
-                    print("jumping")
+                    self.data["state"] = "jump"
+                else:
+                    self.data["state"] = "static"
                 #---end if---
             #---end if---
         #---end if---
