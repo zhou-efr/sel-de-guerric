@@ -56,6 +56,7 @@ class item:
     def getPosition(self):
         return self.position
     #---end accessors---
+#---end item---
 
 class entities (item):
 
@@ -88,7 +89,6 @@ class entities (item):
         if (self.internalClock >= (self.data[self.data["state"]]["index"] - 1)):
             self.internalClock = -1
         #---end if---
-
         if (self.clock >= (self.data[self.data["state"]]["duration"] - 1)):
             self.clock = -1
         #---end if---
@@ -433,3 +433,25 @@ class rat(entities):
         #---end if---
     #---end stateUpdater---
 #---end rat---
+
+class trash(entities):
+    """docstring for trash"""
+    def __init__(self, keyChar, environment, x1, x2, y1, y2):
+        super(trash, self).__init__(keyChar, environment)
+        self.keyChar = keyChar
+        self.environment = environment
+        self.position["x1"] = x1
+        self.position["x2"] = x2
+        self.position["y1"] = y1
+        self.position["y2"] = y2
+        self.rect = pygame.Rect(x1, 0, x2, 0)
+    #---end init---
+
+    def stateUpdater(self, entities, world):
+        playerRect = pygame.Rect(entities[0].position["x1"], entities[0].position["y1"], (entities[0].position["x2"]-entities[0].position["x1"]), (entities[0].position["y2"]-entities[0].position["y1"]))
+        if self.rect.colliderect(playerRect):
+            self.data["state"] = "targetLock"
+            print("nice bro")
+        #---end if---
+    #---end stateUpdater---
+#---end trash---

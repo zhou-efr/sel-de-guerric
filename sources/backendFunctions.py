@@ -74,16 +74,16 @@ def simpleList(area):
     ent = []
     obj = []
     zone = {"ent": [], "obj": []}
-    for e in area.list[:3]:
+    for e in area.list[:4]:
         ent += e
     #---endfor---
-    for e in area.list[3:4]:
+    for e in area.list[4:5]:
         obj += e
     #---endfor---
-    for e in area.list[4:5]:
+    for e in area.list[5:6]:
         zone["ent"] += e
     #---end for---
-    for e in area.list[5:]:
+    for e in area.list[6:]:
         zone["obj"] += e
     #---end for---
     return ent, obj, zone
@@ -94,6 +94,7 @@ def list(board):
     player = []
     fish = []
     rat = []
+    trash = []
     fspot = []
     walls = []
     cloud = []
@@ -119,6 +120,8 @@ def list(board):
             rat[-1].position["y2"] = i[3]
             rat[-1].position["x1"] = i[2]
             rat[-1].position["x2"] = i[4]
+        elif i[0] == "t":
+            trash.append(o.trash(i[0], board.environment, i[1], i[2], i[3], i[4]))
         elif i[0] == "m" or i[0] == "c":
             walls.append(o.item(i[0], board.environment))
             walls[-1].position["y1"] = i[1]
@@ -161,7 +164,7 @@ def list(board):
             #---end if---
         #---end for---
     #---end for---
-    return player, fish, rat, walls, cloud, exit, fspot, zrat
+    return player, fish, rat, trash, walls, cloud, exit, fspot, zrat
 #---end list---
 
 def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
@@ -587,4 +590,3 @@ def wallUpdater(item, lists, world):
             #---end if---
         #---end if---
 #---end wallUpdater---
-

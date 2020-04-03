@@ -107,6 +107,8 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
     #---end for---
 
     for i in entities:
+        print(i)
+        print((i.position['x1'], m.fabs(i.position['y1'])))
         window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
     #---end for---
     return old

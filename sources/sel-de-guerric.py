@@ -11,6 +11,10 @@ pygame.init()
 width = 1366
 height = 768
 window = pygame.display.set_mode((width, height))
+#window = pygame.display.set_mode((0,0), pygame.FULLSCREEN)
+if height != window.get_rect().bottom:
+    height = window.get_rect().bottom
+    width = window.get_rect().right
 """resolutions
     for 16*9 tiles
         for 720p
@@ -47,7 +51,7 @@ except (FileNotFoundError, IndexError) as identifier:
 #---end try---
 
 #------game------
-loaded = l.environmentLoader(window, 1, 1, 11)
+loaded = l.environmentLoader(window, 1, 1, 12)
 clock = 0 #in ms
 inputs = {"up" : (False, 0),
         "down" : (False, 0),
