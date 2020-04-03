@@ -89,6 +89,28 @@ while lauched:
         b.worldUpdater(loaded, inputs)
         #---end if---
     #---end second loop---
+    save1 = "..//files//temp//now.png"
+    pygame.image.save(window,save1)
+    imgo = pygame.image.load(save1).convert()
+    angle = 0
+    size = 1
+    animation = True
+    while (height/2)*size > 10 and animation:
+        #we get events
+        window.fill((0,0,0))
+        img = pygame.transform.rotozoom(imgo, angle, size)
+        window.blit(img, ((height/2)-((height/2)*size), (width/2)-((width/2)*size)))
+        pygame.display.flip()
+        time.sleep(0.01)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT : #or (event.type == pygame.KEYDOWN and (event.key == pygame.K_ESC or event.key == pygame.K_RETURN)):
+                #the boolean take the value False then we quit the loop
+                animation = False
+                #---end if---
+        #---end for---
+        angle += 10
+        size -= 0.01
+    #---end while---
 #---end Main loop---
 
 #---end---
