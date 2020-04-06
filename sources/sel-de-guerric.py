@@ -109,7 +109,7 @@ while lauched:
                 #---end if---
         #---end for---
         angle += 10
-        size -= 0.01
+        size -= 0.02
     #---end while---
 #---end Main loop---
 

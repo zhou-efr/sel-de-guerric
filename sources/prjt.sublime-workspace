@@ -443,23 +443,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "sel-de-guerric.py",
-			"settings":
-			{
-				"buffer_size": 3902,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example04.py",
-			"settings":
-			{
-				"buffer_size": 836,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -592,12 +575,12 @@
 	],
 	"file_history":
 	[
+		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/sel-de-guerric.py",
+		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example04.py",
 		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/tests/testPygame.py",
 		"/C/Users/gundamzhou/archivesWorkspaceEclipse/eclipse-workspace/black&white/projectTwo/functions.py",
-		"/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example04.py",
 		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/objects.py",
 		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/backendFunctions.py",
-		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/sel-de-guerric.py",
 		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/sources/frontEndFunctions.py",
 		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files/environment1/level1/12/board.dat",
 		"/C/Users/gundamzhou/Documents/GitHub/sel-de-guerric/files/environment1/level1/12/data.dat",
@@ -769,67 +752,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "sel-de-guerric.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3902,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3517,
-								3517
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 204.0,
-						"translation.y": 1800.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/C/Users/gundamzhou/Documents/travail/efrei'/L1 2019- 2020/Semestre 2/projet transverse/tuto pygame/example04.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 836,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								565,
-								793
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 300.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				}
 			]
 		}
 	],
