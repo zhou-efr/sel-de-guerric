@@ -19,24 +19,40 @@ class environmentLoader:
         #attributs settings
         self.environment = environment
         self.currentLevel = levelLoader(environment, level, area)
-        self.inventory = {}
-        self.folder = "../files/environment" + str(environment) + "/"
-        self.inventoryFile = "inventory.dat"
+        self.folder = "./files/environment" + str(environment) + "/"
         self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": int(surface.get_rect().right/16)}
+        
         #initialazation
-        self.initInventory()
         self.sizeUpdate(self.windowData["sizeOfTiles"])
         self.currentLevel.currentBoard.resizeBackground((self.windowData["width"],self.windowData["height"]))
     #---end init--
-
-    def initInventory(self):
-        self.inventory = fileLoader(self.folder, self.inventoryFile)
-    #---end initInventory---
 
     def nextLevel(self):
         self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
     #---end nextLevel---
 
+    def sizeUpdate(self, size):
+        for i in self.getObjects():
+            i.updateObjectPictureSize(size)
+        #---end for---
+
+        for i in self.getEntities():
+            i.updatePictureSize(size)
+    #---end sizeUpdate---
+
+    def levelChanged(self):      
+        if self.getPlayer().BoardChanged != 'false':
+            self.currentLevel.boardChange(self.getPlayer().BoardChanged)
+            if self.currentLevel.position == 99:
+                self.nextLevel()
+            #---end if---
+            self.getPlayer().BoardChanged = 'false'
+            return True
+        #---end if---
+        return False
+    #---end levelChanged---
+
+    #---Beginning accessor---
     def getPlayer(self):
         return self.currentLevel.currentBoard.entities[0]
 
@@ -70,27 +86,6 @@ class environmentLoader:
     def getZones(self):
         return self.currentLevel.currentBoard.zone
 
-    def sizeUpdate(self, size):
-        for i in self.getObjects():
-            i.updateObjectPictureSize(size)
-        #---end for---
-
-        for i in self.getEntities():
-            i.updatePictureSize(size)
-    #---end nextLevel---
-
-    def isChanged(self):
-        if self.currentLevel.BoardChanged:
-            self.currentLevel.BoardChanged = False
-            return True
-        #---end if---
-        return False
-    #---end if---
-
-    #---Beginning accessor---
-    def getInventoryAdress(self):
-        return self.folder + self.inventoryFile
-
     def getFolder(self):
         return self.folder
 
@@ -99,15 +94,6 @@ class environmentLoader:
 
     def getBoard(self):
         return self.currentLevel.currentBoard
-
-    def getInventory(self):
-        return self.inventory
-
-    def getItem(self, keyChar):
-        if keyChar in self.inventory.keys():
-            return self.inventory[keyChar]
-        #---end if---
-        return o.item('na', self.environment)
 
     def getEnvironment(self):
         return self.environment
@@ -134,13 +120,13 @@ class levelLoader:
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "../files/environment" + str(environment) + "/level" + str(level)
+        self.folder = "./files/environment" + str(environment) + "/level" + str(level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
         self.position = area #11 being the starting board
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
-        self.BoardChanged = False
+        
         #initialazation
         self.initStructure()
     #---end init---
@@ -179,9 +165,11 @@ class levelLoader:
             self.position -= 1
         else:
             self.position += 0 #
-
-        self.BoardChanged = True
+        #---end if---
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
+
+        # Must do a security to not go out of the level structure, but i'm lazy right now
+
     #---end boardChange
 
     #---Beginning of accessors---
@@ -251,7 +239,7 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "../files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
         self.background = pygame.image.load(self.backAdress)
@@ -261,8 +249,9 @@ class areaLoader:
         self.entities = self.simpleList[0]
         self.item = self.simpleList[1]
         self.zone = self.simpleList[2]
-        self.rect = pygame.Rect(0,0,self.boardata["width"], self.boardata["height"]);
+        self.rect = pygame.Rect(0,0,self.boardata["width"], self.boardata["height"])
         self.collidesRect = [pygame.Rect(0,0,self.boardata["width"], 0),pygame.Rect(0,self.boardata["height"]-4,self.boardata["width"], 4)]
+        
         #beginning of initialazation 
         for e in self.item:
             if isinstance(e, o.entities):

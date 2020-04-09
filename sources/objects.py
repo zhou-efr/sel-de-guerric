@@ -21,7 +21,7 @@ class item:
     def __init__(self, keyChar, environment):
         self.keyChar = keyChar
         self.state = "default"
-        self.folder = "../files/environment" + str(environment) + "/items/" + keyChar + "/"
+        self.folder = "./files/environment" + str(environment) + "/items/" + keyChar + "/"
         self.pictureAdress = self.folder + self.state + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
         self.updateObjectPictureSize()
@@ -34,9 +34,8 @@ class item:
 
     def updateState(self, newstate):
         self.state = newstate
-        if type(self) == item:
-            self.pictureAdress = self.folder + self.state + ".png"
-            self.picture = pygame.image.load(self.pictureAdress)
+        self.pictureAdress = self.folder + self.state + ".png"
+        self.picture = pygame.image.load(self.pictureAdress)
         #---end if---
     #---end updateState---
 
@@ -75,13 +74,18 @@ class entities (item):
         self.vXMax = 1
         self.vYMax = 1
         self.size = 120
+
         try:
             self.data = l.fileLoader(self.dataFolder, str(keyChar) + ".dat")
         except (FileNotFoundError, IndexError) as identifier:
             print(identifier)
             self.data = {"state" : "na", "na" : {"index" : 0}}
         #---end try---
+
         self.data["newState"] = None
+        self.globalfolder = self.folder
+        self.folder = self.globalfolder + "sprite/" + self.data["state"] + "/"
+
         self.updateSprite()
     #---end init---
 
@@ -107,6 +111,7 @@ class entities (item):
     def getPicture(self):
         if self.changed and self.data[self.data["state"]]["initialState"] == self.internalClock:
             self.data["state"] = self.data["newState"]
+            self.folder = self.globalfolder + "sprite/" + self.data["state"] + "/"
             self.updateSprite()
         #---end if---
         self.internalClockUpdate()
@@ -127,19 +132,19 @@ class entities (item):
     def updateSprite(self):
         self.sprite = []
         for i in range(self.data[self.data["state"]]["index"]):
-            self.sprite.append(pygame.image.load(self.folder + "sprite/" + self.data["state"] + "/sprt" + str(i) + ".png").convert_alpha())
+            self.sprite.append(pygame.image.load(self.folder + "sprt" + str(i) + ".png").convert_alpha())
         #---end for---
-        self.updatePictureSize( self.size)
+        self.updatePictureSize(self.size)
     #---end updateSprite---
 
     def changeState(self, state = "default", dead = 0):
+        self.data["newState"] = state
         if dead:
             self.data["state"] = "dead"
+        else:
             self.data["newState"] = state
+            self.changed = True
         #---end if---
-        self.changed = True
-        if not(dead):
-            self.data["newState"] = state
     #---end changeState---
 
     #---beginning accessors---
@@ -162,6 +167,7 @@ class player (entities):
         self.rice = 100
         self.coef = 0.1
         self.ricesize = "high"
+        self.BoardChanged = 'false'   #'false' if no changement, 'n', 's', 'e', 'o' if there is a changement depending of this exit taken
     #---end init---
 
     def updatePlayerInput(self, inp, running = False):
@@ -180,8 +186,6 @@ class player (entities):
                     self.state = "bouncing"
                 #---end if---
             #---end if---
-        elif self.hit["floor"]:
-            self.cdw["action"] = True
         #---end if---
 
 
@@ -346,7 +350,7 @@ class zrat(item):
 class rat(entities):
 
     def __init__(self, keyChar, environment):
-        super().__init__(keyChar, environment)
+        super().__init__(self, keyChar, environment)
         self.territory = None
         self.max = None
         self.min = None
@@ -463,3 +467,16 @@ class trash(entities):
         #---end if---
     #---end stateUpdater---
 #---end trash---
+
+class exit(item):
+    def __init__(self, keyChar, environment) :
+        super().__init__(keyChar, environment)
+        self.direction = 'e'
+    #---end init---
+
+    def playerExit(self, player):
+        if (self.position["x1"] <= player.position["x1"] <= self.position["x2"] or player.position["x1"] <= self.position["x1"] <= player.position["x2"]) and (self.position["y1"] >= player.position["y1"] >= self.position["y2"] or player.position["y1"] >= self.position["y1"] >= player.position["y2"]):
+            player.BoardChanged = self.direction
+        #---end if---
+    #---end playerExit---
+#---end exit---

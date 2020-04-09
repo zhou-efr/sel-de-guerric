@@ -100,6 +100,7 @@ def list(board):
     cloud = []
     exit = []
     zrat = []
+    
     #fill the lists
     for i in hitboxesFileReader(board.boardAdress):
         if i[0] == "p":
@@ -139,11 +140,12 @@ def list(board):
                 cloud[-1].position["x1"] = j["x1"]
                 cloud[-1].position["x2"] = j["x2"]
             elif i == "ex":
-                exit.append(o.item("ex", board.environment))
+                exit.append(o.exit("ex", board.environment))
                 exit[-1].position["y1"] = j["y1"]
                 exit[-1].position["y2"] = j["y2"]
                 exit[-1].position["x1"] = j["x1"]
                 exit[-1].position["x2"] = j["x2"]
+                exit[-1].direction = j["direction"]
             elif i == "s":
                 fspot.append(o.item(i, board.environment))
                 fspot[-1].position["y1"] = j["y1"]
@@ -167,7 +169,7 @@ def list(board):
     return player, fish, rat, trash, walls, cloud, exit, fspot, zrat
 #---end list---
 
-def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
+def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1":
         influence = {"x" : 0, "y" : -0.05} #natural decrease of speed and gravity
@@ -202,7 +204,7 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
         influence["x"] = -speed["x"]*0.8
     elif id == "wall":
         influence["y"] = -speed["y"]*0.4
-    elif id == "nt" and (type(ele[0]) == type(ele[1]) or type(ele[0]) == o.player):
+    elif id == "nt" and (ele[0] == ele[1] or type(ele[0]) == o.player):
         if speed != 0 and (ele[0].position["x1"] - ele[1].speed["x"] <= ele[1].position["x1"] <= ele[0].position["x2"] + ele[1].speed["x"] or ele[1].position["x1"] - ele[0].speed["x"] <= ele[0].position["x1"] <= ele[1].position["x2"] + ele[0].speed["x"]) and (ele[0].position["y1"] - ele[1].speed["y"] <= ele[1].position["y1"] <= ele[0].position["y2"] + ele[1].speed["y"] or ele[1].position["y1"] - ele[0].speed["y"] <= ele[0].position["y1"] <= ele[1].position["y2"] + ele[0].speed["y"]):
             influence["x"] += 0.2 * (ele[0].speed["x"]**2 + ele[1].speed["x"]**2)**(1/2)
             influence["y"] += 0.2 * (ele[0].speed["y"]**2 + ele[1].speed["y"]**2)**(1/2)
@@ -213,8 +215,8 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
             influence["y"] += m.cos(ele[1].inptime/4) + 1
             ele[1].inptime += 1
         #---end if---
-    elif id == 't':
-        if ele[1].data["state"] == "jump":
+    elif id == 't' and ele[0] == ele[1]:
+        if ele[1].data["state"] == "jump" and ele[1].hit["floor"]:
             ele[1].acceleration["y"] = 0.6
         #---end if---
     elif id == "f":
@@ -238,11 +240,12 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
                 influence["x"] = -ele[1].speed["x"]*0.8
             #---end if---
         elif ele[1].state == "attack" and type(ele[0]) == o.player and ele[1].hit["floor"]:
+            distance = ((ele[0].position["x1"] - ele[1].position["x1"])**2 + (ele[0].position["y1"] - ele[1].position["y1"])**2)**(1/2)
             influence["x"] += (ele[0].position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
             influence["y"] += (ele[0].position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
         #---end if---
-    elif id == 'r':
-        if ele[1].state == 'move':
+    elif id == 'r' :
+        if ele[0] == ele[1] and ele[1].state == 'move':
             if ele[1].rmove == 1:
                 if ele[1].speed["x"]>-1:
                     d = 1/(1-ele[1].speed["x"])
@@ -255,6 +258,8 @@ def physicLoader(id, ele = None, distance = 0, speed = 0, dtime = 1, Vmax = 0.5)
                 #---end if---
             #---end if---
         #---end if---
+    elif id == 'p' and type(ele[0]) == o.exit:
+        ele[0].playerExit(ele[1])
     #---end if---
     return influence
 #---end physicLoader---
@@ -263,76 +268,72 @@ def acceleration(ent, obj, world, trueWorld):
     #Execute the influence of the world on the entities
     for e in ent:
         e.stateUpdater(ent, trueWorld)
-        worldinfluence = physicLoader("world" + str(world), None, None,e.speed)
+        worldinfluence = physicLoader("world" + str(world), None, e.speed)
         e.acceleration["x"] += worldinfluence["x"]
         e.acceleration["y"] += worldinfluence["y"]
+    #---end for---
+
     #Move of the player(s)
     inp = False
     inpinfluence = {"x" : -0.2 * ent[0].speed["x"], "y" : 0}
     if ent[0].hit["floor"]:
-        ent[0].cdw = {"walljump": True, "jump": True, "double_jump": False, "action": ent[0].cdw["action"]}
+        ent[0].cdw = {"walljump": True, "jump": True, "double_jump": False, "action": True}
     if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
-        influence = physicLoader("wall", None, None, ent[0].speed)
+        influence = physicLoader("wall", None,  ent[0].speed)
         inpinfluence["y"] += influence["y"]
     if ent[0].jump["jump"]:
         inp = True
         if ent[0].cdw["jump"]:
-            influence = physicLoader("player_jump", None, None, None, ent[0].inptime)
+            influence = physicLoader("player_jump", None, None, ent[0].inptime)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
-        if ent[0].cdw["double_jump"]:
-            influence = physicLoader("player_double_jump", None, None, ent[0].speed, ent[0].inptime)
+        elif ent[0].cdw["double_jump"]:
+            influence = physicLoader("player_double_jump", None, ent[0].speed, ent[0].inptime)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
             ent[0].cdw["double_jump"] = False
-        if ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
+        elif ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 0)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
             ent[0].cdw["walljump"] = False
-        if ent[0].hit["rwall"] and ent[0].cdw["walljump"]:
+        elif ent[0].hit["rwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 1)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
             ent[0].cdw["walljump"] = False
-        #---end ifs---
+        #---end if---
     elif ent[0].cdw["jump"]:
         ent[0].cdw["jump"] = False
-        ent[0].inpinfluence = 1
-    
-    if ent[0].jump["fastfall"]:
+    elif ent[0].jump["fastfall"]:
+        inp = True
         influence = physicLoader("player_fastfall")
         inpinfluence["y"] += influence["y"]
+
     if ent[0].walking["right"] == True:
-        inp = True
-        influence = physicLoader("player_right", None, None, ent[0].speed, ent[0].inptime)
+        influence = physicLoader("player_right", None, ent[0].speed, ent[0].inptime)
         inpinfluence["x"] += influence["x"]
         inpinfluence["y"] += influence["y"]
-    if ent[0].walking["left"] == True:
-        inp = True
-        influence = physicLoader("player_left", None, None, ent[0].speed, ent[0].inptime)
+    elif ent[0].walking["left"] == True:
+        influence = physicLoader("player_left", None, ent[0].speed, ent[0].inptime)
         inpinfluence["x"] += influence["x"]
         inpinfluence["y"] += influence["y"]
-    if ent[0].hit["floor"] and not(inp):
-        inpinfluence = physicLoader("stopx", None, None, ent[0].speed)
+    elif not(inp):
+        ent[0].inptime = 1
+        if ent[0].hit["floor"]:
+            inpinfluence = physicLoader("stopx", None, ent[0].speed)
+        #---end if---
     #---end ifs---
     ent[0].acceleration["x"] += inpinfluence["x"]
     ent[0].acceleration["y"] += inpinfluence["y"]
     #Check each entities/object and execute the influence of each item on it 
     for e in ent:
         for ele in ent+obj:
-            distance = ((ele.position["x1"]-e.position["x1"])**2 + (ele.position["y1"]-e.position["y1"])**2)**(1/2)
-            if ele in ent:
-                speed = ((e.speed["x"])**2 + (e.speed["y"])**2)**(1/2) - ((ele.speed["x"])**2 + (ele.speed["y"])**2)**(1/2)
-            else:
-                speed = e.speed
-            #---end if---
-            influence = physicLoader(e.keyChar,[ele,e],distance,speed)
+            influence = physicLoader(e.keyChar,[ele,e])
             e.acceleration["x"] += influence["x"]
             e.acceleration["y"] += influence["y"]
         #---end for---
     #---end for---
-    return ent
 #---end acceleration---
 
 def speed(ent):
@@ -344,7 +345,6 @@ def speed(ent):
         #Remove the Acceleration
         e.acceleration = {"x" : 0, "y" : 0}
     #---end for---
-    return ent
 #---end speed---
 
 def hit(en, obj, zone):
@@ -360,79 +360,97 @@ def hit(en, obj, zone):
         dx = e.position["x2"]-e.position["x1"]
         dy = e.position["y2"]-e.position["y1"]
 
-        for ele in obj + ent:
-            hitx = True
-            if e.speed["x"] > ele.position["x1"] - e.position["x2"] - 1 >= 0:
-                hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"] - 1)*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "r"}
-                hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["x"] < ele.position["x2"] + 1 - e.position["x1"] <= 0:
-                hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "l"}
-                hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
-            else:
-                hitx = False
-            #---end if---
+        if e.speed["x"] != 0 or e.speed["y"] != 0:
+            for ele in obj + ent:
+                if e.speed["x"] != 0:
+                    hitx = True
+                    if e.speed["x"] > ele.position["x1"] - e.position["x2"] - 1 >= 0:
+                        hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"] - 1)*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "r"}
+                        hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
+                    elif e.speed["x"] < ele.position["x2"] + 1 - e.position["x1"] <= 0:
+                        hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "l"}
+                        hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
+                    else:
+                        hitx = False
+                    #---end if---
+                else:
+                    hitx = False
+                #---end if---
 
-            hity = True
-            if e.speed["y"] < ele.position["y1"] - e.position["y2"] + 1 <= 0:
-                hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0, "id": "floor"}
-                hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
-            elif e.speed["y"] > ele.position["y2"] - 1 - e.position["y1"] >= 0:
-                hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - e.position["y2"] - 1)*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
-                hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
-            else:
-                hity = False
-            #---end if---
-            if hitx and (ele.position["y1"]>=hitposx["y"]>ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
-                hitpoint["x"].append(hitposx)
-            #---end if---
-            
-            if hity and (ele.position["x1"]<=hitposy["x"]<ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
-                hitpoint["y"].append(hitposy)
-            #---end if---
-        #---end for---
+                if e.speed["y"] != 0:
+                    hity = True
+                    if e.speed["y"] < ele.position["y1"] - e.position["y2"] + 1 <= 0:
+                        hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0, "id": "floor"}
+                        hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
+                    elif e.speed["y"] > ele.position["y2"] - 1 - e.position["y1"] >= 0:
+                        hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - e.position["y2"] - 1)*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
+                        hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
+                    else:
+                        hity = False
+                    #---end if---
+                else:
+                    hity = False
+                #---end if---
 
-        hitpointx = []
-        for x in hitpoint["x"]:
-            if hitpointx == []:
-                hitpointx = [x["x"], x["y"], x["dist"], x["id"]]
-            elif x["dist"] < hitpointx[2]:
-                hitpointx = [x["x"], x["y"], x["dist"], x["id"]]
-            #---end if---
-        #---end for---
+                if hitx and (ele.position["y1"]>=hitposx["y"]>ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
+                    hitpoint["x"].append(hitposx)
+                    hitx = False
+                #---end if---
+                
+                if hity and (ele.position["x1"]<=hitposy["x"]<ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
+                    hitpoint["y"].append(hitposy)
+                    hity = False
+                #---end if---
+            #---end for---
 
-        hitpointy = []
-        for y in hitpoint["y"]:
-            if hitpointy == []:
-                hitpointy = [y["x"], y["y"], y["dist"], y["id"]]
-            elif y["dist"] < hitpointy[2]:
-                hitpointy = [y["x"], y["y"], y["dist"], y["id"]]
-            #---end if---
-        #---end for---
+            hitpointx = []
+            for x in hitpoint["x"]:
+                if hitpointx == []:
+                    hitpointx = [x["x"], x["y"], x["dist"], x["id"]]
+                elif x["dist"] < hitpointx[2]:
+                    hitpointx = [x["x"], x["y"], x["dist"], x["id"]]
+                #---end if---
+            #---end for---
 
-        if hitpointx != [] and hitpointy != [] and hitpointx[2] == hitpointy[2]:
-            e.speed["x"] = 0
-            e.speed["y"] = 0
-            e.position["x1"] = hitpointx[0]
-            e.position["x2"] = hitpointx[0] + dx
-            e.position["y1"] = hitpointy[1]
-            e.position["y2"] = hitpointy[1] + dy
-            e.hit[hitpointy[3]] = True
-            e.hit[hitpointx[3] + "wall"] = True
-        elif hitpointx != [] and (hitpointy == [] or hitpointx[2] < hitpointy[2]):
-            e.speed["x"] = 0
-            e.position["x1"] = hitpointx[0]
-            e.position["x2"] = hitpointx[0] + dx
-            e.position["y1"] = hitpointx[1]
-            e.position["y2"] = hitpointx[1] + dy
-            e.hit[hitpointx[3] + "wall"] = True
-        elif hitpointy != [] and (hitpointx == [] or hitpointx[2] > hitpointy[2]):
-            e.speed["y"] = 0
-            e.position["x1"] = hitpointy[0]
-            e.position["x2"] = hitpointy[0] + dx
-            e.position["y1"] = hitpointy[1]
-            e.position["y2"] = hitpointy[1] + dy
-            e.hit[hitpointy[3]] = True
+            hitpointy = []
+            for y in hitpoint["y"]:
+                if hitpointy == []:
+                    hitpointy = [y["x"], y["y"], y["dist"], y["id"]]
+                elif y["dist"] < hitpointy[2]:
+                    hitpointy = [y["x"], y["y"], y["dist"], y["id"]]
+                #---end if---
+            #---end for---
+
+            if hitpointx != [] and hitpointy != []:
+                e.speed["x"] = 0
+                e.speed["y"] = 0
+                e.position["x1"] = hitpointx[0]
+                e.position["x2"] = hitpointx[0] + dx
+                e.position["y1"] = hitpointy[1]
+                e.position["y2"] = hitpointy[1] + dy
+                e.hit[hitpointy[3]] = True
+                e.hit[hitpointx[3] + "wall"] = True
+            elif hitpointx != [] and hitpointy == []:
+                e.speed["x"] = 0
+                e.position["x1"] = hitpointx[0]
+                e.position["x2"] = hitpointx[0] + dx
+                e.position["y1"] = hitpointx[1]
+                e.position["y2"] = hitpointx[1] + dy
+                e.hit[hitpointx[3] + "wall"] = True
+            elif hitpointy != [] and hitpointx == []:
+                e.speed["y"] = 0
+                e.position["x1"] = hitpointy[0]
+                e.position["x2"] = hitpointy[0] + dx
+                e.position["y1"] = hitpointy[1]
+                e.position["y2"] = hitpointy[1] + dy
+                e.hit[hitpointy[3]] = True
+            #---end if---
         #---end if---
+
+        e.position["x1"] += e.speed["x"]
+        e.position["x2"] += e.speed["x"]
+        e.position["y1"] += e.speed["y"]
+        e.position["y2"] += e.speed["y"]
     #---end for---
 #---end hit---
 
@@ -441,13 +459,6 @@ def move(ent, obj, zone):
         e.hit = {"rwall": False, "lwall": False, "floor": False, "ceil": False}
     #---end for---
     hit(ent, obj, zone)
-    hit(ent, obj, zone)
-    for e in ent + zone["ent"]:
-        e.position["x1"] += e.speed["x"]
-        e.position["x2"] += e.speed["x"]
-        e.position["y1"] += e.speed["y"] 
-        e.position["y2"] += e.speed["y"]
-    #---end for---
 #---end move---
 
 def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]}):
@@ -461,7 +472,7 @@ def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]
 #---end worldUpdater---
 
 def save(id, area, level = 0, environment = 0, newname = ""):
-    fileAdress = "../files/environment0/saves/" + str(id) + ".dat"
+    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
     try:
         save = open(fileAdress, 'r').read().split('\n')
         save[3] = int(area)
@@ -484,7 +495,7 @@ def save(id, area, level = 0, environment = 0, newname = ""):
 #---end save---
 
 def loadsave(id):
-    fileAdress = "../files/environment0/saves/" + str(id) + ".dat"
+    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
     save = open(fileAdress, 'r').read().split('\n')
     return l.environmentLoader(save[1], save[2], save[3])
 #---end loadsave---
