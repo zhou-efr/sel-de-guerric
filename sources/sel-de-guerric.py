@@ -72,7 +72,7 @@ while lauched:
     #---Second Loop---
     game = True
     while game and loaded.getEntities()[0].data["state"] != "dead":
-        if loaded.isChanged():
+        if loaded.levelChanged():
             initialShift = 4 if loaded.getEntities()[0].position["x1"]-9 > 0 else loaded.getEntities()[0].position["x1"]
             old = [loaded.getEntities()[0].position["x1"]-initialShift,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
         #---end if---
