@@ -176,9 +176,9 @@ class levelLoader:
         elif (direction == 's'):
             self.position -= 10
         elif (direction == 'o'):
-            self.position += 1
-        elif (direction == 'e'):
             self.position -= 1
+        elif (direction == 'e'):
+            self.position += 1
         else:
             self.position += 0 #
         #---end if---
