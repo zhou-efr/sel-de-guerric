@@ -18,17 +18,17 @@ class environmentLoader:
     def __init__(self, surface, environment, level = 1, area = 11):
         #attributs settings
         self.environment = environment
-        self.currentLevel = levelLoader(environment, level, area)
-        self.folder = "./files/environment" + str(environment) + "/"
+        self.folder = "../files/environment" + str(environment) + "/"
         self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": int(surface.get_rect().right/16)}
-        
+        self.currentLevel = levelLoader(environment, level, self.windowData["sizeOfTiles"], area)
+
         #initialazation
         self.sizeUpdate(self.windowData["sizeOfTiles"])
         self.currentLevel.currentBoard.resizeBackground((self.windowData["width"],self.windowData["height"]))
     #---end init--
 
     def nextLevel(self):
-        self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1)
+        self.currentLevel = levelLoader(self.environment, self.currentLevel.getLevel()+1, self.windowData["sizeOfTiles"])
     #---end nextLevel---
 
     def sizeUpdate(self, size):
@@ -51,6 +51,10 @@ class environmentLoader:
         #---end if---
         return False
     #---end levelChanged---
+
+    def isChanged(self):
+        return self.currentLevel.boardChanged()
+    #---end isChanged---
 
     #---Beginning accessor---
     def getPlayer(self):
@@ -116,20 +120,32 @@ class levelLoader:
             accessors
     """
 
-    def __init__(self, environment, level, area = 11):
+    def __init__(self, environment, level, sizeOfTiles, area = 11):
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "./files/environment" + str(environment) + "/level" + str(level)
+        self.folder = "../files/environment" + str(environment) + "/level" + str(level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
         self.position = area #11 being the starting board
+        self.boardHasChange = False;
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
         
         #initialazation
         self.initStructure()
-    #---end init---
+        self.sizeUpdate(sizeOfTiles)
+        self.currentBoard.resizeBackground((sizeOfTiles*16,sizeOfTiles*9))
+    #---end init--
+
+    def sizeUpdate(self, size):
+        for i in self.currentBoard.item:
+            i.updateObjectPictureSize(size)
+        #---end for---
+
+        for i in self.currentBoard.entities:
+            i.updatePictureSize(size)
+    #---end sizeUpdate---
 
     def initStructure(self):
         #board initialazation
@@ -166,11 +182,20 @@ class levelLoader:
         else:
             self.position += 0 #
         #---end if---
+        self.boardChange = True
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
 
         # Must do a security to not go out of the level structure, but i'm lazy right now
 
-    #---end boardChange
+    #---end boardChange---
+
+    def boardChanged(self):
+        if (self.boardHasChange):
+            self.boardHasChange = 0
+            return not(self.boardHasChange)
+        #---end if---
+        return self.boardHasChange
+    #---end boardChanged---
 
     #---Beginning of accessors---
     def getBoard(self):
@@ -239,7 +264,7 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.adress = "../files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
         self.background = pygame.image.load(self.backAdress)
