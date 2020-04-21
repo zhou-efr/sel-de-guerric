@@ -52,10 +52,6 @@ class environmentLoader:
         return False
     #---end levelChanged---
 
-    def isChanged(self):
-        return self.currentLevel.boardChanged()
-    #---end isChanged---
-
     #---Beginning accessor---
     def getPlayer(self):
         return self.currentLevel.currentBoard.entities[0]
@@ -129,13 +125,12 @@ class levelLoader:
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
         self.position = area #11 being the starting board
-        self.boardHasChange = False;
         self.currentBoard = areaLoader(self.environment, self.level, self.position) 
-        
+        self.sizeOfTiles = sizeOfTiles;
         #initialazation
         self.initStructure()
-        self.sizeUpdate(sizeOfTiles)
-        self.currentBoard.resizeBackground((sizeOfTiles*16,sizeOfTiles*9))
+        self.sizeUpdate(self.sizeOfTiles)
+        self.currentBoard.resizeBackground((self.sizeOfTiles*16,self.sizeOfTiles*9))
     #---end init--
 
     def sizeUpdate(self, size):
@@ -182,20 +177,13 @@ class levelLoader:
         else:
             self.position += 0 #
         #---end if---
-        self.boardChange = True
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
+        self.sizeUpdate(self.sizeOfTiles)
+        self.currentBoard.resizeBackground((self.sizeOfTiles*16,self.sizeOfTiles*9))
 
         # Must do a security to not go out of the level structure, but i'm lazy right now
-
+        #I assume it was at something like 1 AM
     #---end boardChange---
-
-    def boardChanged(self):
-        if (self.boardHasChange):
-            self.boardHasChange = 0
-            return not(self.boardHasChange)
-        #---end if---
-        return self.boardHasChange
-    #---end boardChanged---
 
     #---Beginning of accessors---
     def getBoard(self):
