@@ -57,6 +57,47 @@ class item:
     #---end accessors---
 #---end item---
 
+class multipleItem(item):
+    """docstring for multipleItem"""
+    def __init__(self, keyChar, environment):
+        super(multipleItem, self).__init__()
+        self.keyChar = keyChar
+        self.environment = environment
+        self.data = {};
+        self.dataFolder = self.folder + "data/"
+        try:
+            self.data = fileLoader(self.dataFolder, str(keyChar)+".dat");
+        except FileNotFoundError as e:
+            print(e)
+            exit(-1);
+        #---end try---
+
+    def loadPicture(self):
+        self.data["picture"] = []
+        for i in range(self.data["sizeX"]):
+            self.data["picture"].append([])
+            for int in range(self.data["sizeY"]):
+                self.data["picture"][i].append(pygame.image.load(str(i)+str(j)))
+            #---end for---
+        #---end for---
+    #---end loadPicture---
+
+    def updateObjectPictureSize(self, size = 120):
+        for i in range(self.data["sizeX"]):
+            for j in range(self.data["sizeY"]):
+                self.data["picture"][i][j] = pygame.transform.scale(self.data["picture"][i][j].convert_alpha(), (size, size))
+            #---end for---
+        #---end for---
+    #---end updatePictureSize---
+
+    def getPicture(self, coordinate):
+        return self.data["picture"][coordinate[0]][coordinate[1]]
+    #---end getPicture---
+
+#---end multipleItem---
+
+
+
 class entities (item):
 
     def __init__(self, keyChar, environment):
