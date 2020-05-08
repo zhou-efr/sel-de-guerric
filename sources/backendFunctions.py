@@ -475,7 +475,7 @@ def worldUpdater(world, inp = {"up" : [False], "right": [False], "left": [False]
 #---end worldUpdater---
 
 def save(id, area, level = 0, environment = 0, newname = ""):
-    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
+    fileAdress = "../files/environment0/saves/" + str(id) + ".dat"
     try:
         save = open(fileAdress, 'r').read().split('\n')
         save[3] = int(area)
@@ -498,7 +498,7 @@ def save(id, area, level = 0, environment = 0, newname = ""):
 #---end save---
 
 def loadsave(id):
-    fileAdress = "./files/environment0/saves/" + str(id) + ".dat"
+    fileAdress = "../files/environment0/saves/" + str(id) + ".dat"
     save = open(fileAdress, 'r').read().split('\n')
     return l.environmentLoader(save[1], save[2], save[3])
 #---end loadsave---
