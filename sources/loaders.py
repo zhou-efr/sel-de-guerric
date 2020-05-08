@@ -18,7 +18,7 @@ class environmentLoader:
     def __init__(self, surface, environment, level = 1, area = 11):
         #attributs settings
         self.environment = environment
-        self.folder = "../files/environment" + str(environment) + "/"
+        self.folder = "./files/environment" + str(environment) + "/"
         self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": int(surface.get_rect().right/16)}
         self.currentLevel = levelLoader(environment, level, self.windowData["sizeOfTiles"], area)
 
@@ -41,12 +41,12 @@ class environmentLoader:
     #---end sizeUpdate---
 
     def levelChanged(self):      
-        if self.getPlayer().BoardChanged != 'false':
+        if self.getPlayer().BoardChanged != None:
             self.currentLevel.boardChange(self.getPlayer().BoardChanged)
             if self.currentLevel.position == 99:
                 self.nextLevel()
             #---end if---
-            self.getPlayer().BoardChanged = 'false'
+            self.getPlayer().BoardChanged = None
             return True
         #---end if---
         return False
@@ -120,14 +120,17 @@ class levelLoader:
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "../files/environment" + str(environment) + "/level" + str(level)
+        self.folder = "./files/environment" + str(environment) + "/level" + str(level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
         self.position = area #11 being the starting board
-        self.currentBoard = areaLoader(self.environment, self.level, self.position) 
-        self.sizeOfTiles = sizeOfTiles;
+        self.player = o.player()
+        self.currentBoard = areaLoader(self.environment, self.level, self.position)
+        self.currentBoard.list[0].append(self.player)
+        self.sizeOfTiles = sizeOfTiles
         #initialazation
+        self.currentBoard.init_in_level()
         self.initStructure()
         self.sizeUpdate(self.sizeOfTiles)
         self.currentBoard.resizeBackground((self.sizeOfTiles*16,self.sizeOfTiles*9))
@@ -165,19 +168,19 @@ class levelLoader:
         #---end try---
     #---end initStructure---
 
-    def boardChange(self, direction):
-        if (direction == 'n'):
-            self.position += 10
-        elif (direction == 's'):
-            self.position -= 10
-        elif (direction == 'o'):
-            self.position -= 1
-        elif (direction == 'e'):
-            self.position += 1
-        else:
-            self.position += 0 #
+    def boardChange(self, data):
+        self.position = data.area
+        self.player.position["x"] = data.x
+        self.player.position["y"] = data.y
         #---end if---
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
+        if data.force:
+            self.currentBoard.list[0][0].position["x1"] = data.x
+            self.currentBoard.list[0][0].position["x2"] = data.x
+            self.currentBoard.list[0][0].position["y1"] = data.y
+            self.currentBoard.list[0][0].position["y2"] = data.y
+        #---end if---
+        self.currentBoard.init_in_level()
         self.sizeUpdate(self.sizeOfTiles)
         self.currentBoard.resizeBackground((self.sizeOfTiles*16,self.sizeOfTiles*9))
 
@@ -252,20 +255,22 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "../files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
         self.background = pygame.image.load(self.backAdress)
         self.boardata = fileLoader(self.adress, "/data.dat")
         self.list = b.list(self)
+        self.rect = pygame.Rect(0,0,self.boardata["width"], self.boardata["height"])
+        self.collidesRect = [pygame.Rect(0,0,self.boardata["width"], 0),pygame.Rect(0,self.boardata["height"]-4,self.boardata["width"], 4)]
+    #---end init---
+
+    def init_in_level(self):
         self.simpleList = b.simpleList(self)
         self.entities = self.simpleList[0]
         self.item = self.simpleList[1]
         self.zone = self.simpleList[2]
-        self.rect = pygame.Rect(0,0,self.boardata["width"], self.boardata["height"])
-        self.collidesRect = [pygame.Rect(0,0,self.boardata["width"], 0),pygame.Rect(0,self.boardata["height"]-4,self.boardata["width"], 4)]
-        
-        #beginning of initialazation 
+
         for e in self.item:
             if isinstance(e, o.entities):
                 e.stateUpdater(self.item, self)
@@ -273,7 +278,7 @@ class areaLoader:
                 b.wallUpdater(e, self.item, self)
             #---end if---
         #---end for---
-    #---end init---
+    #---end init_in_level---
 
     #---Beginning of accessors---
     def getBackAdress(self):

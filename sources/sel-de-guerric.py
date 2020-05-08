@@ -23,13 +23,13 @@ if height != window.get_rect().bottom:
             Tile Size = 120 
 """
 TILE_SIZE = int(height/9)
-icon = pygame.image.load("../files/panda.png")
+icon = pygame.image.load("./files/panda.png")
 pygame.display.set_icon(icon)
 
 #------keyboard------
 keyMap = {}
 try:
-    with open("../files/keyboard.dat", 'r') as target:
+    with open("./files/keyboard.dat", 'r') as target:
         contents = target.read().split("\n")
     #---end with---
 
@@ -51,7 +51,7 @@ except (FileNotFoundError, IndexError) as identifier:
 #---end try---
 
 #------game------
-loaded = l.environmentLoader(window, 3, 1)
+loaded = l.environmentLoader(window, 1, 1)
 clock = 0 #in ms
 inputs = {"up" : (False, 0),
         "down" : (False, 0),
@@ -89,7 +89,7 @@ while lauched:
         b.worldUpdater(loaded, inputs)
         #---end if---
     #---end second loop---
-    save1 = "..//files//temp//now.png"
+    save1 = ".//files//temp//now.png"
     pygame.image.save(window,save1)
     imgo = pygame.image.load(save1).convert()
     angle = 0

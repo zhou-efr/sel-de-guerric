@@ -21,7 +21,7 @@ class item:
     def __init__(self, keyChar, environment):
         self.keyChar = keyChar
         self.state = "default"
-        self.folder = "../files/environment" + str(environment) + "/items/" + keyChar + "/"
+        self.folder = "./files/environment" + str(environment) + "/items/" + keyChar + "/"
         self.pictureAdress = self.folder + self.state + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
         self.updateObjectPictureSize()
@@ -208,7 +208,7 @@ class player (entities):
         self.rice = 100
         self.coef = 0.1
         self.ricesize = "high"
-        self.BoardChanged = 'false'   #'false' if no changement, 'n', 's', 'e', 'o' if there is a changement depending of this exit taken
+        self.BoardChanged = None
     #---end init---
 
     def updatePlayerInput(self, inp, running = False):
@@ -512,12 +512,15 @@ class trash(entities):
 class exit(item):
     def __init__(self, keyChar, environment) :
         super().__init__(keyChar, environment)
-        self.direction = 'e'
+        self.area = 11
+        self.x = 1
+        self.y = -1
+        self.force = 'False'
     #---end init---
 
     def playerExit(self, player):
         if (self.position["x1"] <= player.position["x1"] <= self.position["x2"] or player.position["x1"] <= self.position["x1"] <= player.position["x2"]) and (self.position["y1"] >= player.position["y1"] >= self.position["y2"] or player.position["y1"] >= self.position["y1"] >= player.position["y2"]):
-            player.BoardChanged = self.direction
+            player.BoardChanged = self
         #---end if---
     #---end playerExit---
 #---end exit---
