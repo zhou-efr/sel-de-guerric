@@ -25,6 +25,18 @@ if height != window.get_rect().bottom:
         for 1080p
             Tile Size = 120 
 """
+
+keyMap = {119 : "up",
+        115 : "down",
+        100 : "right",
+        97 : "left",
+        304 : "action1",
+        32 : "action2",
+        27 : "pause",
+        12 : "quit"}
+
+print(keyMap[119])
+
 TILE_SIZE = int(height/9)
 icon = pygame.image.load("../files/panda.png")
 pygame.display.set_icon(icon)
@@ -91,15 +103,15 @@ while play:
         
     for event in pygame.event.get():
         if event.type == QUIT:
-            game = False
+            play = False
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_opt and event.pos[0] < x_opt + size_option[0] and event.pos[1] > y_opt and event.pos[1] < y_opt + size_option[1] :
-            game = options(window, window_size)
+            play = options(window, window_size)
         if event.type==VIDEORESIZE:
             window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
             window_size = event.dict['size']
             pygame.display.flip()
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_rules and event.pos[0] < x_rules + size_rules[0] and event.pos[1] > y_rules and event.pos[1] < y_rules + size_rules[1] :
-            game = rules(window, window_size)
+            play = rules(window, window_size)
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
     #------keyboard------
             print("\nJe passe ici\n")
@@ -116,14 +128,7 @@ while play:
                 #---end for---
             except (FileNotFoundError, IndexError) as identifier:
                 print(identifier, "default qwerty mode will be apply")
-                keyMap = {119 : "up",
-                    115 : "down",
-                    100 : "right",
-                    97 : "left",
-                    304 : "action1",
-                    32 : "action2",
-                    27 : "pause",
-                    12 : "quit"}
+                # def de keyMap ici
             #---end try---
 
             #------game------
