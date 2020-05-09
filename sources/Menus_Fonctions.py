@@ -1,87 +1,8 @@
 import pygame
 from pygame.locals import *
 
-def start_menu(window, window_size) :
     
-    pygame.display.flip()
-    size1, size2 = pygame.display.get_surface().get_size()
-    # Colors
-    red = pygame.Color(255, 0, 0)
-    white = (255, 255, 255)
-    blue = (0, 0, 180)
-    vert = (22, 207, 100)
-    police = 'Demo.ttf'
-    fond = pygame.image.load("fond.jpg").convert()
-    
-    pygame.display.flip()
-    
-    game = True
-    while game:
-        
-        window.blit(fond, (0,0))
-        
-        # Bouton Jouer
-        size_jouer = (window_size[0]*(300/1080), window_size[1]*(130/720))
-        x = window_size[0]/2 - size_jouer[0]/2
-        y = window_size[1]/2 - size_jouer[1]/2 - 90
-        pos_rect = (x, y)
-        
-        rect_filled = pygame.Surface(size_jouer)
-        pygame.draw.rect(rect_filled, vert, rect_filled.get_rect())
-        window.blit(rect_filled, pos_rect)
-        
-        # Bouton Options
-        size_option = (window_size[0]*(250/1080), window_size[1]*(100/720))
-        x_opt = window_size[0]/2 - size_option[0]/2
-        y_opt = y + window_size[0]*(100/720)
-        option_pos = (x_opt, y_opt)
-        
-        option_button = pygame.Surface(size_option)
-        pygame.draw.rect(option_button, vert, option_button.get_rect())
-        window.blit(option_button, option_pos)
-        
-        # Bouton Rules
-        size_rules =  (window_size[0]*(150/1080), window_size[1]*(75/720))
-        x_rules = window_size[0]*0.75
-        y_rules = window_size[0]*0.08
-        rules_pos = (x_rules, y_rules)
-        
-        rules_button = pygame.Surface(size_rules)
-        pygame.draw.rect(rules_button, vert, rules_button.get_rect())
-        window.blit(rules_button, rules_pos)
-        
-        # Texte Jouer
-        shape_text = pygame.font.Font(police, 100)
-        text_display = shape_text.render('Play', True, blue)
-        window.blit(text_display, (x - 90 + size_jouer[0]/2, y - 43 + size_jouer[1]/2))
-        
-        # Texte Options
-        shape_text_opt = pygame.font.Font(police, 40)
-        text_option = shape_text_opt.render('Options', True, blue)
-        window.blit(text_option, (x_opt - 75 + size_option[0]/2, y_opt - 15 + size_option[1]/2))
-       
-        # Texte Rules
-        shape_text_rules = pygame.font.Font(police, 30)
-        text_rules = shape_text_rules.render('RULES', True, blue)
-        window.blit(text_rules, (size_rules[0]/2 + window_size[0]*0.75 - 40, size_rules[1]/2 + window_size[0]*0.08 - 12))
-        
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                game = False
-            if event.type == MOUSEBUTTONUP and event.pos[0] > x_opt and event.pos[0] < x_opt + size_option[0] and event.pos[1] > y_opt and event.pos[1] < y_opt + size_option[1] :
-                game = options(window, window_size)
-            if event.type==VIDEORESIZE:
-                window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
-                window_size = event.dict['size']
-                pygame.display.flip()
-            if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
-                game = play(window, window_size)
-            if event.type == MOUSEBUTTONUP and event.pos[0] > x_rules and event.pos[0] < x_rules + size_rules[0] and event.pos[1] > y_rules and event.pos[1] < y_rules + size_rules[1] :
-                game = rules(window, window_size)
-            
-        pygame.display.flip()
-    
-def options(window, window_size):
+def options(window, window_size, keyMap):
 
     pygame.display.flip()
     fond = pygame.image.load("fond.jpg").convert()
@@ -135,13 +56,12 @@ def options(window, window_size):
                 window_size = event.dict['size']
                 pygame.display.flip()
             if event.type == MOUSEBUTTONUP and event.pos[0] > pos_return[0] and event.pos[0] < pos_return[0] + size_return[0]  and event.pos[1] > pos_return[1] and event.pos[1] < pos_return[1] + size_return[1] :
-                game = start_menu(window, window_size)
+                game = False
             if event.type == MOUSEBUTTONUP and event.pos[0] > x_command and event.pos[0] < x_command + size_command[0] and event.pos[1] > y_command and event.pos[1] < y_command + size_command[1] :
-                game = modify_command(window, window_size)
+                game = modify_command(window, window_size, keyMap)
             
         pygame.display.flip()
         
-    return game
    
 def rules(window, window_size):
     
@@ -184,13 +104,13 @@ def rules(window, window_size):
                 window_size = event.dict['size']
                 pygame.display.flip()
             if event.type == MOUSEBUTTONUP and event.pos[0] > pos_return[0] and event.pos[0] < pos_return[0] + size_return[0]  and event.pos[1] > pos_return[1] and event.pos[1] < pos_return[1] + size_return[1] :
-                game = start_menu(window, window_size)
+                game = False
                        
         pygame.display.flip()
         
-    return game
+    return True
     
-def modify_command(window, window_size):
+def modify_command(window, window_size, keyMap):
     pygame.display.flip()
     
     # Colors
@@ -311,7 +231,7 @@ def modify_command(window, window_size):
                 window_size = event.dict['size']
                 pygame.display.flip()
             if event.type == MOUSEBUTTONUP and event.pos[0] > pos_return[0] and event.pos[0] < pos_return[0] + size_return[0]  and event.pos[1] > pos_return[1] and event.pos[1] < pos_return[1] + size_return[1] :
-                game = options(window, window_size)
+                game = options(window, window_size, keyMap)
             if event.type == KEYDOWN and event.key == 119:
                 game = options(window, window_size)
             if event.type == MOUSEBUTTONUP and event.pos[0] > x_z and event.pos[1] < x_z + size_z[0] and event.pos[1] > y_z and event.pos[1] < y_z + size_z[1] :
@@ -325,7 +245,7 @@ def modify_command(window, window_size):
                             if event.key == K_ESCAPE:
                                 press = False
                             else :
-                                event.key = 119
+                                keyMap["up"] = event.key
                                 press = False
                        
         pygame.display.flip()

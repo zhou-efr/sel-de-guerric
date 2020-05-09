@@ -37,12 +37,38 @@ vert = (22, 207, 100)
 police = 'Demo.ttf'
 fond = pygame.image.load("../sources/fond.jpg").convert()
 
-
 pygame.display.flip()
 
 play = True
 
 while play:
+
+    # Je met ça là ça me gène après autrement 
+    #------keyboard------
+    keyMap = {}
+    try:
+        with open("../files/keyboard.dat", 'r') as target:
+            contents = target.read().split("\n")
+        #---end with---
+
+        for i in range(len(contents)):
+            contents[i] = contents[i].split()
+            contents[i][1] = int(contents[i][1])
+            keyMap[contents[i][1]] = contents[i][0]
+        #---end for---
+    except (FileNotFoundError, IndexError) as identifier:
+        print(identifier, "default qwerty mode will be apply")
+        keyMap = {119 : "up",
+                115 : "down",
+                100 : "right",
+                97 : "left",
+                304 : "action1",
+                32 : "action2",
+                27 : "pause",
+                12 : "quit"}
+    #---end try---
+    # Fin
+
     pygame.display.flip()
     window.blit(fond, (0,0))
     # Bouton Jouer
@@ -94,7 +120,7 @@ while play:
         if event.type == QUIT:
             play = False
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_opt and event.pos[0] < x_opt + size_option[0] and event.pos[1] > y_opt and event.pos[1] < y_opt + size_option[1] :
-            play = options(window, window_size)
+            options(window, window_size, keyMap)
         if event.type==VIDEORESIZE:
             window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
             window_size = event.dict['size']
@@ -102,31 +128,8 @@ while play:
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_rules and event.pos[0] < x_rules + size_rules[0] and event.pos[1] > y_rules and event.pos[1] < y_rules + size_rules[1] :
             play = rules(window, window_size)
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
-    #------keyboard------
-            print("\nJe passe ici\n")
-            keyMap = {}
-            try:
-                with open("../files/keyboard.dat", 'r') as target:
-                    contents = target.read().split("\n")
-                #---end with---
-
-                for i in range(len(contents)):
-                    contents[i] = contents[i].split()
-                    contents[i][1] = int(contents[i][1])
-                    keyMap[contents[i][1]] = contents[i][0]
-                #---end for---
-            except (FileNotFoundError, IndexError) as identifier:
-                print(identifier, "default qwerty mode will be apply")
-                keyMap = {119 : "up",
-                        115 : "down",
-                        100 : "right",
-                        97 : "left",
-                        304 : "action1",
-                        32 : "action2",
-                        27 : "pause",
-                        12 : "quit"}
-            #---end try---
-
+            
+            #keyMap["up"] = 119
             #------game------
             loaded = l.environmentLoader(window, 1, 1)
             clock = 0 #in ms
