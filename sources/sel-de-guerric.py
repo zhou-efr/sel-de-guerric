@@ -35,8 +35,6 @@ keyMap = {119 : "up",
         27 : "pause",
         12 : "quit"}
 
-print(keyMap[119])
-
 TILE_SIZE = int(height/9)
 icon = pygame.image.load("../files/panda.png")
 pygame.display.set_icon(icon)
@@ -115,7 +113,7 @@ while play:
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
     #------keyboard------
             print("\nJe passe ici\n")
-            keyMap = {}
+            #keyMap = {}
             try:
                 with open("../files/keyboard.dat", 'r') as target:
                     contents = target.read().split("\n")

@@ -332,33 +332,4 @@ def modify_command(window, window_size):
         
     return game
 
-def play(window, window_size):
-    
-    pygame.display.flip()
-    
-    # Colors
-    red = pygame.Color(255, 0, 0)
-    white = (255, 255, 255)
-    blue = (0, 0, 180)
-    vert = (22, 207, 100)
-        
-    game = True
-    
-    while game:
-        
-        window.fill(vert)
-        
-        shape_text = pygame.font.Font('freesansbold.ttf', 50)
-        text_display = shape_text.render('Le jeu est lancé!', True, blue)
-        window.blit(text_display, (window_size[0]/2 - 180, window_size[1]/2 - 17))
-        
-        for event in pygame.event.get():
-            if event.type == QUIT:
-                game = False
-            if event.type==VIDEORESIZE:
-                window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
-                window_size = event.dict['size']
-                pygame.display.flip()
-                
-        pygame.display.flip()
  
