@@ -127,9 +127,11 @@ class levelLoader:
         self.position = area #11 being the starting board
         self.player = o.player()
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
-        self.currentBoard.list[0].append(self.player)
         self.sizeOfTiles = sizeOfTiles
         #initialazation
+        if self.currentBoard.list[0] == []:
+            self.currentBoard.list[0].append(self.player)
+        #---end if---
         self.currentBoard.init_in_level()
         self.initStructure()
         self.sizeUpdate(self.sizeOfTiles)

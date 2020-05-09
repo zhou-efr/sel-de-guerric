@@ -175,7 +175,7 @@ def list(board):
 def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
     influence = {"x" : 0, "y" : 0}
     if id == "world1" or id == "world3" or id == "world2":
-        influence = {"x" : 0, "y" : -0.05} #natural decrease of speed and gravity
+        influence = {"x" : 0, "y" : -0.05}
     elif id == "player_jump":
         influence["y"] = (1/dtime - 1/10)*0.3
     elif id == "player_double_jump":
@@ -242,7 +242,7 @@ def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the in
             elif ele[1].hit["floor"]:
                 influence["x"] = -ele[1].speed["x"]*0.8
             #---end if---
-        elif ele[1].state == "attack" and type(ele[0]) == o.player and ele[1].hit["floor"]:
+        if ele[1].state == "attack" and type(ele[0]) == o.player and ele[1].hit["floor"]:
             distance = ((ele[0].position["x1"] - ele[1].position["x1"])**2 + (ele[0].position["y1"] - ele[1].position["y1"])**2)**(1/2)
             influence["x"] += (ele[0].position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
             influence["y"] += (ele[0].position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
@@ -367,10 +367,10 @@ def hit(en, obj, zone):
             for ele in obj + ent:
                 if e.speed["x"] != 0:
                     hitx = True
-                    if e.speed["x"] > ele.position["x1"] - e.position["x2"] - 1 >= 0:
+                    if e.speed["x"] > ele.position["x1"] - e.position["x2"] - 1 >= -0.01:
                         hitposx = {"x" : ele.position["x1"] - 1 - dx, "y" : e.position["y1"] + (ele.position["x1"] - e.position["x2"] - 1)*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "r"}
                         hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
-                    elif e.speed["x"] < ele.position["x2"] + 1 - e.position["x1"] <= 0:
+                    elif e.speed["x"] < ele.position["x2"] + 1 - e.position["x1"] <= 0.01:
                         hitposx = {"x" : ele.position["x2"] + 1, "y" : e.position["y1"] + (ele.position["x2"] + 1 - e.position["x1"])*e.speed["y"]/e.speed["x"], "dist" : 0, "id": "l"}
                         hitposx["dist"] = ((hitposx["x"] - e.position["x1"])**2 + (hitposx["y"] - e.position["y1"])**2)**(1/2)
                     else:
@@ -382,10 +382,10 @@ def hit(en, obj, zone):
 
                 if e.speed["y"] != 0:
                     hity = True
-                    if e.speed["y"] < ele.position["y1"] - e.position["y2"] + 1 <= 0:
+                    if e.speed["y"] < ele.position["y1"] - e.position["y2"] + 1 <= 0.01:
                         hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0, "id": "floor"}
                         hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
-                    elif e.speed["y"] > ele.position["y2"] - 1 - e.position["y1"] >= 0:
+                    elif e.speed["y"] > ele.position["y2"] - 1 - e.position["y1"] >= -0.01:
                         hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - e.position["y2"] - 1)*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
                         hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
                     else:

@@ -290,8 +290,8 @@ class player (entities):
             self.ricesize = "low"
         else:
             self.changeState("dead")
-        #---end if--- 
-    #---end updateWalking---
+        #---end if---
+    #---end updatePlayerInput---
 #---end player--- 
 
 class fish(entities):
@@ -309,7 +309,7 @@ class fish(entities):
         self.l_spot = None
         self.r_spot = None
         self.spot = None
-        for s in board.list[6]:
+        for s in board.list[7]:
             if (self.position["x1"]-0.2 <= s.position["x1"] <= self.position["x1"]+0.2 or self.position["x2"]-0.2 <= s.position["x2"] <= self.position["x2"]+0.2) and (self.position["y1"]-0.2 <= s.position["y1"] <= self.position["y1"]+0.2 or self.position["y2"]-0.2 <= s.position["y2"] <= self.position["y2"]+0.2) and self.hit["floor"]:
                 self.spot = s
                 self.position["x1"] = s.position["x1"]
