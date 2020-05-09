@@ -26,15 +26,6 @@ if height != window.get_rect().bottom:
             Tile Size = 120 
 """
 
-keyMap = {119 : "up",
-        115 : "down",
-        100 : "right",
-        97 : "left",
-        304 : "action1",
-        32 : "action2",
-        27 : "pause",
-        12 : "quit"}
-
 TILE_SIZE = int(height/9)
 icon = pygame.image.load("../files/panda.png")
 pygame.display.set_icon(icon)
@@ -113,7 +104,7 @@ while play:
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
     #------keyboard------
             print("\nJe passe ici\n")
-            #keyMap = {}
+            keyMap = {}
             try:
                 with open("../files/keyboard.dat", 'r') as target:
                     contents = target.read().split("\n")
@@ -126,7 +117,14 @@ while play:
                 #---end for---
             except (FileNotFoundError, IndexError) as identifier:
                 print(identifier, "default qwerty mode will be apply")
-                # def de keyMap ici
+                keyMap = {119 : "up",
+                        115 : "down",
+                        100 : "right",
+                        97 : "left",
+                        304 : "action1",
+                        32 : "action2",
+                        27 : "pause",
+                        12 : "quit"}
             #---end try---
 
             #------game------
