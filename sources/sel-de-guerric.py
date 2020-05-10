@@ -126,10 +126,9 @@ while play:
             window_size = event.dict['size']
             pygame.display.flip()
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_rules and event.pos[0] < x_rules + size_rules[0] and event.pos[1] > y_rules and event.pos[1] < y_rules + size_rules[1] :
-            play = rules(window, window_size)
+            rules(window, window_size)
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
             
-            #keyMap["up"] = 119
             #------game------
             loaded = l.environmentLoader(window, 1, 1)
             clock = 0 #in ms

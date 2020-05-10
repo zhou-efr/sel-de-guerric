@@ -16,7 +16,7 @@ def options(window, window_size, keyMap):
     pygame.display.flip()
 
     game = True
-
+    play = True
     while game:
         window.blit(fond, (0,0))
         
@@ -50,7 +50,7 @@ def options(window, window_size, keyMap):
         
         for event in pygame.event.get():
             if event.type == QUIT:
-                game = False
+                quit()
             if event.type==VIDEORESIZE:
                 window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
                 window_size = event.dict['size']
@@ -58,10 +58,12 @@ def options(window, window_size, keyMap):
             if event.type == MOUSEBUTTONUP and event.pos[0] > pos_return[0] and event.pos[0] < pos_return[0] + size_return[0]  and event.pos[1] > pos_return[1] and event.pos[1] < pos_return[1] + size_return[1] :
                 game = False
             if event.type == MOUSEBUTTONUP and event.pos[0] > x_command and event.pos[0] < x_command + size_command[0] and event.pos[1] > y_command and event.pos[1] < y_command + size_command[1] :
-                game = modify_command(window, window_size, keyMap)
+                modify_command(window, window_size, keyMap)
             
         pygame.display.flip()
-        
+    
+    return game   
+
    
 def rules(window, window_size):
     
@@ -77,7 +79,8 @@ def rules(window, window_size):
     fond = pygame.image.load("fond.jpg").convert()
     
     game = True
-    
+    play = True 
+
     while game:
         
         window.blit(fond, (0,0))
@@ -98,18 +101,18 @@ def rules(window, window_size):
        
         for event in pygame.event.get():
             if event.type == QUIT:
-                game = False
+                quit()
             if event.type==VIDEORESIZE:
                 window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
                 window_size = event.dict['size']
                 pygame.display.flip()
             if event.type == MOUSEBUTTONUP and event.pos[0] > pos_return[0] and event.pos[0] < pos_return[0] + size_return[0]  and event.pos[1] > pos_return[1] and event.pos[1] < pos_return[1] + size_return[1] :
                 game = False
+                play = True
                        
         pygame.display.flip()
-        
-    return True
-    
+
+
 def modify_command(window, window_size, keyMap):
     pygame.display.flip()
     
@@ -123,6 +126,7 @@ def modify_command(window, window_size, keyMap):
     fond = pygame.image.load("fond.jpg").convert()
     
     game = True
+    play = True
     
     while game:
         
@@ -225,15 +229,13 @@ def modify_command(window, window_size, keyMap):
         
         for event in pygame.event.get():
             if event.type == QUIT:
-                game = False
+                quit()
             if event.type==VIDEORESIZE:
                 window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
                 window_size = event.dict['size']
                 pygame.display.flip()
             if event.type == MOUSEBUTTONUP and event.pos[0] > pos_return[0] and event.pos[0] < pos_return[0] + size_return[0]  and event.pos[1] > pos_return[1] and event.pos[1] < pos_return[1] + size_return[1] :
                 game = options(window, window_size, keyMap)
-            if event.type == KEYDOWN and event.key == 119:
-                game = options(window, window_size)
             if event.type == MOUSEBUTTONUP and event.pos[0] > x_z and event.pos[1] < x_z + size_z[0] and event.pos[1] > y_z and event.pos[1] < y_z + size_z[1] :
                 press = True
                 while press:
@@ -241,15 +243,16 @@ def modify_command(window, window_size, keyMap):
                         if event.type == QUIT:
                             game = False
                             press = False
+                            play = False
                         if event.type == KEYDOWN:
                             if event.key == K_ESCAPE:
                                 press = False
                             else :
-                                keyMap["up"] = event.key
+                                keyMap[event.key] = "up"
                                 press = False
-                       
+                                print(keyMap[event.key])
+    
         pygame.display.flip()
         
     return game
-
  
