@@ -280,7 +280,9 @@ def acceleration(ent, obj, world, trueWorld):
     inp = False
     inpinfluence = {"x" : -0.2 * ent[0].speed["x"], "y" : 0}
     if ent[0].hit["floor"]:
-        ent[0].cdw = {"walljump": True, "jump": True, "double_jump": False, "action": True}
+        ent[0].cdw["walljump"] = True
+        ent[0].cdw["jump"] = True
+        ent[0].cdw["double_jump"] = False
     if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
         influence = physicLoader("wall", None,  ent[0].speed)
         inpinfluence["y"] += influence["y"]

@@ -208,6 +208,7 @@ class player (entities):
         self.rice = 100
         self.coef = 0.1
         self.ricesize = "high"
+        self.bounce = False
         self.BoardChanged = None
     #---end init---
 
@@ -217,18 +218,24 @@ class player (entities):
         self.jump["jump"] = inp["up"][0]
         self.jump["fastfall"] = inp["down"][0]
 
-        if inp["action1"][0]:
+        if inp["action1"][0] and self.cdw["action"] == True:
             if self.cdw["action"]:
                 self.cdw["action"] = False
-                if self.state == "bouncing":
-                    self.state = "default"
-                    self.cdw["double_jump"] = True
-                else:
-                    self.state = "bouncing"
-                #---end if---
+                self.bounce = True
             #---end if---
+        else:
+            self.cdw["action"] = True
         #---end if---
 
+        if self.bounce and self.hit["floor"]:
+            self.bounce = False
+            if self.state == "bouncing":
+                self.state = "default"
+                self.cdw["double_jump"] = True
+            else:
+                self.state = "bouncing"
+            #---end if---
+        #---end if---
 
         if self.state == "bouncing":
             self.jump["jump"] = True
