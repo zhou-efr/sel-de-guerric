@@ -5,7 +5,6 @@ import backendFunctions as b
 import objects as o
 import loaders as l
 from pygame.locals import *
-from Menus_Fonctions import *  
 
 #---Initialazation---
 #------pygame------
@@ -27,15 +26,15 @@ if height != window.get_rect().bottom:
 """
 
 TILE_SIZE = int(height/9)
-icon = pygame.image.load("../files/panda.png")
+icon = pygame.image.load("../files/menu/panda.png")
 pygame.display.set_icon(icon)
 
 red = pygame.Color(255, 0, 0)
 white = (255, 255, 255)
 blue = (0, 0, 180)
 vert = (22, 207, 100)
-police = 'Demo.ttf'
-fond = pygame.image.load("../sources/fond.jpg").convert()
+police = '../files/menu/Demo.ttf'
+fond = pygame.image.load("../files/menu/fond.jpg").convert()
 
 pygame.display.flip()
 
