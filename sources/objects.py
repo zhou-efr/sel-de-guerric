@@ -218,7 +218,7 @@ class player (entities):
         self.jump["fastfall"] = inp["down"][0]
 
         if inp["action1"][0]:
-            if self.cdw["action"] and self.inptime != 2:
+            if self.cdw["action"]:
                 self.cdw["action"] = False
                 if self.state == "bouncing":
                     self.state = "default"
