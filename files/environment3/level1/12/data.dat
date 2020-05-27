@@ -1,4 +1,4 @@
 width 16
 height 9
 zone ['ex']
-ex [{"x1":0,"y1":-2,"x2":1,"y2":-3,"area":11,"x":13,"y":-2,"force":'True'}]
+ex [{"x1":0,"y1":-2,"x2":1,"y2":-3,"area":11,"x":13,"y":-2,"force":'True'},{"x1":4,"y1":-7,"x2":5,"y2":-7,"area":22,"x":3,"y":-8,"force":'True'}]

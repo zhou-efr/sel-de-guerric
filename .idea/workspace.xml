@@ -20,34 +20,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2e8d2d1-1a1b-4b76-aeec-72ed6988cea4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/files/environment3/items/i/default.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/files/environment3/items/i/i.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/files/environment3/items/o/default.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/files/environment3/items/o/o.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/files/environment3/items/o/wool_colored_brown.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment1/items/m/b.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment1/items/m/b.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment1/items/m/default.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment1/items/m/default.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment1/items/m/t.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment1/items/m/t.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/items/m/b.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/items/m/b.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/items/m/default.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/items/m/default.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/items/m/t.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/items/m/t.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/11/3840x2160.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/11/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/11/back.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/11/board.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/11/board.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/11/data.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/11/data.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/12/3840x2160.jpg" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/files/environment3/items/h/default.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment3/items/a/a.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/items/a/a.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment3/items/a/default.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/items/a/default.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/environment3/level1/12/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/12/back.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/environment3/level1/12/board.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/12/board.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/environment3/level1/12/data.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/12/data.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/21/back.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/21/board.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/22/back.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/22/back.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/environment3/level1/22/board.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/22/board.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment3/level1/levelStruct.txt" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/levelStruct.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment3/level1/22/data.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment3/level1/22/data.dat" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/files/temp/now.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/temp/now.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sources/backendFunctions.py" beforeDir="false" afterPath="$PROJECT_DIR$/sources/backendFunctions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/objects.py" beforeDir="false" afterPath="$PROJECT_DIR$/sources/objects.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/sel-de-guerric.py" beforeDir="false" afterPath="$PROJECT_DIR$/sources/sel-de-guerric.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,10 +48,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/files/environment3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/files/environment3/items/h" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\thepa\Code\Python\pygame\sel-de-guerric\sel-de-guerric\files\environment3\items" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\thepa\Code\Python\pygame\sel-de-guerric\sel-de-guerric\files\environment3\items\h" />
       <recent name="C:\Users\thepa\Code\Python\pygame\sel-de-guerric\sel-de-guerric\files\environment3" />
     </key>
   </component>
@@ -128,21 +115,25 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="484" y="8" key="#sel-de-guerric/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590586650791" />
-    <state width="1515" height="227" key="GridCell.Tab.0.bottom" timestamp="1590589162256">
+    <state width="1515" height="227" key="GridCell.Tab.0.bottom" timestamp="1590593402487">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="227" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590589162256" />
-    <state width="1515" height="227" key="GridCell.Tab.0.center" timestamp="1590589162256">
+    <state width="1515" height="227" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590593402487" />
+    <state width="1515" height="227" key="GridCell.Tab.0.center" timestamp="1590593402487">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="227" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590589162256" />
-    <state width="1515" height="227" key="GridCell.Tab.0.left" timestamp="1590589162256">
+    <state width="1515" height="227" key="GridCell.Tab.0.center/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590593402487" />
+    <state width="1515" height="227" key="GridCell.Tab.0.left" timestamp="1590593402487">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="227" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590589162256" />
-    <state width="1515" height="227" key="GridCell.Tab.0.right" timestamp="1590589162256">
+    <state width="1515" height="227" key="GridCell.Tab.0.left/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590593402487" />
+    <state width="1515" height="227" key="GridCell.Tab.0.right" timestamp="1590593402487">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1515" height="227" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590589162256" />
+    <state width="1515" height="227" key="GridCell.Tab.0.right/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590593402487" />
+    <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1590590355018">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="578" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824/1920.0.1366.728@0.0.1536.824" timestamp="1590590355018" />
   </component>
 </project>
