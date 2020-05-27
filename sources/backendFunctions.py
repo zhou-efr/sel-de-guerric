@@ -123,7 +123,7 @@ def list(board):
             rat[-1].position["x2"] = i[4]
         elif i[0] == "t":
             trash.append(o.trash(i[0], board.environment, i[2], i[4], i[1], i[3]))
-        elif i[0] == "m" or i[0] == "c":
+        elif i[0] == "m" or i[0] == "c" or i[0] == "o" or i[0] == "i" or i[0] == "a":
             walls.append(o.item(i[0], board.environment))
             walls[-1].position["y1"] = i[1]
             walls[-1].position["y2"] = i[3]

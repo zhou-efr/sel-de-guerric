@@ -69,51 +69,57 @@ while play:
     # Fin
 
     pygame.display.flip()
-    window.blit(fond, (0,0))
+    window.blit(fond, (0, 0))
     # Bouton Jouer
-    size_jouer = (window_size[0]*(300/1080), window_size[1]*(130/720))
-    x = window_size[0]/2 - size_jouer[0]/2
-    y = window_size[1]/2 - size_jouer[1]/2 - 90
+    size_jouer = (window_size[0] * (300 / 1080), window_size[1] * (130 / 720))
+    x = window_size[0] / 2 - size_jouer[0] / 2
+    y = window_size[1] / 2 - size_jouer[1] / 2 - 90
     pos_rect = (x, y)
-        
+
     rect_filled = pygame.Surface(size_jouer)
-    pygame.draw.rect(rect_filled, vert, rect_filled.get_rect())
-    window.blit(rect_filled, pos_rect)
-        
+    # pygame.draw.rect(rect_filled, vert, rect_filled.get_rect())
+    # window.blit(rect_filled, pos_rect)
+    button_img = pygame.image.load("../files/menu/dialog.png").convert_alpha()
+    button_option_img = pygame.transform.scale(button_img,
+                                               (int(window_size[0] * (250 / 1080)), int(window_size[1] * (100 / 720))))
+
     # Bouton Options
-    size_option = (window_size[0]*(250/1080), window_size[1]*(100/720))
-    x_opt = window_size[0]/2 - size_option[0]/2
-    y_opt = y + window_size[0]*(100/720)
+    size_option = (window_size[0] * (250 / 1080), window_size[1] * (100 / 720))
+    x_opt = window_size[0] / 2 - size_option[0] / 2
+    y_opt = y + window_size[0] * (100 / 720)
     option_pos = (x_opt, y_opt)
-        
+
     option_button = pygame.Surface(size_option)
-    pygame.draw.rect(option_button, vert, option_button.get_rect())
-    window.blit(option_button, option_pos)
-        
+    # window.blit(button_option_img, option_pos)
+    # window.blit(option_button, option_pos)
+
     # Bouton Rules
-    size_rules =  (window_size[0]*(150/1080), window_size[1]*(75/720))
-    x_rules = window_size[0]*0.75
-    y_rules = window_size[0]*0.08
+    size_rules = (window_size[0] * (150 / 1080), window_size[1] * (75 / 720))
+    x_rules = window_size[0] * 0.75
+    y_rules = window_size[0] * 0.08
     rules_pos = (x_rules, y_rules)
-        
+    button_rule_img = pygame.transform.scale(button_img,
+                                             (int(window_size[0] * (150 / 1080)), int(window_size[1] * (75 / 720))))
+
     rules_button = pygame.Surface(size_rules)
-    pygame.draw.rect(rules_button, vert, rules_button.get_rect())
-    window.blit(rules_button, rules_pos)
-        
+    # window.blit(button_rule_img, option_pos)
+    # window.blit(rules_button, rules_pos)
+
     # Texte Jouer
     shape_text = pygame.font.Font(police, 100)
     text_display = shape_text.render('Play', True, blue)
-    window.blit(text_display, (x - 90 + size_jouer[0]/2, y - 43 + size_jouer[1]/2))
-        
+    window.blit(text_display, (x - 90 + size_jouer[0] / 2, y - 43 + size_jouer[1] / 2))
+
     # Texte Options
     shape_text_opt = pygame.font.Font(police, 40)
     text_option = shape_text_opt.render('Options', True, blue)
-    window.blit(text_option, (x_opt - 75 + size_option[0]/2, y_opt - 15 + size_option[1]/2))
-       
+    window.blit(text_option, (x_opt - 75 + size_option[0] / 2, y_opt - 15 + size_option[1] / 2))
+
     # Texte Rules
     shape_text_rules = pygame.font.Font(police, 30)
     text_rules = shape_text_rules.render('RULES', True, blue)
-    window.blit(text_rules, (size_rules[0]/2 + window_size[0]*0.75 - 40, size_rules[1]/2 + window_size[0]*0.08 - 12))
+    window.blit(text_rules,
+                (size_rules[0] / 2 + window_size[0] * 0.75 - 40, size_rules[1] / 2 + window_size[0] * 0.08 - 12))
         
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -129,7 +135,7 @@ while play:
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
             
             #------game------
-            loaded = l.environmentLoader(window, 1, 1)
+            loaded = l.environmentLoader(window, 3, 1, 12)
             clock = 0 #in ms
             inputs = {"up" : (False, 0),
                     "down" : (False, 0),

@@ -18,9 +18,10 @@ class item:
         j'ai fait ce dont j'avais besoin je vous laisserai probablement le reste vue que c'est du backend
         C'est pas par ce que je l'ai cree que vous avez a la garder
     """
-    def __init__(self, keyChar, environment):
+    def __init__(self, keyChar, environment, resize = True):
         self.keyChar = keyChar
         self.state = "default"
+        self.resize = resize
         self.folder = "../files/environment" + str(environment) + "/items/" + keyChar + "/"
         self.pictureAdress = self.folder + self.state + ".png"
         self.picture = pygame.image.load(self.pictureAdress)
