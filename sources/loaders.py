@@ -18,7 +18,7 @@ class environmentLoader:
     def __init__(self, surface, environment, level = 1, area = 11):
         #attributs settings
         self.environment = environment
-        self.folder = "../files/environment" + str(environment) + "/"
+        self.folder = "./files/environment" + str(environment) + "/"
         self.windowData = {"width" : surface.get_rect().right, "height" : surface.get_rect().bottom, "sizeOfTiles": int(surface.get_rect().right/16)}
         self.currentLevel = levelLoader(environment, level, self.windowData["sizeOfTiles"], area)
 
@@ -120,7 +120,7 @@ class levelLoader:
         #setting internal variables
         self.environment = environment
         self.level = level
-        self.folder = "../files/environment" + str(environment) + "/level" + str(level)
+        self.folder = "./files/environment" + str(environment) + "/level" + str(level)
         self.musicAdress = self.folder + "soundtrack.mp3"
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
@@ -172,16 +172,22 @@ class levelLoader:
 
     def boardChange(self, data):
         self.position = data.area
-        self.player.position["x"] = data.x
-        self.player.position["y"] = data.y
-        #---end if---
+        self.player.position["x1"] = data.x
+        self.player.position["x2"] = data.x
+        self.player.position["y1"] = data.y
+        self.player.position["y2"] = data.y
+        
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
-        if data.force:
-            self.currentBoard.list[0][0].position["x1"] = data.x
-            self.currentBoard.list[0][0].position["x2"] = data.x
-            self.currentBoard.list[0][0].position["y1"] = data.y
-            self.currentBoard.list[0][0].position["y2"] = data.y
+        if data.force == 'True':
+            while len(self.currentBoard.list[0]) != 0:
+                del(self.currentBoard.list[0][0])
+            #---end while---
         #---end if---
+        self.currentBoard.list[0].append(self.player)
+        while len(self.currentBoard.list[0]) > 1:
+            del(self.currentBoard.list[0][1])
+        #---end while---
+
         self.currentBoard.init_in_level()
         self.sizeUpdate(self.sizeOfTiles)
         self.currentBoard.resizeBackground((self.sizeOfTiles*16,self.sizeOfTiles*9))
@@ -257,7 +263,7 @@ class areaLoader:
         self.environment = environment
         self.level = level 
         self.board = board
-        self.adress = "../files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
+        self.adress = "./files/environment" + str(environment) + "/level" + str(level) + "/" + str(self.board)
         self.boardAdress = str(self.adress) + "/board.dat"
         self.backAdress = str(self.adress) + "/back.png"
         self.background = pygame.image.load(self.backAdress)
