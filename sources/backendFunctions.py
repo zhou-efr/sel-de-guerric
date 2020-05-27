@@ -385,10 +385,10 @@ def hit(en, obj, zone):
                 if e.speed["y"] != 0:
                     hity = True
                     if e.speed["y"] < ele.position["y1"] - e.position["y2"] + 1 <= 0.01:
-                        hitposy = {"x" : e.position["x1"] + (ele.position["y2"] + 1 - e.position["y1"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] + 1 - dy, "dist" : 0, "id": "floor"}
+                        hitposy = {"x" : e.position["x1"] + (ele.position["y1"] + 1 - e.position["y2"])*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] + 1 - dy, "dist" : 0, "id": "floor"}
                         hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
                     elif e.speed["y"] > ele.position["y2"] - 1 - e.position["y1"] >= -0.01:
-                        hitposy = {"x" : e.position["x1"] + (ele.position["y1"] - e.position["y2"] - 1)*e.speed["x"]/e.speed["y"], "y" : ele.position["y1"] - 1, "dist" : 0, "id": "ceil"}
+                        hitposy = {"x" : e.position["x1"] + (ele.position["y2"] - e.position["y1"] - 1)*e.speed["x"]/e.speed["y"], "y" : ele.position["y2"] - 1, "dist" : 0, "id": "ceil"}
                         hitposy["dist"] = ((hitposy["x"] - e.position["x1"])**2 + (hitposy["y"] - e.position["y1"])**2)**(1/2)
                     else:
                         hity = False
