@@ -204,7 +204,7 @@ class player (entities):
         self.walking = {"right" : False, "left" : False}
         self.jump = {"jump" : False, "fastfall" : False}
         self.inptime = 1
-        self.cdw = {"walljump": True, "jump": True, "action": True, "double_jump": False}
+        self.cdw = {"walljump": True, "jump": True, "action": True, "double_jump": "False"}
         self.rice = 100
         self.coef = 0.1
         self.ricesize = "high"
@@ -227,17 +227,20 @@ class player (entities):
             self.cdw["action"] = True
         #---end if---
 
-        if self.bounce and self.hit["floor"]:
-            self.bounce = False
-            if self.state == "bouncing":
-                self.state = "default"
-                self.cdw["double_jump"] = True
-            else:
-                self.state = "bouncing"
-            #---end if---
+        if self.bounce:
+            if self.state == "bouncing" and self.cdw["double_jump"] == "False":
+                self.cdw["double_jump"] = "True"
+            if self.hit["floor"]:
+                self.bounce = False
+                if self.state == "bouncing":
+                    self.state = "default"
+                else:
+                    self.state = "bouncing"
+                #---end if---
+            #---end ifs---
         #---end if---
 
-        if self.state == "bouncing":
+        if self.state == "bouncing" and self.cdw["double_jump"] == "False":
             self.jump["jump"] = True
             self.jump["fastfall"] = False
         #---end if---
@@ -279,7 +282,7 @@ class player (entities):
         if self.jump["jump"]:
             if self.hit["floor"]:
                 self.changeState("floor_jump")
-            elif self.cdw["double_jump"]:
+            elif self.cdw["double_jump"] == "True":
                 self.changeState("double_jump")
             elif self.hit["rwall"] and self.cdw["walljump"]:
                 self.changeState("rwall_jump")

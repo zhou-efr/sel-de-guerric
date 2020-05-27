@@ -282,7 +282,7 @@ def acceleration(ent, obj, world, trueWorld):
     if ent[0].hit["floor"]:
         ent[0].cdw["walljump"] = True
         ent[0].cdw["jump"] = True
-        ent[0].cdw["double_jump"] = False
+        ent[0].cdw["double_jump"] = "False"
     if ent[0].hit["rwall"] or ent[0].hit["lwall"]:
         influence = physicLoader("wall", None,  ent[0].speed)
         inpinfluence["y"] += influence["y"]
@@ -292,11 +292,11 @@ def acceleration(ent, obj, world, trueWorld):
             influence = physicLoader("player_jump", None, None, ent[0].inptime)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
-        elif ent[0].cdw["double_jump"]:
+        elif ent[0].cdw["double_jump"] == "True":
             influence = physicLoader("player_double_jump", None, ent[0].speed, ent[0].inptime)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
-            ent[0].cdw["double_jump"] = False
+            ent[0].cdw["double_jump"] = "Done"
         elif ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 0)
             inpinfluence["x"] += influence["x"]
