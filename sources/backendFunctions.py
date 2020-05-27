@@ -268,17 +268,17 @@ def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the in
 #---end physicLoader---
 
 def acceleration(ent, obj, world, trueWorld):
-    #Execute the influence of the world on the entities
+    #Execute the influence of the world on the entities ; it can be different between the different world
     for e in ent:
-        e.stateUpdater(ent, trueWorld)
+        e.stateUpdater(ent, trueWorld) #Update also the state of all the entities
         worldinfluence = physicLoader("world" + str(world), None, e.speed)
         e.acceleration["x"] += worldinfluence["x"]
         e.acceleration["y"] += worldinfluence["y"]
     #---end for---
 
-    #Move of the player(s)
+    #Move of the player(s) and cooldown gestion
     inp = False
-    inpinfluence = {"x" : -0.2 * ent[0].speed["x"], "y" : 0}
+    inpinfluence = {"x" : -0.2 * ent[0].speed["x"], "y" : 0} #Natural decrease of x speed
     if ent[0].hit["floor"]:
         ent[0].cdw["walljump"] = True
         ent[0].cdw["jump"] = True
@@ -288,16 +288,7 @@ def acceleration(ent, obj, world, trueWorld):
         inpinfluence["y"] += influence["y"]
     if ent[0].jump["jump"]:
         inp = True
-        if ent[0].cdw["jump"]:
-            influence = physicLoader("player_jump", None, None, ent[0].inptime)
-            inpinfluence["x"] += influence["x"]
-            inpinfluence["y"] += influence["y"]
-        elif ent[0].cdw["double_jump"] == "True":
-            influence = physicLoader("player_double_jump", None, ent[0].speed, ent[0].inptime)
-            inpinfluence["x"] += influence["x"]
-            inpinfluence["y"] += influence["y"]
-            ent[0].cdw["double_jump"] = "Done"
-        elif ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
+        if ent[0].hit["lwall"] and ent[0].cdw["walljump"]:
             influence = physicLoader("player_wall_jump", 0)
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
@@ -307,6 +298,15 @@ def acceleration(ent, obj, world, trueWorld):
             inpinfluence["x"] += influence["x"]
             inpinfluence["y"] += influence["y"]
             ent[0].cdw["walljump"] = False
+        elif ent[0].cdw["jump"]:
+            influence = physicLoader("player_jump", None, None, ent[0].inptime)
+            inpinfluence["x"] += influence["x"]
+            inpinfluence["y"] += influence["y"]
+        elif ent[0].cdw["double_jump"] == "True":
+            influence = physicLoader("player_double_jump", None, ent[0].speed, ent[0].inptime)
+            inpinfluence["x"] += influence["x"]
+            inpinfluence["y"] += influence["y"]
+            ent[0].cdw["double_jump"] = "Done"
         #---end if---
     elif ent[0].cdw["jump"]:
         ent[0].cdw["jump"] = False
