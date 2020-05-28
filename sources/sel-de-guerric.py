@@ -133,9 +133,9 @@ while play:
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_rules and event.pos[0] < x_rules + size_rules[0] and event.pos[1] > y_rules and event.pos[1] < y_rules + size_rules[1] :
             rules(window, window_size)
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
-            
+           
             #------game------
-            loaded = l.environmentLoader(window, 3, 1, 12)
+            loaded = l.environmentLoader(window, 2, 1, 11)
             clock = 0 #in ms
             inputs = {"up" : (False, 0),
                     "down" : (False, 0),
