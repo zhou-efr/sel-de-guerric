@@ -191,10 +191,10 @@ class levelLoader:
         #---end if---
 
         self.currentBoard.list[0].append(o.player())
-        self.currentBoard.list[0][0].position["x1"] = self.player["x1"]
-        self.currentBoard.list[0][0].position["x2"] = self.player["x2"]
-        self.currentBoard.list[0][0].position["y1"] = self.player["y1"]
-        self.currentBoard.list[0][0].position["y2"] = self.player["y2"]
+        self.currentBoard.list[0][-1].position["x1"] = self.player["x1"]
+        self.currentBoard.list[0][-1].position["x2"] = self.player["x2"]
+        self.currentBoard.list[0][-1].position["y1"] = self.player["y1"]
+        self.currentBoard.list[0][-1].position["y2"] = self.player["y2"]
         
         while len(self.currentBoard.list[0]) > 1:
             del(self.currentBoard.list[0][1])
