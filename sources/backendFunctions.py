@@ -406,6 +406,11 @@ def hit(en, obj, zone):
                     hitpoint["y"].append(hitposy)
                     hity = False
                 #---end if---
+
+                if hitx and hity and hitposx["x"] == hitposy["x"] and hitposx["y"] == hitposy["y"]:   #case of a corner
+                    hitpoint["x"].append(hitposx)
+                    hitpoint["y"].append(hitposy)
+                #---end if---
             #---end for---
 
             hitpointx = []

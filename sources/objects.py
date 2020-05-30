@@ -206,7 +206,7 @@ class player (entities):
         self.jump = {"jump" : False, "fastfall" : False}
         self.inptime = 1
         self.cdw = {"walljump": True, "jump": True, "action": True, "double_jump": "False"}
-        self.rice = 1000
+        self.rice = 80
         self.coef = 2
         self.ricesize = "high"
         self.bounce = False
