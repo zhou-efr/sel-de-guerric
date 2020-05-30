@@ -154,8 +154,8 @@ while play:
             while lauched:
                 #---Second Loop---
                 game = True
-                while game and loaded.getEntities()[0].data["state"] != "dead":
-                    if loaded.levelChanged():
+                while game:
+                    if loaded.levelChanged() or loaded.currentLevel.respawn():
                         initialShift = 4 if loaded.getEntities()[0].position["x1"]-9 > 0 else loaded.getEntities()[0].position["x1"]
                         old = [loaded.getEntities()[0].position["x1"]-initialShift,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
                     #---end if---
@@ -166,11 +166,11 @@ while play:
                     elif inputs["quit"][0]:
                         game = False
                         lauched = False
+                    #---end if---
                     clock += 1
                     time.sleep(0.01)
                     pygame.display.flip()
                     b.worldUpdater(loaded, inputs)
-                    #---end if---
                 #---end second loop---
                 save1 = "..//files//temp//now.png"
                 pygame.image.save(window,save1)
