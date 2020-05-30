@@ -97,8 +97,6 @@ class multipleItem(item):
 
 #---end multipleItem---
 
-
-
 class entities (item):
 
     def __init__(self, keyChar, environment):

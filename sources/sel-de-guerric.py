@@ -157,6 +157,7 @@ while play:
                 while game:
                     if loaded.levelChanged() or loaded.currentLevel.respawn():
                         initialShift = 4 if loaded.getEntities()[0].position["x1"]-9 > 0 else loaded.getEntities()[0].position["x1"]
+
                         old = [loaded.getEntities()[0].position["x1"]-initialShift,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
                     #---end if---
                     old = f.windowUpdate(window, loaded, old, TILE_SIZE)

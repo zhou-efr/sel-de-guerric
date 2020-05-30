@@ -41,7 +41,7 @@ class environmentLoader:
     #---end sizeUpdate---
 
     def levelChanged(self):      
-        if self.getPlayer().BoardChanged != None:
+        if self.getPlayer().BoardChanged != None :
             self.currentLevel.boardChange(self.getPlayer().BoardChanged)
             if self.currentLevel.position == 99:
                 self.nextLevel()
@@ -115,7 +115,6 @@ class levelLoader:
             for change area (in function of direction 'n' 's' 'e' 'o')
             accessors
     """
-
     def __init__(self, environment, level, sizeOfTiles, area = 11):
         #setting internal variables
         self.environment = environment
@@ -223,7 +222,19 @@ class levelLoader:
                 self.currentBoard.list[0][0].position["y1"] = self.player["y1"]
                 self.currentBoard.list[0][0].position["y2"] = self.player["y2"]
             #---end if---
+            if self.currentBoard.list[0] == []:
+                self.currentBoard.list[0].append(o.player())
+                if self.player != None:
+                    self.currentBoard.list[0][0].position["x1"] = self.player["x1"]
+                    self.currentBoard.list[0][0].position["x2"] = self.player["x2"]
+                    self.currentBoard.list[0][0].position["y1"] = self.player["y1"]
+                    self.currentBoard.list[0][0].position["y2"] = self.player["y2"]
+                # ---end if---
+            # ---end if---
             self.currentBoard.init_in_level()
+            self.initStructure()
+            self.sizeUpdate(self.sizeOfTiles)
+            self.currentBoard.resizeBackground((self.sizeOfTiles * 16, self.sizeOfTiles * 9))
             return True
         else:
             return False
