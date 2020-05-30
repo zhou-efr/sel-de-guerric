@@ -397,14 +397,19 @@ def hit(en, obj, zone):
                     hity = False
                 #---end if---
 
-                if hitx and (ele.position["y1"]>=hitposx["y"]>=ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
+                if hitx and (ele.position["y1"]>=hitposx["y"]>ele.position["y2"]-1 or hitposx["y"]>ele.position["y1"]>hitposx["y"]+dy-1):
                     hitpoint["x"].append(hitposx)
                     hitx = False
                 #---end if---
                 
-                if hity and (ele.position["x1"]<=hitposy["x"]<=ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
+                if hity and (ele.position["x1"]<=hitposy["x"]<ele.position["x2"]+1 or hitposy["x"]<ele.position["x1"]<hitposy["x"]+dx+1):
                     hitpoint["y"].append(hitposy)
                     hity = False
+                #---end if---
+
+                if hitx and hity and hitposx["x"] == hitposy["x"] and hitposx["y"] == hitposy["y"]:   #case of a corner
+                    hitpoint["x"].append(hitposx)
+                    hitpoint["y"].append(hitposy)
                 #---end if---
             #---end for---
 
