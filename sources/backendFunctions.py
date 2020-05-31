@@ -408,8 +408,11 @@ def hit(en, obj, zone):
                 #---end if---
 
                 if hitx and hity and hitposx["x"] == hitposy["x"] and hitposx["y"] == hitposy["y"]:   #case of a corner
-                    hitpoint["x"].append(hitposx)
-                    hitpoint["y"].append(hitposy)
+                    if e.speed["x"] > e.speed["y"]:
+                        hitpoint["y"].append(hitposy)
+                    else:
+                        hitpoint["x"].append(hitposx)
+                    #---end if---
                 #---end if---
             #---end for---
 
