@@ -38,37 +38,39 @@ fond = pygame.image.load("../files/menu/fond.jpg").convert()
 
 pygame.display.flip()
 
+#this dictionnary contains the sprites corespondant to the level of rice of the player
 riceSize = {"low":pygame.transform.scale(pygame.image.load("../files/environment0/items/p/sprite/life/low.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)), "normal":pygame.transform.scale(pygame.image.load("../files/environment0/items/p/sprite/life/normal.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)), "high":pygame.transform.scale(pygame.image.load("../files/environment0/items/p/sprite/life/high.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))}
 
 play = True
 
+# ------keyboard------
+# this try is reading the mapping file to get the key corespondant to the action (by default in qwerty)
+keyMap = {}
+try:
+    with open("../files/keyboard.dat", 'r') as target:
+        contents = target.read().split("\n")
+    # ---end with---
+
+    for i in range(len(contents)):
+        contents[i] = contents[i].split()
+        contents[i][1] = int(contents[i][1])
+        keyMap[contents[i][1]] = contents[i][0]
+    # ---end for---
+except (FileNotFoundError, IndexError) as identifier:
+    print(identifier, "default qwerty mode will be apply")
+    keyMap = {119: "up",
+              115: "down",
+              100: "right",
+              97: "left",
+              304: "action1",
+              32: "action2",
+              27: "pause",
+              12: "quit"}
+# ---end try---
+# Fin
+
+#menu loop
 while play:
-
-    # Je met ça là ça me gène après autrement 
-    #------keyboard------
-    keyMap = {}
-    try:
-        with open("../files/keyboard.dat", 'r') as target:
-            contents = target.read().split("\n")
-        #---end with---
-
-        for i in range(len(contents)):
-            contents[i] = contents[i].split()
-            contents[i][1] = int(contents[i][1])
-            keyMap[contents[i][1]] = contents[i][0]
-        #---end for---
-    except (FileNotFoundError, IndexError) as identifier:
-        print(identifier, "default qwerty mode will be apply")
-        keyMap = {119 : "up",
-                115 : "down",
-                100 : "right",
-                97 : "left",
-                304 : "action1",
-                32 : "action2",
-                27 : "pause",
-                12 : "quit"}
-    #---end try---
-    # Fin
 
     pygame.display.flip()
     window.blit(fond, (0, 0))
@@ -81,8 +83,8 @@ while play:
     rect_filled = pygame.Surface(size_jouer)
     # pygame.draw.rect(rect_filled, vert, rect_filled.get_rect())
     # window.blit(rect_filled, pos_rect)
-    button_img = pygame.image.load("../files/menu/dialog.png").convert_alpha()
-    button_option_img = pygame.transform.scale(button_img,(int(window_size[0] * (250 / 1080)), int(window_size[1] * (100 / 720))))
+    #button_img = pygame.image.load("../files/menu/dialog.png").convert_alpha()
+    #button_option_img = pygame.transform.scale(button_img,(int(window_size[0] * (250 / 1080)), int(window_size[1] * (100 / 720))))
 
     # Bouton Options
     size_option = (window_size[0] * (250 / 1080), window_size[1] * (100 / 720))
@@ -99,8 +101,7 @@ while play:
     x_rules = window_size[0] * 0.75
     y_rules = window_size[0] * 0.08
     rules_pos = (x_rules, y_rules)
-    button_rule_img = pygame.transform.scale(button_img,
-                                             (int(window_size[0] * (150 / 1080)), int(window_size[1] * (75 / 720))))
+    #button_rule_img = pygame.transform.scale(button_img,(int(window_size[0] * (150 / 1080)), int(window_size[1] * (75 / 720))))
 
     rules_button = pygame.Surface(size_rules)
     # window.blit(button_rule_img, option_pos)
@@ -110,29 +111,30 @@ while play:
     shape_text = pygame.font.Font(police, 100)
     text_display = shape_text.render('Play', True, blue)
     window.blit(text_display, (x - 90 + size_jouer[0] / 2, y - 43 + size_jouer[1] / 2))
-
+    """
     # Texte Options
     shape_text_opt = pygame.font.Font(police, 40)
     text_option = shape_text_opt.render('Options', True, blue)
     window.blit(text_option, (x_opt - 75 + size_option[0] / 2, y_opt - 15 + size_option[1] / 2))
-
+    """
     # Texte Rules
     shape_text_rules = pygame.font.Font(police, 30)
     text_rules = shape_text_rules.render('RULES', True, blue)
     window.blit(text_rules,
                 (size_rules[0] / 2 + window_size[0] * 0.75 - 40, size_rules[1] / 2 + window_size[0] * 0.08 - 12))
+
         
     for event in pygame.event.get():
         if event.type == QUIT:
             play = False
-        if event.type == MOUSEBUTTONUP and event.pos[0] > x_opt and event.pos[0] < x_opt + size_option[0] and event.pos[1] > y_opt and event.pos[1] < y_opt + size_option[1] :
-            options(window, window_size, keyMap)
+        #if event.type == MOUSEBUTTONUP and event.pos[0] > x_opt and event.pos[0] < x_opt + size_option[0] and event.pos[1] > y_opt and event.pos[1] < y_opt + size_option[1] :
+            #options(window, window_size, keyMap)
         if event.type==VIDEORESIZE:
             window = pygame.display.set_mode(event.dict['size'],HWSURFACE|DOUBLEBUF|RESIZABLE)
             window_size = event.dict['size']
             pygame.display.flip()
         if event.type == MOUSEBUTTONUP and event.pos[0] > x_rules and event.pos[0] < x_rules + size_rules[0] and event.pos[1] > y_rules and event.pos[1] < y_rules + size_rules[1] :
-            rules(window, window_size)
+            f.rules(window, window_size)
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
            
             #------game------

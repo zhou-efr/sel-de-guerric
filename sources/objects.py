@@ -13,10 +13,8 @@ import random as r
 pygame.init()
 
 class item:
-    """item, the main class, all others object are inherent to this one
-        Work In Progress (wip)
-        j'ai fait ce dont j'avais besoin je vous laisserai probablement le reste vue que c'est du backend
-        C'est pas par ce que je l'ai cree que vous avez a la garder
+    """
+    item, the main class, all others object are inherent to this one
     """
     def __init__(self, keyChar, environment, resize = True):
         self.keyChar = keyChar
@@ -58,52 +56,16 @@ class item:
     #---end accessors---
 #---end item---
 
-class multipleItem(item):
-    """docstring for multipleItem"""
-    def __init__(self, keyChar, environment):
-        super(multipleItem, self).__init__()
-        self.keyChar = keyChar
-        self.environment = environment
-        self.data = {};
-        self.dataFolder = self.folder + "data/"
-        try:
-            self.data = fileLoader(self.dataFolder, str(keyChar)+".dat");
-        except FileNotFoundError as e:
-            print(e)
-            exit(-1);
-        #---end try---
-
-    def loadPicture(self):
-        self.data["picture"] = []
-        for i in range(self.data["sizeX"]):
-            self.data["picture"].append([])
-            for int in range(self.data["sizeY"]):
-                self.data["picture"][i].append(pygame.image.load(str(i)+str(j)))
-            #---end for---
-        #---end for---
-    #---end loadPicture---
-
-    def updateObjectPictureSize(self, size = 120):
-        for i in range(self.data["sizeX"]):
-            for j in range(self.data["sizeY"]):
-                self.data["picture"][i][j] = pygame.transform.scale(self.data["picture"][i][j].convert_alpha(), (size, size))
-            #---end for---
-        #---end for---
-    #---end updatePictureSize---
-
-    def getPicture(self, coordinate):
-        return self.data["picture"][coordinate[0]][coordinate[1]]
-    #---end getPicture---
-
-#---end multipleItem---
-
 class entities (item):
-
+    """
+    basicelly a moving item
+    """
     def __init__(self, keyChar, environment):
         super().__init__(keyChar, environment)
         self.dataFolder = self.folder + "data/"
         self.data = {}
         self.sprite = []
+        #clocks are here for the picture animation we need two of them to finish an animation
         self.internalClock = -1
         self.clock = -1
         self.changed = False
@@ -170,6 +132,9 @@ class entities (item):
     #---end getPosition---
 
     def updateSprite(self):
+        """
+        change the sprite list when the state change
+        """
         self.sprite = []
         for i in range(self.data[self.data["state"]]["index"]):
             self.sprite.append(pygame.image.load(self.folder + "sprt" + str(i) + ".png").convert_alpha())
@@ -505,7 +470,7 @@ class rat(entities):
 #---end rat---
 
 class trash(entities):
-    """docstring for trash"""
+    """a trash is a mob who jump when the player is above it, if you touch its top you die"""
     def __init__(self, keyChar, environment, x1, x2, y1, y2):
         super(trash, self).__init__(keyChar, environment)
         self.keyChar = keyChar
