@@ -7,7 +7,15 @@ import math as m
 import loaders as l
 import random as r
 
-def hitboxesFileReader(adress):  #Return the list of the objects with their type and their position 
+def hitboxesFileReader(adress):  
+    '''
+    This Function is used to read the board.dat
+    You have to give the adress of the board
+    The function return an array of all the detected elements with their position and their keychar
+    The origin of the board.dat is at the top left
+    So x go in positives numbers
+    And y in negatives ones
+    ''' 
     #Load the fill
     try:
         with open(adress, 'r') as target:
@@ -71,6 +79,11 @@ def hitboxesFileReader(adress):  #Return the list of the objects with their type
 #---end hitboxesFileReader---
 
 def simpleList(area):
+    '''
+    simpleList range all the elements of area.list between the entities, the objects and the "zone"
+    the return first give the tupple of entities, then of object, and the of "zone"
+    Reminder : "zone" has no colisions, some move, other not ; "object" have colision and don't move ; "ent" have colision and can move
+    '''
     ent = []
     obj = []
     zone = {"ent": [], "obj": []}
@@ -90,6 +103,10 @@ def simpleList(area):
 #---end simpleList---
 
 def list(board):
+    '''
+    list sort all the entities finded with hitboxesFileReader by class, and store the data inside it
+    it return the list of all the possible class finded
+    '''
     #lists to fill
     player = []
     fish = []
@@ -173,6 +190,12 @@ def list(board):
 #---end list---
 
 def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the influence of somthing on the acceleration of an other
+    '''
+    physicLoader is used to find the influence of a thing in an entitie.
+    it litterally do all the event that could occures
+    it return a dictonary with the influence of "x" and "y"
+    '''
+    
     influence = {"x" : 0, "y" : 0}
     if id == "world1" or id == "world3" or id == "world2":
         influence = {"x" : 0, "y" : -0.05}
@@ -277,6 +300,9 @@ def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the in
 #---end physicLoader---
 
 def acceleration(ent, obj, world, trueWorld):
+    '''
+    acceleration make an update of all the entitie.acceleration by considering gravity, player inputs, and influences between all objects and entities
+    '''
     #Execute the influence of the world on the entities ; it can be different between the different world
     for e in ent:
         e.stateUpdater(ent, trueWorld) #Update also the state of all the entities
@@ -351,6 +377,9 @@ def acceleration(ent, obj, world, trueWorld):
 #---end acceleration---
 
 def speed(ent):
+    '''
+    speed add to all the entitie speed its acceleration, befor make the acceleration null again.
+    '''
     #Check each acceleration of the entities
     for e in ent:
         #Add it to the speed
@@ -362,6 +391,10 @@ def speed(ent):
 #---end speed---
 
 def hit(en, obj, zone):
+    '''
+    hit manage the movement of all the entities by considering the collisions.
+    Once dettecting all collisions which exist, it ads to position the speed
+    '''
     for n in range(len(en) + len(zone["ent"])):
         if n<len(en):
             e = en[n]
@@ -477,6 +510,9 @@ def hit(en, obj, zone):
 #---end hit---
 
 def move(ent, obj, zone):
+    '''
+    move reset the hit dictonary before 
+    '''
     for e in ent + zone["ent"]:
         e.hit = {"rwall": False, "lwall": False, "floor": False, "ceil": False}
     #---end for---
