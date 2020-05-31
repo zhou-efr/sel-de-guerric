@@ -204,7 +204,7 @@ class player (entities):
         self.jump = {"jump" : False, "fastfall" : False}
         self.inptime = 1
         self.cdw = {"walljump": True, "jump": True, "action": True, "double_jump": "False"}
-        self.rice = 80
+        self.rice = 200
         self.coef = 2
         self.ricesize = "high"
         self.bounce = False
@@ -293,9 +293,9 @@ class player (entities):
         #---end if--- 
 
         self.rice -= (self.speed["x"]**2 + self.speed["y"]**2)**(1/2)**self.coef
-        if self.rice >= 750:
+        if self.rice >= 150:
             self.ricesize = "high"
-        elif self.rice > 250:
+        elif self.rice > 50:
             self.ricesize = "normal"
         elif self.rice > 0:
             self.ricesize = "low"

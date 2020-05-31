@@ -38,6 +38,8 @@ fond = pygame.image.load("../files/menu/fond.jpg").convert()
 
 pygame.display.flip()
 
+riceSize = {"low":pygame.transform.scale(pygame.image.load("../files/environment0/items/p/sprite/life/low.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)), "normal":pygame.transform.scale(pygame.image.load("../files/environment0/items/p/sprite/life/normal.png").convert_alpha(), (TILE_SIZE, TILE_SIZE)), "high":pygame.transform.scale(pygame.image.load("../files/environment0/items/p/sprite/life/high.png").convert_alpha(), (TILE_SIZE, TILE_SIZE))}
+
 play = True
 
 while play:
@@ -80,8 +82,7 @@ while play:
     # pygame.draw.rect(rect_filled, vert, rect_filled.get_rect())
     # window.blit(rect_filled, pos_rect)
     button_img = pygame.image.load("../files/menu/dialog.png").convert_alpha()
-    button_option_img = pygame.transform.scale(button_img,
-                                               (int(window_size[0] * (250 / 1080)), int(window_size[1] * (100 / 720))))
+    button_option_img = pygame.transform.scale(button_img,(int(window_size[0] * (250 / 1080)), int(window_size[1] * (100 / 720))))
 
     # Bouton Options
     size_option = (window_size[0] * (250 / 1080), window_size[1] * (100 / 720))
@@ -135,7 +136,7 @@ while play:
         if event.type == MOUSEBUTTONUP and event.pos[0] > x and event.pos[0] < x + size_jouer[0] and event.pos[1] > y and event.pos[1] < y + size_jouer[1] :
            
             #------game------
-            loaded = l.environmentLoader(window, 2, 1, 15)
+            loaded = l.environmentLoader(window, 2, 1, 11)
             clock = 0 #in ms
             inputs = {"up" : (False, 0),
                     "down" : (False, 0),
@@ -161,6 +162,7 @@ while play:
                         old = [loaded.getEntities()[0].position["x1"]-initialShift,0,loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"],loaded.getEntities()[0].position["x1"],loaded.getEntities()[0].position["y1"]]
                     #---end if---
                     old = f.windowUpdate(window, loaded, old, TILE_SIZE)
+                    window.blit(riceSize[loaded.getEntities()[0].ricesize], (0,0))
                     inputs = f.inputReader(keyMap, inputs)
                     if inputs["pause"][0]:
                         game = False
