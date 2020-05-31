@@ -242,10 +242,19 @@ def physicLoader(id, ele = None, speed = 0, dtime = 1, Vmax = 0.5): #give the in
             elif ele[1].hit["floor"]:
                 influence["x"] = -ele[1].speed["x"]*0.8
             #---end if---
-        if ele[1].state == "attack" and type(ele[0]) == o.player and ele[1].hit["floor"]:
-            distance = ((ele[0].position["x1"] - ele[1].position["x1"])**2 + (ele[0].position["y1"] - ele[1].position["y1"])**2)**(1/2)
-            influence["x"] += (ele[0].position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
-            influence["y"] += (ele[0].position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
+        if type(ele[0]) == o.player:
+            if ele[1].state == "attack" and ele[1].hit["floor"]:
+                distance = ((ele[0].position["x1"] - ele[1].position["x1"])**2 + (ele[0].position["y1"] - ele[1].position["y1"])**2)**(1/2)
+                influence["x"] += (ele[0].position["x1"] - ele[1].position["x1"])/(2*distance) - ele[1].acceleration["x"]*distance
+                influence["y"] += (ele[0].position["y1"] - ele[1].position["y1"])/(2*distance) - ele[1].acceleration["y"]*distance
+            elif (ele[0].position["x1"] - ele[1].position["x1"])**2 + (ele[0].position["y1"] - ele[1].position["y1"])**2 <= 1.3:
+                if ele[1].state == "dead":
+                    ele[1].kill()
+                    ele[0].rice += 50
+                else:
+                    ele[0].rice -= 30
+                #---end if---
+            #---end if---
         #---end if---
     elif id == 'r' :
         if ele[0] == ele[1] and ele[1].state == 'move':
