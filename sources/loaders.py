@@ -43,8 +43,8 @@ class environmentLoader:
     def levelChanged(self):      
         if self.getPlayer().BoardChanged != None :
             self.currentLevel.boardChange(self.getPlayer().BoardChanged)
-            if self.currentLevel.position == 99:
-                self.nextLevel()
+            if self.currentLevel.position == 100:
+                quit()
             #---end if---
             self.getPlayer().BoardChanged = None
             return True
