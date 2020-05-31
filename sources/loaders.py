@@ -372,6 +372,7 @@ def strToArray(text):
 #--end strToArray---
 
 def fileLoader(folderRoot, file = ""):
+    """recursively convert a txt file into a dictionnary"""
     data = {}
     contents = []
     root = folderRoot + file

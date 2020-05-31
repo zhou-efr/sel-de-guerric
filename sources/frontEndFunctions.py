@@ -22,6 +22,15 @@ from pygame.locals import *
 import loaders as ld
 
 def printer(testIDE, window, sizeOfTiles, xWorld = 0, yWorld = 0): #WIP
+    """
+    test function to print a level , not used in the final code
+    :param testIDE: the environment
+    :param window:
+    :param sizeOfTiles:
+    :param xWorld:
+    :param yWorld:
+    :return:
+    """
     pygame.init()
 
     #---backend elements---
@@ -45,14 +54,12 @@ def printer(testIDE, window, sizeOfTiles, xWorld = 0, yWorld = 0): #WIP
 #---end devPrinter---
 
 def windowUpdate(window, environment, old, sizeOfTiles = -1):
-    """"the function which blit everything 
-        For more readability I assume that ALL COORDINATES has the form (x,y) as
-        y 
-        ^
-        |
-        0,0-->x
-        (0,0) being the left top point of the screen
+    """"
+    the function which blit everything
+    It get the environment from which it get the position of mobs, items, player etc
+    old is a dictionnary containing required data to compute the phase shift (camera tracking)
     """
+    #fullscreen case
     if (sizeOfTiles <= 0):
         sizeOfTiles = int(window.get_rect().bottom / 9)
     #--end if---
@@ -65,9 +72,11 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
     worldRect = environment.getYcollideRects()
     abscissaPhaseShift = deepcopy(-old[0]) if (worldSize[0]!=windowSize[0]) else 0
     ordinatePhaseShift = 0
+    #check if the entities exist
     if (len(entities) > 0):
         player = entities[0]
 
+        #abscissaPhaseShift computation
         if(worldSize[0]!=windowSize[0]):
             if (old[0] - old[2] + player.position['x1']) > 0:
                 if player.position['x1'] > windowSize[0]*(1/3) and old[0] <= old[0] + player.position["x1"] - old[2]:
@@ -79,6 +88,7 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
             #---end if---
         #---end if---
 
+        #ordinate phase shift computation
         if(worldSize[1]!=windowSize[1]): 
             if player.position["y1"] < (-worldSize[1]+5):
                 old[1] = -(worldSize[1] - windowSize[1])
@@ -98,6 +108,7 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
     #---end if---
     
     window.blit(environment.getBackground(), (0,0))
+    #objects blitting, loops are here because some object have a lenght > 1
     for i in objects:
         for j in range(int(i.position["x2"] - i.position["x1"])+1):
             for k in range(int(m.fabs(i.position["y2"]- i.position["y1"]))+1):
@@ -107,6 +118,7 @@ def windowUpdate(window, environment, old, sizeOfTiles = -1):
         #---end for---
     #---end for---
 
+    #simply blitting entities
     for i in entities:
         window.blit(i.getPicture(), ((i.position['x1'] + abscissaPhaseShift)*sizeOfTiles, (m.fabs(i.position['y1']) + ordinatePhaseShift)*sizeOfTiles))
     #---end for---
@@ -117,9 +129,11 @@ def inputReader(inputs, odlInputs):
     rInput = deepcopy(inputs)
     fInput = {}
     events = pygame.event.get()
+    #the [0] contains the name of the input where [1] contain the code of the input
     for i, j in rInput.items():
         rInput[i] = (odlInputs[j][0], i)
     #---end for---
+    #lisening for events
     for e in events:
         if e.type == QUIT:
             rInput[e.type] = (True, e.type)            
@@ -129,7 +143,7 @@ def inputReader(inputs, odlInputs):
             rInput[e.key] = (False, e.key)
         #---end if---
     #---end for---
-
+    #generate a readable dictionnary for the backend
     for i, j in inputs.items():
         fInput[j] = rInput[i]
     #---end for---
@@ -206,7 +220,6 @@ def options(window, window_size, keyMap):
     
     return game   
 
-   
 def rules(window, window_size):
     
     pygame.display.flip()
@@ -218,8 +231,13 @@ def rules(window, window_size):
     vert = (22, 207, 100)
     bleu_clair = (0, 153, 255)
     
-    fond = pygame.image.load("fond.jpg").convert()
-    
+    fond = pygame.image.load("../files/menu/fond.jpg").convert()
+    texte0 = "You can move on left and right with Q and D, "
+    texte5 = "you can jump with Z and you can fastfall with S."
+    texte1    =     " You can turn into bounce mode with SHIFT."
+    texte2   ="You can disactivate your bounce mode in the air. Then press Z to do a double jump."
+    texte3  = "The glasses are teleporter but there is one in each level which isn't."
+    texte4 = "The torch are teleportes inside the same board. Good luck !"
     game = True
     play = True 
 
@@ -233,12 +251,24 @@ def rules(window, window_size):
         x_return = window_size[0]*0.04
         y_return = window_size[1]*0.04
         pos_return = (x_return, y_return)
-        pygame.draw.rect(button_return, vert, button_return.get_rect())
-        window.blit(button_return, pos_return)
+        #pygame.draw.rect(button_return, vert, button_return.get_rect())
+        #window.blit(button_return, pos_return)
         
         # Texte retour
-        shape_text_return = pygame.font.Font('freesansbold.ttf', 30)
+        shape_text_return = pygame.font.Font('../files/menu/Demo.ttf', 30)
         text_return = shape_text_return.render('Retour', True, blue)
+        text_display = shape_text_return.render(texte0, True, (0,0,0))
+        window.blit(text_display, (200,200))
+        text_display = shape_text_return.render(texte5, True, (0,0,0))
+        window.blit(text_display, (200,250))
+        text_display = shape_text_return.render(texte1, True, (0,0,0))
+        window.blit(text_display, (200,300))
+        text_display = shape_text_return.render(texte2, True, (0,0,0))
+        window.blit(text_display, (200,350))
+        text_display = shape_text_return.render(texte3, True, (0,0,0))
+        window.blit(text_display, (200,400))
+        text_display = shape_text_return.render(texte4, True, (0,0,0))
+        window.blit(text_display, (200,450))
         window.blit(text_return, (x_return - 50 + size_return[0]/2, y_return - 10 + size_return[1]/2))
        
         for event in pygame.event.get():
