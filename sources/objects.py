@@ -97,8 +97,6 @@ class multipleItem(item):
 
 #---end multipleItem---
 
-
-
 class entities (item):
 
     def __init__(self, keyChar, environment):
@@ -343,8 +341,21 @@ class fish(entities):
         #---end for---
     #---end sdetector---
 
+    def kill(self):
+        self.state = "kill"
+        self.data["state"] = "kill"
+    #---end kill---
     def stateUpdater(self, lists, world):
-        if self.state != 'dead':
+        if self.state == 'kill':
+            i = 0
+            while i < len(lists) and lists[i] != self:
+                i += 1
+            #---end while---
+            if i != len(lists):
+                del(world.currentLevel.currentBoard.simpleList[0][i])
+                del(world.currentLevel.currentBoard.list[1][i-1])
+            #---end if---
+        elif self.state != 'dead':
             self.sdetector(world.getBoard())
             if self.spot != None:
                 self.changeState('default')

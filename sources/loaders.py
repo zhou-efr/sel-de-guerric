@@ -41,7 +41,7 @@ class environmentLoader:
     #---end sizeUpdate---
 
     def levelChanged(self):      
-        if self.getPlayer().BoardChanged != None:
+        if self.getPlayer().BoardChanged != None :
             self.currentLevel.boardChange(self.getPlayer().BoardChanged)
             if self.currentLevel.position == 99:
                 self.nextLevel()
@@ -115,7 +115,6 @@ class levelLoader:
             for change area (in function of direction 'n' 's' 'e' 'o')
             accessors
     """
-
     def __init__(self, environment, level, sizeOfTiles, area = 11):
         #setting internal variables
         self.environment = environment
@@ -125,12 +124,18 @@ class levelLoader:
         self.levelStructureAdress = self.folder + "/levelStruct.txt"
         self.levelStructure = []
         self.position = area #11 being the starting board
-        self.player = o.player()
+        self.player = None
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
         self.sizeOfTiles = sizeOfTiles
         #initialazation
         if self.currentBoard.list[0] == []:
-            self.currentBoard.list[0].append(self.player)
+            self.currentBoard.list[0].append(o.player())
+            if self.player != None:
+                self.currentBoard.list[0][0].position["x1"] = self.player["x1"]
+                self.currentBoard.list[0][0].position["x2"] = self.player["x2"]
+                self.currentBoard.list[0][0].position["y1"] = self.player["y1"]
+                self.currentBoard.list[0][0].position["y2"] = self.player["y2"]
+            #---end if---
         #---end if---
         self.currentBoard.init_in_level()
         self.initStructure()
@@ -172,10 +177,11 @@ class levelLoader:
 
     def boardChange(self, data):
         self.position = data.area
-        self.player.position["x1"] = data.x
-        self.player.position["x2"] = data.x
-        self.player.position["y1"] = data.y
-        self.player.position["y2"] = data.y
+        self.player = {"x1":0, "x2":0, "y1":0, "y2":0}
+        self.player["x1"] = data.x
+        self.player["x2"] = data.x
+        self.player["y1"] = data.y
+        self.player["y2"] = data.y
         
         self.currentBoard = areaLoader(self.environment, self.level, self.position)
         if data.force == 'True':
@@ -183,9 +189,16 @@ class levelLoader:
                 del(self.currentBoard.list[0][0])
             #---end while---
         #---end if---
-        self.currentBoard.list[0].append(self.player)
+
+        self.currentBoard.list[0].append(o.player())
+        self.currentBoard.list[0][-1].position["x1"] = self.player["x1"]
+        self.currentBoard.list[0][-1].position["x2"] = self.player["x2"]
+        self.currentBoard.list[0][-1].position["y1"] = self.player["y1"]
+        self.currentBoard.list[0][-1].position["y2"] = self.player["y2"]
+        
         while len(self.currentBoard.list[0]) > 1:
             del(self.currentBoard.list[0][1])
+            self.player = None
         #---end while---
 
         self.currentBoard.init_in_level()
@@ -195,6 +208,38 @@ class levelLoader:
         # Must do a security to not go out of the level structure, but i'm lazy right now
         #I assume it was at something like 1 AM
     #---end boardChange---
+
+    def respawn(self):
+        if self.currentBoard.list[0][0].data["state"] == "dead":
+            self.currentBoard = areaLoader(self.environment, self.level, self.position)
+            if self.player != None:
+                while len(self.currentBoard.list[0]) > 0:
+                    del(self.currentBoard.list[0][0])
+                #---end while---
+                self.currentBoard.list[0].append(o.player())
+                self.currentBoard.list[0][0].position["x1"] = self.player["x1"]
+                self.currentBoard.list[0][0].position["x2"] = self.player["x2"]
+                self.currentBoard.list[0][0].position["y1"] = self.player["y1"]
+                self.currentBoard.list[0][0].position["y2"] = self.player["y2"]
+            #---end if---
+            if self.currentBoard.list[0] == []:
+                self.currentBoard.list[0].append(o.player())
+                if self.player != None:
+                    self.currentBoard.list[0][0].position["x1"] = self.player["x1"]
+                    self.currentBoard.list[0][0].position["x2"] = self.player["x2"]
+                    self.currentBoard.list[0][0].position["y1"] = self.player["y1"]
+                    self.currentBoard.list[0][0].position["y2"] = self.player["y2"]
+                # ---end if---
+            # ---end if---
+            self.currentBoard.init_in_level()
+            self.initStructure()
+            self.sizeUpdate(self.sizeOfTiles)
+            self.currentBoard.resizeBackground((self.sizeOfTiles * 16, self.sizeOfTiles * 9))
+            return True
+        else:
+            return False
+        #---end if---
+    #---end respawn---
 
     #---Beginning of accessors---
     def getBoard(self):
