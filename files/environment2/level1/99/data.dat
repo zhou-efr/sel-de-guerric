@@ -1,4 +1,4 @@
 width 16
 height 9
-zone ['ex']
-ex [{"x1":15,"y1":-7,"x2":17,"y2":-7,"area":100,"x":2,"y":-2,"force":'False'}]
+zone []
+ex []
