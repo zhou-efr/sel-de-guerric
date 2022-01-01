@@ -20,13 +20,337 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2e8d2d1-1a1b-4b76-aeec-72ed6988cea4" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Runtime.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitmodules" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sel-de-guerric.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sel-de-guerric.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment2/level1/16/data.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment2/level1/16/data.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment2/level1/99/board.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment2/level1/99/board.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/environment2/level1/99/data.dat" beforeDir="false" afterPath="$PROJECT_DIR$/files/environment2/level1/99/data.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/temp/now.png" beforeDir="false" afterPath="$PROJECT_DIR$/files/temp/now.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/loaders.py" beforeDir="false" afterPath="$PROJECT_DIR$/sources/loaders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sources/sel-de-guerric.py" beforeDir="false" afterPath="$PROJECT_DIR$/sources/sel-de-guerric.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/launch.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vscode/settings.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Screenshot 2021-02-12 165429.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/attack_left.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/attack_right.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/dead.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/default.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/f.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/go_left.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/go_right.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/ground.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/ground_left.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/ground_right.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/data/kill.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/attack_left/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/attack_left/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/attack_right/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/attack_right/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/dead/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/default/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/default/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/go_left/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/go_left/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/go_right/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/go_right/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/ground/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/ground/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/ground_left/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/ground_left/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/ground_right/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/f/sprite/ground_right/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/backward.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/bouncing.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/dead.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/double_jump.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/fastfall.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/floor_jump.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/foward.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/lwall_jump.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/p.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/rwall_jump.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/static.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/data/staticb.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/backward/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/backward/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/bouncing.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/bouncing/sprt9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/dead/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/double_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/double_jump/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/fastfall/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/floor_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/floor_jump/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/foward/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/foward/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/life/high.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/life/low.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/life/normal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/lwall_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/rwall_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/slimeSheetFinalToEdit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/static/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/static/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/staticb/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/p/sprite/staticb/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/data/dead.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/data/floor_jump.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/data/static.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/data/t.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/backward/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/backward/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/bouncing.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/bouncing/sprt9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/dead/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/double_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/double_jump/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/fastfall/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/floor_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/floor_jump/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/foward/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/foward/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/lwall_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/rwall_jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/slimeSheetFinalToEdit.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/static/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/static/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/staticb/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/items/t/sprite/staticb/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/saves/1.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/saves/2.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment0/saves/3.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/inventory.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/a/a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/a/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/a/old/a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/a/old/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/'.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/(.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/+.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/,.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/-.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/[.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/].png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/_.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/c.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/t.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/{.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/c/}.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/d/d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/d/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/e/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/e/e.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/ex/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/f/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/h/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/h/h.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/i/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/i/i.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/l/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/l/l.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/m/b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/m/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/m/t.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/na/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/nt/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/o/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/o/o.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/o/wool_colored_brown.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/r/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/s/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/data/dead.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/data/jump.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/data/static.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/data/t.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/sprite/dead/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/sprite/jump/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/sprite/jump/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/sprite/static/sprt0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/t/sprite/static/sprt1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/u/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/u/u.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/items/zrat/default.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/11/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/11/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/11/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/12/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/12/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/12/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/13/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/13/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/13/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/14/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/14/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/14/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/15/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/15/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/15/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/16/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/16/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/16/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/17/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/17/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/17/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/99/back.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/99/board.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/99/data.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/level1/levelStruct.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/previous/(.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/previous/).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/previous/[.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/previous/].png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/previous/b.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/environment2/previous/t.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/new tile set.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Background Tiles.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Big Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Bulb Corridor.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Corridor.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Flashing Plants.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Giant Sidehopper Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Gloomy Old Brinstar.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Green Brinstar Shaft.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Kraid's Lair.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Kraid's Walls.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Old Brinstar.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Radioactive Tower.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Radioactive Tunnel.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Red Brinstar Item Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Rocks.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Tunnel.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Varia Suit Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Brinstar/Water Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Ceres Space Colony/Ceres Effect Normal.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Ceres Space Colony/Ceres Effect Self-Destruct.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Ceres Space Colony/Ceres Hallway Normal.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Ceres Space Colony/Ceres Hallway Self-Destruct.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Ceres Space Colony/Ceres Research Room Normal.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Ceres Space Colony/Ceres Research Room Self-Destruct.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Crateria Interior.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Elevator Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Gloomy Crateria Interior.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Gloomy Elevator Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Gloomy Old Tourain.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Gloomy Ruins.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Mushroom Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Old Tourain Fog.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Old Tourain.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Rock Tower.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Room Before Statue Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Ruins 2.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Ruins.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Torizo's Room Effect.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Torizo's Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Crateria/Under the Lake.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Average Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Botwoon's Room With Holes.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Botwoon's Room without holes.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Dark Vine Room With Less Vines.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Dark Vine Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Grass Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Plasma Beam Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Tube Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Maridia/Tunnel to Brinstar.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Block.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Bottom of Lava Lower Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Brick Tower.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Bubbles.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Flaming Molten Walls.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Flaming Walls.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Hall Before Ridley.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Lower Norfair Entry Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Missile Caverns.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Molten Walls.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Top of Lava Lower Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Tower.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Walls.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Norfair/Wave Beam Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Note.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Stations/Haunted Station.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Stations/Health Station.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Stations/Map Station.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Stations/Missile Station.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Stations/Save Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Title and Ending/Stars.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Title and Ending/Title Effect.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Title and Ending/Zebes Explosion.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Title and Ending/Zebes about to Explode.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Title and Ending/Zebes.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Tourain/Sidehopper Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Entrance.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Hallway.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Haunted Entrance.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Haunted Hallway.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Haunted Metroid Research Lab.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Haunted Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Metroid Research Lab.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/images/tests/SNES - Super Metroid - Backgrounds/Wrecked Ship/Room.bmp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/keyboard.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/ASMAN.TTF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/Demo.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/dialog.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/fond.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/logo-blanc-transparent.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/logo-blanc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/logo-noir-transparent.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/logo-noir.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/logo.pdn" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/menu/panda.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/files/temp/now.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/backendFunctions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/csv conversion/csvToTxt.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/frontEndFunctions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/loaders.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/objects.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/sel-de-guerric.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/Pandauwu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/backendTestFile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/getKey.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/panda.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/test.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/testFile.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/testJoystick.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sources/tests/testPygame.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tempCodeRunnerFile.python" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yellow kirby.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +358,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1cUcLlujDXqsyV7kU2cTOuc9ywO" />
   <component name="ProjectViewState">
@@ -44,6 +376,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/files/environment3/items/h" />
   </component>
   <component name="RecentsManager">
@@ -68,6 +401,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/sources/sel-de-guerric.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -78,6 +412,7 @@
       <method v="2" />
     </configuration>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -88,8 +423,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590586558504</updated>
+      <workItem from="1641063445315" duration="229000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -101,7 +440,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590586642286">
