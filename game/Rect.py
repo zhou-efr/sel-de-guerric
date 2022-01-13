@@ -3,7 +3,7 @@ from __future__ import annotations
 
 class GameRect:
     half_size: list
-    center : list
+    center: list
 
     def __init__(self, center: list, half_size: list):
         """
