@@ -1,0 +1,14 @@
+{
+    'name': '001',
+    'size': [5, 5],
+    'entry': [[1, 1]],
+    'map': """bbbbbb
+b    b
+b b  b
+b    b
+bbbbbb""",
+    'translation': {
+        'b': TileType.BLOCK,
+        'e': TileType.EMPTY
+    }
+}

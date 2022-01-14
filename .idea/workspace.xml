@@ -19,18 +19,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b2e8d2d1-1a1b-4b76-aeec-72ed6988cea4" name="Default Changelist" comment="Moving Game Object">
-      <change afterPath="$PROJECT_DIR$/file/image/player/player.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/Game.kv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/Game.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/Player.kv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/Player.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game/testObj.kv" afterDir="false" />
+    <list default="true" id="b2e8d2d1-1a1b-4b76-aeec-72ed6988cea4" name="Default Changelist" comment="Player and kivy integration">
+      <change afterPath="$PROJECT_DIR$/file/image/Sprites/149518.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file/image/Sprites/BLOCK/001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file/maps/temp/001.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/file/maps/temp/002.map" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game/Map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Game.kv" beforeDir="false" afterPath="$PROJECT_DIR$/game/Game.kv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/Game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/Object.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/Object.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/Rect.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/Rect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Player.kv" beforeDir="false" afterPath="$PROJECT_DIR$/game/Player.kv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/Player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/game/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,16 +73,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/file/image/player" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/file/image/Sprites" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\thepa\PycharmProjects\sel-de-guerric\file\image\Sprites" />
+      <recent name="C:\Users\thepa\PycharmProjects\sel-de-guerric\file\maps\temp" />
       <recent name="C:\Users\thepa\PycharmProjects\sel-de-guerric\file\image\player" />
       <recent name="C:\Users\thepa\Code\Python\pygame\sel-de-guerric\sel-de-guerric\files\environment3\items\h" />
       <recent name="C:\Users\thepa\Code\Python\pygame\sel-de-guerric\sel-de-guerric\files\environment3" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\thepa\PycharmProjects\sel-de-guerric\file\maps" />
       <recent name="C:\Users\thepa\PycharmProjects\sel-de-guerric\game" />
       <recent name="C:\Users\thepa\PycharmProjects\sel-de-guerric" />
       <recent name="C:\Users\thepa\Code\Python\pygame\sel-de-guerric\sel-de-guerric\files\environment3\items" />
@@ -204,7 +208,8 @@
       <workItem from="1641506829090" duration="1903000" />
       <workItem from="1641908285538" duration="3024000" />
       <workItem from="1641917703108" duration="2424000" />
-      <workItem from="1642093705170" duration="11568000" />
+      <workItem from="1642093705170" duration="15836000" />
+      <workItem from="1642184558235" duration="13211000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1641063690041</created>
@@ -234,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641067642493</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Player and kivy integration">
+      <created>1642106744620</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1642106744620</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,11 +267,22 @@
     <MESSAGE value="initial commit" />
     <MESSAGE value="Game Rect" />
     <MESSAGE value="Moving Game Object" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moving Game Object" />
+    <MESSAGE value="Player and kivy integration" />
+    <option name="LAST_COMMIT_MESSAGE" value="Player and kivy integration" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.inputs" language="Python" />
+        <watch expression="self.map" />
+        <watch expression="self.map.player.inputs" language="Python" />
+        <watch expression="WoShiFan.map" language="Python" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/sel_de_guerric$Rect.coverage" NAME="Rect Coverage Results" MODIFIED="1641065391528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/game" />
-    <SUITE FILE_PATH="coverage/sel_de_guerric$main.coverage" NAME="main Coverage Results" MODIFIED="1642105988148" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
+    <SUITE FILE_PATH="coverage/sel_de_guerric$main.coverage" NAME="main Coverage Results" MODIFIED="1642203674102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/" />
     <SUITE FILE_PATH="coverage/sel_de_guerric$Player.coverage" NAME="Player Coverage Results" MODIFIED="1642099441887" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/game" />
   </component>
 </project>

@@ -1,6 +1,7 @@
 from copy import deepcopy
 from enum import Enum
 
+from kivy.graphics import Rectangle, Color
 from kivy.lang import Builder
 
 from game import GRAVITY, DELTA_TIME, MAX_FALLING_SPEED, MIN_JUMP_SPEED, PLAYER_HALF_SIZE, WALK_SPEED, JUMP_SPEED
@@ -46,9 +47,6 @@ class Player(Object):
 
     def update_inputs(self):
         self.old_inputs = deepcopy(self.inputs)
-
-    def __init__(self, **kwargs):
-        super(Player, self).__init__(**kwargs)
 
     def update(self):
         if self.current_state == PlayerState.STAND:
@@ -122,17 +120,17 @@ class Player(Object):
 
         self.update_inputs()
 
-    def __init__(self, **kwargs):
+    def __init__(self, position=None, **kwargs):
         super().__init__(**kwargs)
         self.old_inputs = [False, False, False, False, False]
 
         self.inputs = [False, False, False, False, False]
-        self.position = [0, 0]
+        self.position = position or [0, 0]
 
         self.walk_speed = WALK_SPEED
         self.jump_speed = JUMP_SPEED
 
         self.game_rect = GameRect(self.position, deepcopy(PLAYER_HALF_SIZE))
-        self.game_rect_offset = [0, self.game_rect.half_size[1]]
+        self.game_rect_offset = [self.game_rect.half_size[0], self.game_rect.half_size[1]]
 
         self.scale = [1, 1]
